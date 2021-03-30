@@ -7,17 +7,18 @@ public class Player : MonoBehaviour
     [SerializeField]
     private float _speed = 3.5f;    
     [SerializeField]
-    private float _laserOffset = 0.85f;
-    [SerializeField]
-    private GameObject _laserPrefab;
+    private float _laserOffset = 0.85f;    
     [SerializeField]
     private float _fireDelay = 0.5f;
     [SerializeField]
     private float _canFire = 0.0f;
     [SerializeField]
     private int _playerLives = 3;
-    
-    
+    [SerializeField]
+    private GameObject _spawnManager;
+    [SerializeField]
+    private GameObject _laserPrefab;
+
     void Start()
     {
         transform.position = new Vector3(0, 0, 0);
@@ -67,6 +68,7 @@ public class Player : MonoBehaviour
 
         if(_playerLives < 1)
         {
+            _spawnManager.transform.GetComponent<SpawnManager>().StopSpawning();
             Destroy(this.gameObject);
         }
     }
