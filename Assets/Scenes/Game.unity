@@ -238,6 +238,7 @@ MonoBehaviour:
   _enemyPrefab: {fileID: 6859482750010898201, guid: 205bc89fc70e60e4a95df721f56c039d,
     type: 3}
   _enemyContainer: {fileID: 1654788336}
+  _playerIsAlive: 0
 --- !u!4 &1129285360
 Transform:
   m_ObjectHideFlags: 0
@@ -383,6 +384,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3784755063490819818, guid: b98b890ee0b636a40ad470f3b45dee7d,
+        type: 3}
+      propertyPath: _spawnManager
+      value: 
+      objectReference: {fileID: 1129285358}
     - target: {fileID: 3784755063490819819, guid: b98b890ee0b636a40ad470f3b45dee7d,
         type: 3}
       propertyPath: m_Name
