@@ -69,6 +69,7 @@ public class Player : MonoBehaviour
         if(_playerLives < 1)
         {
             _spawnManager.transform.GetComponent<SpawnManager>().StopSpawning();
+            // Debug.Log("Stop Spawning Message Sent");
             Destroy(this.gameObject);
         }
     }

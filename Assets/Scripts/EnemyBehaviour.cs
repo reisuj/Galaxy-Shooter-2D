@@ -32,9 +32,7 @@ public class EnemyBehaviour : MonoBehaviour
             Destroy(this.gameObject);
         }
         else if(other.tag == "Player")
-        {
-            Debug.Log("Player Hit!!");
-
+        {            
             Player player = other.transform.GetComponent<Player>();
             if (player != null)
             {

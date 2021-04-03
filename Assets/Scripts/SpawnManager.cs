@@ -37,6 +37,7 @@ public class SpawnManager : MonoBehaviour
 
     public void StopSpawning()
     {
+        // Debug.Log("Stop Spawning Message Received");
         _playerIsAlive = false;
     }
 }
