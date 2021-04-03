@@ -15,13 +15,19 @@ public class Player : MonoBehaviour
     [SerializeField]
     private int _playerLives = 3;
     [SerializeField]
-    private GameObject _spawnManager;
+    private SpawnManager _spawnManager;
     [SerializeField]
     private GameObject _laserPrefab;
+
 
     void Start()
     {
         transform.position = new Vector3(0, 0, 0);
+        _spawnManager = GameObject.Find("SpawnManager").GetComponent<SpawnManager>();
+        if (_spawnManager == null)
+        {
+            Debug.LogError("The Spawn Manageris NULL!!");
+        }
     }
 
     // Update is called once per frame
@@ -68,8 +74,7 @@ public class Player : MonoBehaviour
 
         if(_playerLives < 1)
         {
-            _spawnManager.transform.GetComponent<SpawnManager>().StopSpawning();
-            // Debug.Log("Stop Spawning Message Sent");
+            _spawnManager.StopSpawning();
             Destroy(this.gameObject);
         }
     }

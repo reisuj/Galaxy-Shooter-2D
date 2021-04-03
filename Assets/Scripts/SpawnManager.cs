@@ -30,14 +30,12 @@ public class SpawnManager : MonoBehaviour
             float _enemyX = Random.Range(-9.0f, 9.0f);
             GameObject newEnemy = Instantiate(_enemyPrefab, (new Vector3(_enemyX, 10.5f, 0)), Quaternion.identity);
             newEnemy.transform.parent = _enemyContainer.transform;
-            yield return new WaitForSeconds(5.0f);
-        }
-        
+            yield return new WaitForSeconds(3.0f);
+        }        
     }
 
     public void StopSpawning()
     {
-        // Debug.Log("Stop Spawning Message Received");
         _playerIsAlive = false;
     }
 }
