@@ -14,7 +14,6 @@ public class Player : MonoBehaviour
     private float _canFire = 0.0f;
     [SerializeField]
     private int _playerLives = 3;
-    [SerializeField]
     private SpawnManager _spawnManager;
     [SerializeField]
     private GameObject _laserPrefab;
