@@ -17,6 +17,12 @@ public class Player : MonoBehaviour
     private SpawnManager _spawnManager;
     [SerializeField]
     private GameObject _laserPrefab;
+    [SerializeField]
+    private GameObject _tripleShotPrefab;
+    [SerializeField]
+    private bool tripleShotActive = false;
+
+
 
 
     void Start()
@@ -63,7 +69,15 @@ public class Player : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space) && Time.time > _canFire)
         {
             _canFire = Time.time + _fireDelay;
-            Instantiate(_laserPrefab, (new Vector3(transform.position.x, transform.position.y + _laserOffset, 0)), Quaternion.identity);
+            if (tripleShotActive == true)
+            {
+                Instantiate(_tripleShotPrefab, (new Vector3(transform.position.x, transform.position.y, 0)), Quaternion.identity);
+            }
+            else
+            {
+                Instantiate(_laserPrefab, (new Vector3(transform.position.x, transform.position.y + _laserOffset, 0)), Quaternion.identity);
+            }
+            
         }
     }
 

@@ -497,6 +497,9 @@ MonoBehaviour:
   _playerLives: 3
   _laserPrefab: {fileID: 6728700082669355712, guid: 707702c78613a3b4bb14cf4311396e83,
     type: 3}
+  _tripleShotPrefab: {fileID: 1136315462387127491, guid: 7eb89d6918b779c4a9a1acbeeb3054a5,
+    type: 3}
+  tripleShotActive: 0
 --- !u!212 &2109694118
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -556,7 +559,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2109694116}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.17, y: 4.67, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_Children: []
   m_Father: {fileID: 0}
