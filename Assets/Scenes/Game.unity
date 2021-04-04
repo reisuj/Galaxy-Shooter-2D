@@ -237,7 +237,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _enemyPrefab: {fileID: 6859482750010898201, guid: 205bc89fc70e60e4a95df721f56c039d,
     type: 3}
-  _enemyContainer: {fileID: 1654788336}
+  _enemyContainer: {fileID: 1432167167}
   _playerIsAlive: 0
 --- !u!4 &1129285360
 Transform:
@@ -250,7 +250,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 1654788337}
+  - {fileID: 1432167168}
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -347,7 +347,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
---- !u!1 &1654788336
+--- !u!1 &1432167167
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -355,7 +355,7 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 1654788337}
+  - component: {fileID: 1432167168}
   m_Layer: 0
   m_Name: EnemyContainer
   m_TagString: Untagged
@@ -363,13 +363,13 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &1654788337
+--- !u!4 &1432167168
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1654788336}
+  m_GameObject: {fileID: 1432167167}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -388,7 +388,7 @@ PrefabInstance:
         type: 3}
       propertyPath: _spawnManager
       value: 
-      objectReference: {fileID: 1129285358}
+      objectReference: {fileID: 1129285359}
     - target: {fileID: 3784755063490819819, guid: b98b890ee0b636a40ad470f3b45dee7d,
         type: 3}
       propertyPath: m_Name
