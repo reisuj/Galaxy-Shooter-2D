@@ -110,8 +110,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _speed: 3.5
   _laserOffset: 0.85
-  _laserPrefab: {fileID: 8073176487786757702, guid: 707702c78613a3b4bb14cf4311396e83,
-    type: 3}
   _fireDelay: 0.5
   _canFire: -1
   _playerLives: 3
+  _laserPrefab: {fileID: 6728700082669355712, guid: 707702c78613a3b4bb14cf4311396e83,
+    type: 3}

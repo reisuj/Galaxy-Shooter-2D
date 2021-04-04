@@ -7,7 +7,7 @@ public class Player : MonoBehaviour
     [SerializeField]
     private float _speed = 3.5f;    
     [SerializeField]
-    private float _laserOffset = 0.85f;    
+    private float _laserOffset = 1.1f;    
     [SerializeField]
     private float _fireDelay = 0.5f;
     [SerializeField]
