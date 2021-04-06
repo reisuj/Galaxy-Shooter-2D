@@ -115,6 +115,6 @@ MonoBehaviour:
   _playerLives: 3
   _laserPrefab: {fileID: 6728700082669355712, guid: 707702c78613a3b4bb14cf4311396e83,
     type: 3}
-  _tripleShotPrefab: {fileID: 1136315462387127491, guid: 7eb89d6918b779c4a9a1acbeeb3054a5,
+  _tripleShotPrefab: {fileID: 97752734348323326, guid: f8cf2b4890dee5a4499a51028eb01115,
     type: 3}
-  tripleShotActive: 1
+  tripleShotActive: 0

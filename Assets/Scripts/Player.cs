@@ -91,4 +91,9 @@ public class Player : MonoBehaviour
             Destroy(this.gameObject);
         }
     }
+
+    public void CollectedPowerup()
+    {
+        tripleShotActive = true;
+    }
 }
