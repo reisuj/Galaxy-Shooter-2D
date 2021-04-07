@@ -21,10 +21,6 @@ public class Player : MonoBehaviour
     private GameObject _tripleShotPrefab;
     [SerializeField]
     private bool tripleShotActive = false;
-
-
-
-
     void Start()
     {
         transform.position = new Vector3(0, 0, 0);
@@ -92,8 +88,15 @@ public class Player : MonoBehaviour
         }
     }
 
-    public void CollectedPowerup()
+    public void TripleShotActive()
     {
         tripleShotActive = true;
+        StartCoroutine(TripleShotPowerDown());
+    }
+
+    IEnumerator TripleShotPowerDown()
+    {
+        yield return new WaitForSeconds(6.0f);
+        tripleShotActive = false;
     }
 }
