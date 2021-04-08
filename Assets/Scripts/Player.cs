@@ -22,7 +22,11 @@ public class Player : MonoBehaviour
     [SerializeField]
     private GameObject _tripleShotPrefab;
     [SerializeField]
+    private GameObject _shieldVisual;
+    [SerializeField]
     private bool tripleShotActive = false;
+    [SerializeField]
+    private bool _shieldIsActive = false;
     
     void Start()
     {
@@ -82,6 +86,12 @@ public class Player : MonoBehaviour
 
     public void Damage()
     {
+        if (_shieldIsActive == true)
+        {
+            _shieldIsActive = false;
+            _shieldVisual.SetActive(false);
+            return;
+        }
         _playerLives -= 1;
 
         if(_playerLives < 1)
@@ -113,5 +123,12 @@ public class Player : MonoBehaviour
     {
         yield return new WaitForSeconds(6.0f);
         _speed /= _speedMultiplier;
+    }
+
+    public void ShieldActive()
+    {
+        _shieldIsActive = true;
+        _shieldVisual.SetActive(true);
+        Debug.Log("Player Collected Shield");
     }
 }
