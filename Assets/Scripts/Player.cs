@@ -18,10 +18,7 @@ public class Player : MonoBehaviour
     private int _playerLives = 3;
     [SerializeField]
     private int _score;
-    [SerializeField]
-    private int _shieldCharges;
-    [SerializeField]
-    private ShieldBehaviour _shields = null;
+
     private UIManager _uiManager;
     private SpawnManager _spawnManager;
     [SerializeField]
@@ -40,7 +37,6 @@ public class Player : MonoBehaviour
         transform.position = new Vector3(0, 0, 0);
         _spawnManager = GameObject.Find("SpawnManager").GetComponent<SpawnManager>();
         _uiManager = GameObject.Find("Canvas").GetComponent<UIManager>();
-        _shields = GameObject.Find("Shields").GetComponent<ShieldBehaviour>();
         if (_spawnManager == null)
         {
             Debug.LogError("The Spawn Manageris NULL!!");
@@ -49,11 +45,6 @@ public class Player : MonoBehaviour
         if (_uiManager == null)
         {
             Debug.LogError("The UIManager is NULL!!");
-        }
-
-        if (_shields == null)
-        {
-            Debug.LogError("The _shields are NULL!!");
         }
     }
 
@@ -107,12 +98,8 @@ public class Player : MonoBehaviour
     {
         if (_shieldIsActive == true)
         {
-            _shields.ShieldHit();
-            if (_shieldCharges < 1)
-            {
-                _shieldIsActive = false;
-                //_shieldVisual.SetActive(false);
-            }            
+            _shieldIsActive = false;
+            _shieldVisual.SetActive(false);
             return;
         }
         _playerLives -= 1;
@@ -152,7 +139,6 @@ public class Player : MonoBehaviour
     {
         _shieldIsActive = true;
         _shieldVisual.SetActive(true);
-        //_shieldCharges = 3;
         Debug.Log("Player Collected Shield");
     }
 
