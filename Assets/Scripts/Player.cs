@@ -14,15 +14,19 @@ public class Player : MonoBehaviour
     private float _fireDelay = 0.5f;
     [SerializeField]
     private float _canFire = 0.0f;
+
     [SerializeField]
     private int _playerLives = 3;
+
     private SpawnManager _spawnManager;
+
     [SerializeField]
     private GameObject _laserPrefab;
     [SerializeField]
     private GameObject _tripleShotPrefab;
     [SerializeField]
     private GameObject _shieldVisual;
+
     [SerializeField]
     private bool tripleShotActive = false;
     [SerializeField]
@@ -131,4 +135,6 @@ public class Player : MonoBehaviour
         _shieldVisual.SetActive(true);
         Debug.Log("Player Collected Shield");
     }
+
+
 }
