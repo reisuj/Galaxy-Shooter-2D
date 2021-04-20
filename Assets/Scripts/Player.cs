@@ -103,10 +103,12 @@ public class Player : MonoBehaviour
             return;
         }
         _playerLives -= 1;
+        _uiManager.UpdateLives(_playerLives);
 
         if(_playerLives < 1)
         {
             _spawnManager.StopSpawning();
+            // _uiManager.GameOveroutine();
             Destroy(this.gameObject);
         }
     }
