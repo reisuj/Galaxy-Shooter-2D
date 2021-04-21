@@ -34,6 +34,7 @@ public class SpawnManager : MonoBehaviour
 
     IEnumerator SpawnEnemy()
     {
+        yield return new WaitForSeconds(2.0f);
         while (_playerIsAlive == true)
         {
             float _enemyX = Random.Range(-9.0f, 9.0f);
