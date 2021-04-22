@@ -11,7 +11,11 @@ public class EnemyBehaviour : MonoBehaviour
 
     private void Start()
     {
-        _uiManager = GameObject.Find("UI_Manager").GetComponent<UIManager>();
+        _uiManager = GameObject.Find("Canvas").GetComponent<UIManager>();
+        if (_uiManager == null)
+        {
+            Debug.LogError("The UIManager is NULL!!");
+        }
     }
     // Update is called once per frame
     void Update()
