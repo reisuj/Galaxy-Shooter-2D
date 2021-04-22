@@ -98,6 +98,8 @@ public class Player : MonoBehaviour
         }
         _playerLives -= 1;
 
+        
+
         if(_playerLives < 1)
         {
             _spawnManager.StopSpawning();
