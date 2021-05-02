@@ -9,9 +9,25 @@ public class EnemyBehaviour : MonoBehaviour
 
     private Player _player;
 
+    private Animator _anim;
+
     private void Start()
     {
         _player = GameObject.Find("Player").GetComponent<Player>();
+
+        if (_player == null)
+        {
+            Debug.LogError("Player is NULL!");
+        }
+
+        _anim = GetComponent<Animator>();
+
+        if (_anim == null)
+        {
+            Debug.LogError("The Animator is NULL!");
+        }
+
+
     }
     // Update is called once per frame
     void Update()
@@ -34,6 +50,7 @@ public class EnemyBehaviour : MonoBehaviour
             {
                 _player.AddScore(Random.Range(5, 11));
             }
+            _anim.SetTrigger("OnEnemyDeath");
             Destroy(this.gameObject);
         }
         else if(other.tag == "Player")
@@ -43,6 +60,7 @@ public class EnemyBehaviour : MonoBehaviour
             {
                 player.Damage();
             }
+            _anim.SetTrigger("OnEnemyDeath");
             Destroy(this.gameObject);
         }
     }
