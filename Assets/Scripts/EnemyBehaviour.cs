@@ -11,6 +11,8 @@ public class EnemyBehaviour : MonoBehaviour
 
     private Animator _anim;
 
+    private BoxCollider2D _collider;
+
     private void Start()
     {
         _player = GameObject.Find("Player").GetComponent<Player>();
@@ -27,6 +29,12 @@ public class EnemyBehaviour : MonoBehaviour
             Debug.LogError("The Animator is NULL!");
         }
 
+        _collider = GetComponent<BoxCollider2D>();
+
+        if (_collider == null)
+        {
+            Debug.LogError("Collider is NULL!");
+        }
 
     }
     // Update is called once per frame
@@ -51,7 +59,8 @@ public class EnemyBehaviour : MonoBehaviour
                 _player.AddScore(Random.Range(5, 11));
             }
             _anim.SetTrigger("OnEnemyDeath");
-            Destroy(this.gameObject);
+            _collider.enabled = false;
+            Destroy(this.gameObject, 2.8f);
         }
         else if(other.tag == "Player")
         {            
@@ -61,7 +70,8 @@ public class EnemyBehaviour : MonoBehaviour
                 player.Damage();
             }
             _anim.SetTrigger("OnEnemyDeath");
-            Destroy(this.gameObject);
+            _collider.enabled = false;
+            Destroy(this.gameObject, 2.8f);
         }
     }
 }
