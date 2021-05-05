@@ -45,14 +45,15 @@ public class UIManager : MonoBehaviour
     public void UpdateLives(int currentLives)
     {
         _livesImg.sprite = _livesSprites[currentLives];
-        if (currentLives == 0)
-        {
-            GameOverSequence();
-        }
+        //if (currentLives == 0)
+        //{
+        //    StartCoroutine(GameOverSequence());
+        //}
     }
 
-    void GameOverSequence()
+    public IEnumerator GameOverSequence()
     {
+        yield return new WaitForSeconds(2.0f);
         StartCoroutine(GameOverFlickerRoutine());
         _gameManager.GameOver();
         _restartLevelText.gameObject.SetActive(true);        
@@ -90,5 +91,10 @@ public class UIManager : MonoBehaviour
         _countDownText.text = "1";
         yield return new WaitForSeconds(_flashDelay);
         _gameManager.RestartScene();
+    }
+
+    public void GameOver()
+    {
+        StartCoroutine(GameOverSequence());
     }
 }

@@ -28,6 +28,10 @@ public class Player : MonoBehaviour
     [SerializeField]
     private GameObject _shieldVisual;
     [SerializeField]
+    private GameObject _rightEngine;
+    [SerializeField]
+    private GameObject _leftEngine;
+    [SerializeField]
     private bool tripleShotActive = false;
     [SerializeField]
     private bool _shieldIsActive = false;
@@ -107,9 +111,7 @@ public class Player : MonoBehaviour
 
         if(_playerLives < 1)
         {
-            _spawnManager.StopSpawning();
-            // _uiManager.GameOveroutine();
-            Destroy(this.gameObject);
+            StartCoroutine(PlayerDead());
         }
     }
 
@@ -148,5 +150,14 @@ public class Player : MonoBehaviour
     {
         _score += points;
         _uiManager.UpdateScore(_score);
+    }
+
+    private IEnumerator PlayerDead()
+    {
+        yield return new WaitForSeconds(2.0f);
+        _spawnManager.StopSpawning();
+        //_uiManager.GameOverSequence();
+        _uiManager.GameOver();
+        Destroy(this.gameObject);
     }
 }
