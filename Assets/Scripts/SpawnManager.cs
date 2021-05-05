@@ -21,9 +21,7 @@ public class SpawnManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        _playerIsAlive = true;        
-        StartCoroutine(SpawnEnemy());
-        StartCoroutine(SpawnPowerup());
+        
     }
 
     // Update is called once per frame
@@ -60,5 +58,12 @@ public class SpawnManager : MonoBehaviour
         _playerIsAlive = false;
         Destroy(_enemyContainer);
         Destroy(_powerupContainer);
+    }
+
+    public void StartSpawning()
+    {
+        _playerIsAlive = true;
+        StartCoroutine(SpawnEnemy());
+        StartCoroutine(SpawnPowerup());
     }
 }
