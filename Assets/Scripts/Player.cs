@@ -107,6 +107,17 @@ public class Player : MonoBehaviour
             return;
         }
         _playerLives -= 1;
+
+        if (_playerLives == 2)
+        {
+            _rightEngine.SetActive(true);
+        }
+        else if (_playerLives == 1)
+        {
+            _leftEngine.SetActive(true);
+        }
+
+
         _uiManager.UpdateLives(_playerLives);
 
         if(_playerLives < 1)

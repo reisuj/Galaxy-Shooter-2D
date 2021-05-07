@@ -1234,6 +1234,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 78374e9d66835d14fa86efdce12c7c2d, type: 3}
+--- !u!1 &1915211671 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5120659018182728696, guid: b98b890ee0b636a40ad470f3b45dee7d,
+    type: 3}
+  m_PrefabInstance: {fileID: 4528373475945847450}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &2025769946 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8201483044469472134, guid: b98b890ee0b636a40ad470f3b45dee7d,
+    type: 3}
+  m_PrefabInstance: {fileID: 4528373475945847450}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1936703576226512111
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1325,6 +1337,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1834646883957674237, guid: b98b890ee0b636a40ad470f3b45dee7d,
+        type: 3}
+      propertyPath: m_SortingOrder
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 4528373477114313277, guid: b98b890ee0b636a40ad470f3b45dee7d,
         type: 3}
       propertyPath: m_RootOrder
@@ -1384,6 +1401,31 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 4528373477114313279, guid: b98b890ee0b636a40ad470f3b45dee7d,
+        type: 3}
+      propertyPath: _leftEngine
+      value: 
+      objectReference: {fileID: 2025769946}
+    - target: {fileID: 4528373477114313279, guid: b98b890ee0b636a40ad470f3b45dee7d,
+        type: 3}
+      propertyPath: _rightEngine
+      value: 
+      objectReference: {fileID: 1915211671}
+    - target: {fileID: 5120659018182728696, guid: b98b890ee0b636a40ad470f3b45dee7d,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5853832193815334361, guid: b98b890ee0b636a40ad470f3b45dee7d,
+        type: 3}
+      propertyPath: m_SortingOrder
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8201483044469472134, guid: b98b890ee0b636a40ad470f3b45dee7d,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b98b890ee0b636a40ad470f3b45dee7d, type: 3}
