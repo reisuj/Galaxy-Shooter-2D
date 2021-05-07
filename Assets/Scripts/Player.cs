@@ -18,6 +18,7 @@ public class Player : MonoBehaviour
     private int _playerLives = 3;
     [SerializeField]
     private int _score;
+    private bool _playerAlive = true;
 
     private UIManager _uiManager;
     private SpawnManager _spawnManager;
@@ -35,7 +36,13 @@ public class Player : MonoBehaviour
     private bool tripleShotActive = false;
     [SerializeField]
     private bool _shieldIsActive = false;
-    
+    [SerializeField]
+    private GameObject _explosion;
+    [SerializeField]
+    private AudioClip _laserAudio;
+    [SerializeField]
+    private AudioClip _explosionAudio;
+
     void Start()
     {
         transform.position = new Vector3(0, 0, 0);
@@ -55,8 +62,12 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        PlayerMovement();
-        LaserControl();        
+        if (_playerAlive == true)
+        {
+            PlayerMovement();
+            LaserControl();
+        }
+               
     }
 
     void PlayerMovement()
@@ -86,6 +97,7 @@ public class Player : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space) && Time.time > _canFire)
         {
             _canFire = Time.time + _fireDelay;
+            AudioSource.PlayClipAtPoint(_laserAudio, transform.position, 1.0f);
             if (tripleShotActive == true)
             {
                 Instantiate(_tripleShotPrefab, (new Vector3(transform.position.x, transform.position.y, 0)), Quaternion.identity);
@@ -165,7 +177,10 @@ public class Player : MonoBehaviour
 
     private IEnumerator PlayerDead()
     {
-        yield return new WaitForSeconds(2.0f);
+        _playerAlive = false;
+        AudioSource.PlayClipAtPoint(_explosionAudio, new Vector3(0, 0, -10), 1.0f);
+        Instantiate(_explosion, transform.position, Quaternion.identity);
+        yield return new WaitForSeconds(1.0f);
         _spawnManager.StopSpawning();
         //_uiManager.GameOverSequence();
         _uiManager.GameOver();

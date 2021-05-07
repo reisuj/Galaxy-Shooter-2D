@@ -13,6 +13,9 @@ public class EnemyBehaviour : MonoBehaviour
 
     private BoxCollider2D _collider;
 
+    [SerializeField]
+    private AudioClip _explosionAudio;
+
     private void Start()
     {
         _player = GameObject.Find("Player").GetComponent<Player>();
@@ -58,6 +61,7 @@ public class EnemyBehaviour : MonoBehaviour
             {
                 _player.AddScore(Random.Range(5, 11));
             }
+            AudioSource.PlayClipAtPoint(_explosionAudio, new Vector3(0, 0, -10), 1.0f);
             _anim.SetTrigger("OnEnemyDeath");
             _collider.enabled = false;
             Destroy(this.gameObject, 2.8f);
@@ -69,6 +73,7 @@ public class EnemyBehaviour : MonoBehaviour
             {
                 player.Damage();
             }
+            AudioSource.PlayClipAtPoint(_explosionAudio, new Vector3(0, 0, -10), 1.0f);
             _anim.SetTrigger("OnEnemyDeath");
             _collider.enabled = false;
             Destroy(this.gameObject, 2.8f);

@@ -7,6 +7,8 @@ public class Asteroid : MonoBehaviour
     private SpawnManager _spawnManager;
     [SerializeField]
     private GameObject _explosion;
+    [SerializeField]
+    private AudioClip _explosionAudio;
     // Start is called before the first frame update
     void Start()
     {
@@ -28,6 +30,7 @@ public class Asteroid : MonoBehaviour
     {
         if (collision.tag == "PlayerLaser")
         {
+            AudioSource.PlayClipAtPoint(_explosionAudio, new Vector3(0, 0, -10), 1.0f);
             Destroy(collision.gameObject);
             Instantiate(_explosion, transform.position, Quaternion.identity);
             _spawnManager.StartSpawning();
