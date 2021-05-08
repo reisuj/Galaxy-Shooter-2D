@@ -64,6 +64,7 @@ public class Player : MonoBehaviour
     {
         if (_playerAlive == true)
         {
+            ThrusterControl();
             PlayerMovement();
             LaserControl();
         }
@@ -71,7 +72,7 @@ public class Player : MonoBehaviour
     }
 
     void PlayerMovement()
-    {
+    {        
         float horizontalMovement = Input.GetAxis("Horizontal");
         float verticalMovement = Input.GetAxis("Vertical");
 
@@ -90,6 +91,18 @@ public class Player : MonoBehaviour
         {
             transform.position = new Vector3(-11.3f, transform.position.y, 0);
         }        
+    }
+
+    void ThrusterControl()
+    {
+        if (Input.GetKey(KeyCode.LeftShift))
+        {
+            _speed = 10.0f;
+        }
+        else
+        {
+            _speed = 5.0f;
+        }
     }
 
     void LaserControl()
