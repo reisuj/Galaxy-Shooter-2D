@@ -12,6 +12,8 @@ public class EnemyBehaviour : MonoBehaviour
     private Animator _anim;
 
     private BoxCollider2D _collider;
+    [SerializeField]
+    private GameObject _enemyLaser;
 
     [SerializeField]
     private AudioClip _explosionAudio;
@@ -39,6 +41,7 @@ public class EnemyBehaviour : MonoBehaviour
             Debug.LogError("Collider is NULL!");
         }
 
+        StartCoroutine(FireLaser());
     }
     // Update is called once per frame
     void Update()
@@ -78,5 +81,11 @@ public class EnemyBehaviour : MonoBehaviour
             _collider.enabled = false;
             Destroy(this.gameObject, 2.8f);
         }
+    }
+
+    IEnumerator FireLaser()
+    {
+        yield return new WaitForSeconds(1.0f);
+        Instantiate(_enemyLaser, transform.position, Quaternion.identity);
     }
 }

@@ -48,6 +48,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _enemySpeed: 4
+  _enemyLaser: {fileID: 7152518119008837574, guid: 39e6e22fd21b74c4b89ff7496dfdfcb4,
+    type: 3}
   _explosionAudio: {fileID: 8300000, guid: a885c043fab7e46438bba03ba9dab6bc, type: 3}
 --- !u!212 &-537944000425925285
 SpriteRenderer:
