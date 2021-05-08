@@ -5,7 +5,7 @@ using UnityEngine;
 public class EnemyBehaviour : MonoBehaviour
 {
     [SerializeField]
-    private float _enemySpeed = 2.0f;
+    private float _enemySpeed = 1.5f;
 
     private Player _player;
 
@@ -17,6 +17,10 @@ public class EnemyBehaviour : MonoBehaviour
 
     [SerializeField]
     private AudioClip _explosionAudio;
+
+    private float _canFire = 0.0f;
+
+    private float _fireDelay;
 
     private void Start()
     {
@@ -41,12 +45,13 @@ public class EnemyBehaviour : MonoBehaviour
             Debug.LogError("Collider is NULL!");
         }
 
-        StartCoroutine(FireLaser());
+        //StartCoroutine(FireLaser());
     }
     // Update is called once per frame
     void Update()
     {
         CalculateMovement();
+        FireLaser();
     }
 
     void CalculateMovement()
@@ -57,6 +62,17 @@ public class EnemyBehaviour : MonoBehaviour
         {
             float newX = Random.Range(-9.0f, 9.0f);
             transform.position = new Vector3(newX, 10.5f, 0);
+        }
+    }
+
+    void FireLaser()
+    {
+        _fireDelay = Random.Range(3.0f, 7.0f);
+        if (Time.time > _canFire)
+        {
+            _canFire = Time.time + _fireDelay;
+            //AudioSource.PlayClipAtPoint(_laserAudio, transform.position, 1.0f);
+            Instantiate(_enemyLaser, transform.position, Quaternion.identity);
         }
     }
 
@@ -88,9 +104,9 @@ public class EnemyBehaviour : MonoBehaviour
         }
     }
 
-    IEnumerator FireLaser()
-    {
-        yield return new WaitForSeconds(1.0f);
-        Instantiate(_enemyLaser, transform.position, Quaternion.identity);
-    }
+    //IEnumerator FireLaser()
+    //{
+    //    yield return new WaitForSeconds(1.0f);
+    //    Instantiate(_enemyLaser, transform.position, Quaternion.identity);
+    //}
 }
