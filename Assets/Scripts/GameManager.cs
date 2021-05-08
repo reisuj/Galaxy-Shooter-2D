@@ -29,6 +29,11 @@ public class GameManager : MonoBehaviour
         {
             _uiManager.RestartCountdown();
         }
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Application.Quit();
+        }
     }
 
     public void GameOver()

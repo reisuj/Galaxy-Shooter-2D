@@ -5,7 +5,7 @@ using UnityEngine;
 public class EnemyBehaviour : MonoBehaviour
 {
     [SerializeField]
-    private float _enemySpeed = 4.0f;
+    private float _enemySpeed = 2.0f;
 
     private Player _player;
 
@@ -45,6 +45,11 @@ public class EnemyBehaviour : MonoBehaviour
     }
     // Update is called once per frame
     void Update()
+    {
+        CalculateMovement();
+    }
+
+    void CalculateMovement()
     {
         transform.Translate(Vector3.down * _enemySpeed * Time.deltaTime);
 
