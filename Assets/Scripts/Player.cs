@@ -7,6 +7,10 @@ public class Player : MonoBehaviour
     [SerializeField]
     private float _speed = 5.0f;
     [SerializeField]
+    private float _baseSpeed = 5.0f;
+    [SerializeField]
+    private float _thrusterSpeed = 10.0f;
+    [SerializeField]
     private float _speedMultiplier = 2.0f;
     [SerializeField]
     private float _laserOffset = 1.1f;    
@@ -97,11 +101,11 @@ public class Player : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.LeftShift))
         {
-            _speed = 10.0f;
+            _speed = _thrusterSpeed;
         }
         else
         {
-            _speed = 5.0f;
+            _speed = _baseSpeed;
         }
     }
 
