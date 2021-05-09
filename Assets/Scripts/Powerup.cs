@@ -36,7 +36,7 @@ public class Powerup : MonoBehaviour
                         player.SpeedBoostActive();
                         break;
                     case 2:
-                        player.ShieldActive();
+                        player.ShieldPickedUp();
                         break;
                     default:
                         Debug.Log("Default Value");

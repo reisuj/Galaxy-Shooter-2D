@@ -22,6 +22,7 @@ public class Player : MonoBehaviour
     private int _playerLives = 3;
     [SerializeField]
     private int _score;
+    private int _shieldStrength = 0;
     private bool _playerAlive = true;
 
     private UIManager _uiManager;
@@ -46,12 +47,16 @@ public class Player : MonoBehaviour
     private AudioClip _laserAudio;
     [SerializeField]
     private AudioClip _explosionAudio;
+    private Renderer shieldColor;
+    private Color _shieldDefaultColor;
 
     void Start()
     {
         transform.position = new Vector3(0, 0, 0);
         _spawnManager = GameObject.Find("SpawnManager").GetComponent<SpawnManager>();
         _uiManager = GameObject.Find("Canvas").GetComponent<UIManager>();
+        shieldColor = _shieldVisual.GetComponent<Renderer>();
+        _shieldDefaultColor = _shieldVisual.GetComponent<Renderer>().material.GetColor("_Color");
         if (_spawnManager == null)
         {
             Debug.LogError("The Spawn Manageris NULL!!");
@@ -61,6 +66,8 @@ public class Player : MonoBehaviour
         {
             Debug.LogError("The UIManager is NULL!!");
         }
+
+
     }
 
     // Update is called once per frame
@@ -131,8 +138,8 @@ public class Player : MonoBehaviour
     {
         if (_shieldIsActive == true)
         {
-            _shieldIsActive = false;
-            _shieldVisual.SetActive(false);
+            _shieldStrength--;
+            ShieldCheck();
             return;
         }
         _playerLives -= 1;
@@ -179,11 +186,36 @@ public class Player : MonoBehaviour
         _speed /= _speedMultiplier;
     }
 
-    public void ShieldActive()
+    public void ShieldPickedUp()
     {
+        if (_shieldStrength < 3)
+        {
+            _shieldStrength++;
+        }
         _shieldIsActive = true;
-        _shieldVisual.SetActive(true);
+        _shieldVisual.SetActive(true);        
+        ShieldCheck();
         Debug.Log("Player Collected Shield");
+    }
+
+    public void ShieldCheck()
+    {
+        switch (_shieldStrength)
+        {
+            case 0:
+                _shieldIsActive = false;
+                _shieldVisual.SetActive(false);
+                break;
+            case 1:
+                shieldColor.material.SetColor("_Color", Color.red);
+                break;
+            case 2:
+                shieldColor.material.SetColor("_Color", Color.yellow);
+                break;
+            case 3:
+                shieldColor.material.SetColor("_Color", _shieldDefaultColor);
+                break;
+        }
     }
 
     public void AddScore(int points)
@@ -199,7 +231,6 @@ public class Player : MonoBehaviour
         Instantiate(_explosion, transform.position, Quaternion.identity);
         yield return new WaitForSeconds(1.0f);
         _spawnManager.StopSpawning();
-        //_uiManager.GameOverSequence();
         _uiManager.GameOver();
         Destroy(this.gameObject);
     }

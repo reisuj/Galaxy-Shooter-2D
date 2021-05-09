@@ -203,6 +203,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _speed: 3.5
+  _baseSpeed: 5
+  _thrusterSpeed: 10
   _speedMultiplier: 2
   _laserOffset: 0.85
   _fireDelay: 0.5
