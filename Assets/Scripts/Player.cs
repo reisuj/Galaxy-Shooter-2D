@@ -47,7 +47,7 @@ public class Player : MonoBehaviour
     private AudioClip _laserAudio;
     [SerializeField]
     private AudioClip _explosionAudio;
-    private Renderer shieldColor;
+    private Renderer _shieldColor;
     private Color _shieldDefaultColor;
 
     void Start()
@@ -55,7 +55,7 @@ public class Player : MonoBehaviour
         transform.position = new Vector3(0, 0, 0);
         _spawnManager = GameObject.Find("SpawnManager").GetComponent<SpawnManager>();
         _uiManager = GameObject.Find("Canvas").GetComponent<UIManager>();
-        shieldColor = _shieldVisual.GetComponent<Renderer>();
+        _shieldColor = _shieldVisual.GetComponent<Renderer>();
         _shieldDefaultColor = _shieldVisual.GetComponent<Renderer>().material.GetColor("_Color");
         if (_spawnManager == null)
         {
@@ -207,13 +207,13 @@ public class Player : MonoBehaviour
                 _shieldVisual.SetActive(false);
                 break;
             case 1:
-                shieldColor.material.SetColor("_Color", Color.red);
+                _shieldColor.material.SetColor("_Color", Color.red);
                 break;
             case 2:
-                shieldColor.material.SetColor("_Color", Color.yellow);
+                _shieldColor.material.SetColor("_Color", Color.yellow);
                 break;
             case 3:
-                shieldColor.material.SetColor("_Color", _shieldDefaultColor);
+                _shieldColor.material.SetColor("_Color", _shieldDefaultColor);
                 break;
         }
     }
