@@ -10,6 +10,8 @@ public class Powerup : MonoBehaviour
     private int powerupID;
     [SerializeField]
     private AudioClip _powerupAudio;
+    [SerializeField]
+    private int ammoRefillAmount = 15;
 
     // Update is called once per frame
     void Update()
@@ -37,6 +39,9 @@ public class Powerup : MonoBehaviour
                         break;
                     case 2:
                         player.ShieldPickedUp();
+                        break;
+                    case 3:
+                        player.AmmoCollected(ammoRefillAmount);
                         break;
                     default:
                         Debug.Log("Default Value");

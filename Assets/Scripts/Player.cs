@@ -180,7 +180,7 @@ public class Player : MonoBehaviour
     public void TripleShotActive()
     {
         tripleShotActive = true;
-        AmmoCollected();
+        AmmoCollected(5);
         StartCoroutine(TripleShotPowerDown());
     }
 
@@ -202,9 +202,9 @@ public class Player : MonoBehaviour
         _speed /= _speedMultiplier;
     }
 
-    public void AmmoCollected()
+    public void AmmoCollected(int ammoAmount)
     {
-        _currentAmmo += 5;        
+        _currentAmmo += ammoAmount;        
         if (_currentAmmo > 15)
         {
             _currentAmmo = _maxAmmo;
