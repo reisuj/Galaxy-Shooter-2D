@@ -24,6 +24,12 @@ public class Player : MonoBehaviour
     private int _score;
     private int _shieldStrength = 0;
     private bool _playerAlive = true;
+    [SerializeField]
+    private int _maxAmmo = 1;
+    [SerializeField]
+    private int _currentAmmo;
+    private float _audioDelay = 5.0f;
+    private float _playAmmoDepleted;
 
     private UIManager _uiManager;
     private SpawnManager _spawnManager;
@@ -46,12 +52,15 @@ public class Player : MonoBehaviour
     [SerializeField]
     private AudioClip _laserAudio;
     [SerializeField]
+    private AudioClip _ammoDepleted;
+    [SerializeField]
     private AudioClip _explosionAudio;
     private Renderer _shieldColor;
     private Color _shieldDefaultColor;
 
     void Start()
     {
+        _currentAmmo = _maxAmmo;
         transform.position = new Vector3(0, 0, 0);
         _spawnManager = GameObject.Find("SpawnManager").GetComponent<SpawnManager>();
         _uiManager = GameObject.Find("Canvas").GetComponent<UIManager>();
@@ -66,7 +75,6 @@ public class Player : MonoBehaviour
         {
             Debug.LogError("The UIManager is NULL!!");
         }
-
 
     }
 
@@ -118,9 +126,11 @@ public class Player : MonoBehaviour
 
     void LaserControl()
     {
-        if (Input.GetKeyDown(KeyCode.Space) && Time.time > _canFire)
-        {
+        if (Input.GetKeyDown(KeyCode.Space) && Time.time > _canFire && _currentAmmo > 0)
+        {            
             _canFire = Time.time + _fireDelay;
+            _currentAmmo--;
+            _uiManager.UpdateAmmo(_currentAmmo);
             AudioSource.PlayClipAtPoint(_laserAudio, transform.position, 1.0f);
             if (tripleShotActive == true)
             {
@@ -129,8 +139,13 @@ public class Player : MonoBehaviour
             else
             {
                 Instantiate(_laserPrefab, (new Vector3(transform.position.x, transform.position.y + _laserOffset, 0)), Quaternion.identity);
-            }
-            
+            }            
+        }
+        else if (_currentAmmo < 1 && Time.time > _playAmmoDepleted)
+        {
+            _playAmmoDepleted = Time.time + _audioDelay;
+            _uiManager.AmmoDepleted();
+            AudioSource.PlayClipAtPoint(_ammoDepleted, new Vector3(0f, 3.5f, -10f), 1.0f);
         }
     }
 
@@ -165,6 +180,7 @@ public class Player : MonoBehaviour
     public void TripleShotActive()
     {
         tripleShotActive = true;
+        AmmoCollected();
         StartCoroutine(TripleShotPowerDown());
     }
 
@@ -184,6 +200,16 @@ public class Player : MonoBehaviour
     {
         yield return new WaitForSeconds(6.0f);
         _speed /= _speedMultiplier;
+    }
+
+    public void AmmoCollected()
+    {
+        _currentAmmo += 5;        
+        if (_currentAmmo > 15)
+        {
+            _currentAmmo = _maxAmmo;
+        }
+        _uiManager.UpdateAmmo(_currentAmmo);
     }
 
     public void ShieldPickedUp()
@@ -226,6 +252,13 @@ public class Player : MonoBehaviour
 
     private IEnumerator PlayerDead()
     {
+        BoxCollider2D _collider = GetComponent<BoxCollider2D>();
+
+        if (_collider == null)
+        {
+            Debug.LogError("Collider is NULL!");
+        }
+        _collider.enabled = false;
         _playerAlive = false;
         AudioSource.PlayClipAtPoint(_explosionAudio, new Vector3(0, 0, -10), 1.0f);
         Instantiate(_explosion, transform.position, Quaternion.identity);

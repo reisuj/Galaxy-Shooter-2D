@@ -22,6 +22,15 @@ public class UIManager : MonoBehaviour
     private float _flashDelay = 0.75f;
     [SerializeField]
     private Text _countDownText;
+    [SerializeField]
+    private Text _ammoDepletedText;
+    [SerializeField]
+    private Text _ammoCountText;
+    [SerializeField]
+    private bool _ammoDepleted = false;
+    [SerializeField]
+    private int _ammoCount;
+    
 
     // Start is called before the first frame update
     void Start()
@@ -44,11 +53,20 @@ public class UIManager : MonoBehaviour
 
     public void UpdateLives(int currentLives)
     {
-        _livesImg.sprite = _livesSprites[currentLives];
-        //if (currentLives == 0)
-        //{
-        //    StartCoroutine(GameOverSequence());
-        //}
+        _livesImg.sprite = _livesSprites[currentLives];        
+    }
+
+    public void UpdateAmmo(int currentAmmo)
+    {
+        _ammoCountText.text = "AMMO: " + currentAmmo;
+        if (currentAmmo < 1)
+        {
+            AmmoDepleted();
+        }
+        else
+        {
+            _ammoDepleted = false;
+        }
     }
 
     public IEnumerator GameOverSequence()
@@ -96,5 +114,28 @@ public class UIManager : MonoBehaviour
     public void GameOver()
     {
         StartCoroutine(GameOverSequence());
+    }
+
+    public void AmmoDepleted()
+    {
+        _ammoDepleted = true;
+        StartCoroutine(AmmoDepletedRoutine());
+    }
+
+    //public void AmmoReloaded(int ammoAdded)
+    //{
+    //    _ammoCount += ammoAdded;
+    //    _ammoCountText.text = "AMMO: " + _ammoCount;
+    //    _ammoDepleted = false;
+    //}
+    IEnumerator AmmoDepletedRoutine()
+    {
+        while (_ammoDepleted == true)
+        {
+            _ammoDepletedText.text = "AMMO DEPLETED!";
+            yield return new WaitForSeconds(0.5f);
+            _ammoDepletedText.text = "";
+            yield return new WaitForSeconds(0.5f);
+        }
     }
 }
