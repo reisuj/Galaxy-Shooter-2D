@@ -40,8 +40,11 @@ public class Powerup : MonoBehaviour
                     case 2:
                         player.ShieldPickedUp();
                         break;
-                    case 3:
+                    case 3:                        
                         player.AmmoCollected(ammoRefillAmount);
+                        break;
+                    case 4:
+                        player.HealthCollected();
                         break;
                     default:
                         Debug.Log("Default Value");

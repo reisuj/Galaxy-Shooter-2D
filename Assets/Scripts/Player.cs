@@ -159,14 +159,7 @@ public class Player : MonoBehaviour
         }
         _playerLives -= 1;
 
-        if (_playerLives == 2)
-        {
-            _rightEngine.SetActive(true);
-        }
-        else if (_playerLives == 1)
-        {
-            _leftEngine.SetActive(true);
-        }
+        EngineDamageCheck(_playerLives);
 
 
         _uiManager.UpdateLives(_playerLives);
@@ -174,6 +167,23 @@ public class Player : MonoBehaviour
         if(_playerLives < 1)
         {
             StartCoroutine(PlayerDead());
+        }
+    }
+
+    private void EngineDamageCheck(int lives)
+    {
+        if (lives == 3)
+        {
+            _rightEngine.SetActive(false);
+        }
+        if (lives == 2)
+        {
+            _rightEngine.SetActive(true);
+            _leftEngine.SetActive(false);
+        }
+        else if (lives == 1)
+        {
+            _leftEngine.SetActive(true);
         }
     }
 
@@ -242,6 +252,17 @@ public class Player : MonoBehaviour
                 _shieldColor.material.SetColor("_Color", _shieldDefaultColor);
                 break;
         }
+    }
+
+    public void HealthCollected()
+    {
+        _playerLives++;
+        if (_playerLives > 3)
+        {
+            _playerLives = 3;
+        }
+        EngineDamageCheck(_playerLives);
+        _uiManager.UpdateLives(_playerLives);
     }
 
     public void AddScore(int points)
