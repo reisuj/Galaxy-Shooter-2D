@@ -5,7 +5,7 @@ using UnityEngine;
 public class EnemyBehaviour : MonoBehaviour
 {
     [SerializeField]
-    private float _enemySpeed = 1.5f;
+    private float _enemySpeed = 1.0f;
 
     private Player _player;
 
@@ -14,6 +14,9 @@ public class EnemyBehaviour : MonoBehaviour
     private BoxCollider2D _collider;
     [SerializeField]
     private GameObject _enemyLaser;
+
+    [SerializeField]
+    private AudioClip _laserAudio;
 
     [SerializeField]
     private AudioClip _explosionAudio;
@@ -71,7 +74,7 @@ public class EnemyBehaviour : MonoBehaviour
         if (Time.time > _canFire)
         {
             _canFire = Time.time + _fireDelay;
-            //AudioSource.PlayClipAtPoint(_laserAudio, transform.position, 1.0f);
+            AudioSource.PlayClipAtPoint(_laserAudio, transform.position, 1.0f);
             Instantiate(_enemyLaser, transform.position, Quaternion.identity);
         }
     }

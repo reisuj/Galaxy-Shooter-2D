@@ -44,6 +44,8 @@ public class Player : MonoBehaviour
     [SerializeField]
     private GameObject _leftEngine;
     [SerializeField]
+    private bool multiShotActive = false;
+    [SerializeField]
     private bool tripleShotActive = false;
     [SerializeField]
     private bool _shieldIsActive = false;
@@ -136,16 +138,30 @@ public class Player : MonoBehaviour
             {
                 Instantiate(_tripleShotPrefab, (new Vector3(transform.position.x, transform.position.y, 0)), Quaternion.identity);
             }
+            else if (multiShotActive == true)
+            {
+                MultiShot();
+            }
             else
             {
                 Instantiate(_laserPrefab, (new Vector3(transform.position.x, transform.position.y + _laserOffset, 0)), Quaternion.identity);
-            }            
+            }
+
         }
         else if (_currentAmmo < 1 && Time.time > _playAmmoDepleted)
         {
             _playAmmoDepleted = Time.time + _audioDelay;
             _uiManager.AmmoDepleted();
             AudioSource.PlayClipAtPoint(_ammoDepleted, new Vector3(0f, 3.5f, -10f), 1.0f);
+        }
+    }
+
+    public void MultiShot()
+    {
+        for (int fireangle = -67; fireangle < 83; fireangle += 15)
+        {
+            GameObject newBullet = Instantiate(_laserPrefab, (new Vector3(transform.position.x, transform.position.y + _laserOffset, 0)), Quaternion.identity);
+            newBullet.transform.eulerAngles = Vector3.forward * fireangle;
         }
     }
 
@@ -189,6 +205,7 @@ public class Player : MonoBehaviour
 
     public void TripleShotActive()
     {
+        multiShotActive = false;
         tripleShotActive = true;
         AmmoCollected(5);
         StartCoroutine(TripleShotPowerDown());
@@ -199,6 +216,21 @@ public class Player : MonoBehaviour
         yield return new WaitForSeconds(6.0f);
         tripleShotActive = false;
     }
+
+    public void MultiShotActive()
+    {
+        tripleShotActive = false;
+        multiShotActive = true;
+        AmmoCollected(5);
+        StartCoroutine(MultiShotPowerDown());
+    }
+
+    IEnumerator MultiShotPowerDown()
+    {
+        yield return new WaitForSeconds(5.0f);
+        multiShotActive = false;
+    }
+
 
     public void SpeedBoostActive()
     {

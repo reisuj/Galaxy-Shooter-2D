@@ -863,6 +863,7 @@ MonoBehaviour:
   - {fileID: 1177736237231092188, guid: e7986e5895d251a4e8419bb1a474ce2e, type: 3}
   - {fileID: 1995458324217659999, guid: d82960d25ee256d4db97ce076fe4de27, type: 3}
   - {fileID: 1296085280135346812, guid: abdfd006d942dad41967752a56aeff83, type: 3}
+  - {fileID: 8160235212105405024, guid: 2c42e56555097e04d92f3e2d811f0e4d, type: 3}
   _startDelay: 0
 --- !u!4 &1129285360
 Transform:
