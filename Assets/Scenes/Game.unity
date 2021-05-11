@@ -712,6 +712,8 @@ GameObject:
   - component: {fileID: 606045463}
   - component: {fileID: 606045462}
   - component: {fileID: 606045465}
+  - component: {fileID: 606045466}
+  - component: {fileID: 606045467}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -778,7 +780,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 606045461}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 3.5, z: -10}
+  m_LocalPosition: {x: 0, y: 0, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -844,6 +846,38 @@ MonoBehaviour:
   m_BeforeTransparentBundles: []
   m_BeforeStackBundles: []
   m_AfterStackBundles: []
+--- !u!114 &606045466
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 606045461}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b218ad4cafe3f2b4fafc04baa7be123c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  camAnim: {fileID: 606045467}
+--- !u!95 &606045467
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 606045461}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 4504320fd58846f43b467212219de7d5, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &698679302
 GameObject:
   m_ObjectHideFlags: 0
@@ -2075,7 +2109,7 @@ PrefabInstance:
     - target: {fileID: 8874609450288081148, guid: c8f7d7713a384cd429189296b74d0481,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 4.99
+      value: 2.06
       objectReference: {fileID: 0}
     - target: {fileID: 8874609450288081148, guid: c8f7d7713a384cd429189296b74d0481,
         type: 3}
@@ -2139,7 +2173,7 @@ PrefabInstance:
     - target: {fileID: 4528373477114313277, guid: b98b890ee0b636a40ad470f3b45dee7d,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -3
       objectReference: {fileID: 0}
     - target: {fileID: 4528373477114313277, guid: b98b890ee0b636a40ad470f3b45dee7d,
         type: 3}
@@ -2186,6 +2220,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 4528373477114313279, guid: b98b890ee0b636a40ad470f3b45dee7d,
+        type: 3}
+      propertyPath: _camera
+      value: 
+      objectReference: {fileID: 606045463}
     - target: {fileID: 4528373477114313279, guid: b98b890ee0b636a40ad470f3b45dee7d,
         type: 3}
       propertyPath: _maxAmmo

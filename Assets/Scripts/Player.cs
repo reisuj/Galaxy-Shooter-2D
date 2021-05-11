@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    #region MOVEMENT
     [SerializeField]
     private float _playerSpeed = 5.0f;
     [SerializeField]
@@ -12,27 +13,9 @@ public class Player : MonoBehaviour
     private float _thrusterSpeed = 10.0f;
     [SerializeField]
     private float _speedMultiplier = 2.0f;
-    [SerializeField]
-    private float _laserOffset = 1.1f;    
-    [SerializeField]
-    private float _fireDelay = 0.5f;
-    [SerializeField]
-    private float _canFire = 0.0f;
-    [SerializeField]
-    private int _playerLives = 3;
-    [SerializeField]
-    private int _score;
-    private int _shieldStrength = 0;
-    private bool _playerAlive = true;
-    [SerializeField]
-    private int _maxAmmo = 1;
-    [SerializeField]
-    private int _currentAmmo;
-    private float _audioDelay = 5.0f;
-    private float _playAmmoDepleted;
+    #endregion MOVEMENT
 
-    private UIManager _uiManager;
-    private SpawnManager _spawnManager;
+    #region POWERUPS
     [SerializeField]
     private GameObject _laserPrefab;
     [SerializeField]
@@ -40,21 +23,52 @@ public class Player : MonoBehaviour
     [SerializeField]
     private GameObject _shieldVisual;
     [SerializeField]
-    private GameObject _rightEngine;
-    [SerializeField]
-    private GameObject _leftEngine;
-    [SerializeField]
     private bool multiShotActive = false;
     [SerializeField]
     private bool tripleShotActive = false;
     [SerializeField]
     private bool _shieldIsActive = false;
+    #endregion POWERUPS
+
+    #region LASERS
     [SerializeField]
-    private GameObject _explosion;
+    private float _laserOffset = 1.1f;
+    [SerializeField]
+    private float _fireDelay = 0.5f;
+    [SerializeField]
+    private float _canFire = 0.0f;
+    [SerializeField]
+    private int _maxAmmo = 1;
+    [SerializeField]
+    private int _currentAmmo;
     [SerializeField]
     private AudioClip _laserAudio;
     [SerializeField]
     private AudioClip _ammoDepleted;
+    private float _playAmmoDepleted;
+    #endregion LASERS
+
+    [SerializeField]
+    private int _playerLives = 3;
+    [SerializeField]
+    private int _score;
+    private int _shieldStrength = 0;
+    private bool _playerAlive = true;
+    
+    private float _audioDelay = 5.0f;
+    
+
+    private UIManager _uiManager;
+    private SpawnManager _spawnManager;
+    
+    [SerializeField]
+    private GameObject _rightEngine;
+    [SerializeField]
+    private GameObject _leftEngine;
+    
+    [SerializeField]
+    private GameObject _explosion;
+    
     [SerializeField]
     private AudioClip _explosionAudio;
     private Renderer _shieldColor;
@@ -67,6 +81,8 @@ public class Player : MonoBehaviour
     private int _thrusterLevel = 100;
     [SerializeField]
     private BoostBar _boostbar;
+    [SerializeField]
+    private Camera _camera;
 
 
 
@@ -77,9 +93,10 @@ public class Player : MonoBehaviour
         _boostbar.SetStartBooster(_thrusterMax);
         _boostbar.SetBooster(_thrusterMax);
         _thrusterLevel = _thrusterMax;
-        transform.position = new Vector3(0, 0, 0);
+        transform.position = new Vector3(0, -3, 0);
         _spawnManager = GameObject.Find("SpawnManager").GetComponent<SpawnManager>();
-        _uiManager = GameObject.Find("Canvas").GetComponent<UIManager>();        
+        _uiManager = GameObject.Find("Canvas").GetComponent<UIManager>();
+        _camera = Camera.main;
         _shieldColor = _shieldVisual.GetComponent<Renderer>();
         _shieldDefaultColor = _shieldVisual.GetComponent<Renderer>().material.GetColor("_Color");
         if (_spawnManager == null)
@@ -91,7 +108,6 @@ public class Player : MonoBehaviour
         {
             Debug.LogError("The UIManager is NULL!!");
         }
-
     }
     // Update is called once per frame
     void Update()
@@ -115,7 +131,7 @@ public class Player : MonoBehaviour
         transform.Translate(Vector3.up * verticalMovement * _playerSpeed * Time.deltaTime);
 
         // Restricts Player's Vetical movement between -1.5 and 3.0 on the Y axis.
-        transform.position = new Vector3(transform.position.x, (Mathf.Clamp(transform.position.y, -1.5f, 3.0f)), 0);
+        transform.position = new Vector3(transform.position.x, (Mathf.Clamp(transform.position.y, -5.0f, 2.0f)), 0);
 
         // Wraps Player on the X Axis when going past each edge.
         if (transform.position.x < -11.3f)
@@ -170,6 +186,11 @@ public class Player : MonoBehaviour
             _shieldStrength--;
             ShieldCheck();
             return;
+        }
+        CameraControl cameraControl = Camera.main.GetComponent<CameraControl>();
+        if (cameraControl != null)
+        {
+            cameraControl.CamShake();
         }
         _playerLives -= 1;
 
