@@ -5,7 +5,7 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     [SerializeField]
-    private float _speed = 5.0f;
+    private float _playerSpeed = 5.0f;
     [SerializeField]
     private float _baseSpeed = 5.0f;
     [SerializeField]
@@ -59,7 +59,8 @@ public class Player : MonoBehaviour
     private AudioClip _explosionAudio;
     private Renderer _shieldColor;
     private Color _shieldDefaultColor;
-    private bool _thrusterEmpty = false;
+    private bool _thrustAvailable;
+    private bool _thrusterRegen = false;
     private bool _thrusterActive = false;
     private int _thrusterMax = 100;
     [SerializeField]
@@ -72,6 +73,10 @@ public class Player : MonoBehaviour
     void Start()
     {
         _currentAmmo = _maxAmmo;
+        _thrustAvailable = true;
+        _boostbar.SetStartBooster(_thrusterMax);
+        _boostbar.SetBooster(_thrusterMax);
+        _thrusterLevel = _thrusterMax;
         transform.position = new Vector3(0, 0, 0);
         _spawnManager = GameObject.Find("SpawnManager").GetComponent<SpawnManager>();
         _uiManager = GameObject.Find("Canvas").GetComponent<UIManager>();        
@@ -93,7 +98,10 @@ public class Player : MonoBehaviour
     {
         if (_playerAlive == true)
         {
-            ThrusterControl();
+            if (Input.GetKeyDown(KeyCode.LeftShift) && _thrustAvailable == true)
+            {
+                StartCoroutine(ThrusterActivated());
+            }
             PlayerMovement();
             LaserControl();
         }               
@@ -103,8 +111,8 @@ public class Player : MonoBehaviour
         float horizontalMovement = Input.GetAxis("Horizontal");
         float verticalMovement = Input.GetAxis("Vertical");
 
-        transform.Translate(Vector3.right * horizontalMovement * _speed * Time.deltaTime);
-        transform.Translate(Vector3.up * verticalMovement * _speed * Time.deltaTime);
+        transform.Translate(Vector3.right * horizontalMovement * _playerSpeed * Time.deltaTime);
+        transform.Translate(Vector3.up * verticalMovement * _playerSpeed * Time.deltaTime);
 
         // Restricts Player's Vetical movement between -1.5 and 3.0 on the Y axis.
         transform.position = new Vector3(transform.position.x, (Mathf.Clamp(transform.position.y, -1.5f, 3.0f)), 0);
@@ -217,13 +225,13 @@ public class Player : MonoBehaviour
     }
     public void SpeedBoostActive()
     {
-        _speed *= _speedMultiplier;
+        _playerSpeed *= _speedMultiplier;
         StartCoroutine(SpeedBoostPowerDown());
     }
     IEnumerator SpeedBoostPowerDown()
     {
         yield return new WaitForSeconds(6.0f);
-        _speed /= _speedMultiplier;
+        _playerSpeed /= _speedMultiplier;
     }
     public void AmmoCollected(int ammoAmount)
     {
@@ -296,33 +304,36 @@ public class Player : MonoBehaviour
         _uiManager.GameOver();
         Destroy(this.gameObject);
     }
-    void ThrusterControl()
+
+    private IEnumerator ThrusterActivated()
     {
-        if (Input.GetKey(KeyCode.LeftShift) && _thrusterEmpty == false)
+        _thrusterActive = true;
+        _playerSpeed = _thrusterSpeed;
+        while (Input.GetKey(KeyCode.LeftShift) && _thrusterLevel > 0)
         {
-            _thrusterActive = true;
-            StartCoroutine(ThrusterDrain());
-            _speed = _thrusterSpeed;
+            yield return new WaitForSeconds(0.05f);
+            _boostbar.SetBooster(--_thrusterLevel);
+            if (_thrusterLevel < 1)
+            {
+                _thrustAvailable = false;
+            }
         }
-        else
-        {
-            _thrusterActive = false;
-            _speed = _baseSpeed;
-        }
-    }
-    private IEnumerator ThrusterDrain()
-    {
-        while (_thrusterActive)
-        {
-            yield return new WaitForSeconds(2.0f);
-            _thrusterLevel = _thrusterLevel - 1;
-            _boostbar.SetBooster(_thrusterLevel);
-            yield return new WaitForSeconds(2.0f);
-        }
-        
+        _thrusterActive = false;
+        _playerSpeed = _baseSpeed;
+        yield return new WaitForSeconds(2.0f);
+        StartCoroutine(ThrusterRecharge());
     }
     private IEnumerator ThrusterRecharge()
     {
-        yield return new WaitForSeconds(5.0f);
+        _thrusterRegen = true;
+        yield return new WaitForSeconds(2.0f);
+        while (_thrusterLevel < _thrusterMax && _thrusterRegen == true)
+        {
+            _thrusterLevel++;
+            _boostbar.SetBooster(_thrusterLevel);
+            yield return new WaitForSeconds(0.05f);
+        }
+        _thrustAvailable = true;
+        _thrusterRegen = false;
     }
 }
