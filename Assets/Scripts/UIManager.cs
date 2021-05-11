@@ -29,8 +29,7 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     private bool _ammoDepleted = false;
     [SerializeField]
-    private int _ammoCount;
-    
+    private int _ammoCount;    
 
     // Start is called before the first frame update
     void Start()
@@ -39,23 +38,19 @@ public class UIManager : MonoBehaviour
         _gameOverText.text = "";
         _restartLevelText.gameObject.SetActive(false);
     }
-
     // Update is called once per frame
     void Update()
     {
 
     }
-
     public void UpdateScore(int playerScore)
     {
         _scoreText.text = "Score: " + playerScore;
     }
-
     public void UpdateLives(int currentLives)
     {
         _livesImg.sprite = _livesSprites[currentLives];        
     }
-
     public void UpdateAmmo(int currentAmmo)
     {
         _ammoCountText.text = "AMMO: " + currentAmmo;
@@ -68,7 +63,6 @@ public class UIManager : MonoBehaviour
             _ammoDepleted = false;
         }
     }
-
     public IEnumerator GameOverSequence()
     {
         yield return new WaitForSeconds(2.0f);
@@ -76,7 +70,6 @@ public class UIManager : MonoBehaviour
         _gameManager.GameOver();
         _restartLevelText.gameObject.SetActive(true);        
     }
-
     IEnumerator GameOverFlickerRoutine()
     {
         while (true)
@@ -87,12 +80,10 @@ public class UIManager : MonoBehaviour
             yield return new WaitForSeconds(0.5f);
         }        
     }
-
     public void RestartCountdown()
     {
         StartCoroutine(RestartCountdownRoutine());
     }
-
     IEnumerator RestartCountdownRoutine()
     {
         _restartLevelText.gameObject.SetActive(false);
@@ -110,24 +101,15 @@ public class UIManager : MonoBehaviour
         yield return new WaitForSeconds(_flashDelay);
         _gameManager.RestartScene();
     }
-
     public void GameOver()
     {
         StartCoroutine(GameOverSequence());
     }
-
     public void AmmoDepleted()
     {
         _ammoDepleted = true;
         StartCoroutine(AmmoDepletedRoutine());
-    }
-
-    //public void AmmoReloaded(int ammoAdded)
-    //{
-    //    _ammoCount += ammoAdded;
-    //    _ammoCountText.text = "AMMO: " + _ammoCount;
-    //    _ammoDepleted = false;
-    //}
+    }    
     IEnumerator AmmoDepletedRoutine()
     {
         while (_ammoDepleted == true)

@@ -47,8 +47,6 @@ public class EnemyBehaviour : MonoBehaviour
         {
             Debug.LogError("Collider is NULL!");
         }
-
-        //StartCoroutine(FireLaser());
     }
     // Update is called once per frame
     void Update()
@@ -56,7 +54,6 @@ public class EnemyBehaviour : MonoBehaviour
         CalculateMovement();
         FireLaser();
     }
-
     void CalculateMovement()
     {
         transform.Translate(Vector3.down * _enemySpeed * Time.deltaTime);
@@ -67,7 +64,6 @@ public class EnemyBehaviour : MonoBehaviour
             transform.position = new Vector3(newX, 10.5f, 0);
         }
     }
-
     void FireLaser()
     {
         _fireDelay = Random.Range(3.0f, 7.0f);
@@ -78,7 +74,6 @@ public class EnemyBehaviour : MonoBehaviour
             Instantiate(_enemyLaser, transform.position, Quaternion.identity);
         }
     }
-
     private void OnTriggerEnter2D(Collider2D other)
     {
         if(other.tag == "PlayerLaser")

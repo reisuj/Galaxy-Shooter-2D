@@ -21,7 +21,6 @@ public class GameManager : MonoBehaviour
             Debug.LogError("The UIManager is NULL!!");
         }
     }
-
     // Update is called once per frame
     void Update()
     {
@@ -35,17 +34,12 @@ public class GameManager : MonoBehaviour
             Application.Quit();
         }
     }
-
     public void GameOver()
     {
         _isGameOver = true;
     }
-
     public void RestartScene()
     {
         SceneManager.LoadScene(1);
     }
-
-    
-
 }

@@ -24,13 +24,11 @@ public class SpawnManager : MonoBehaviour
     {
         
     }
-
     // Update is called once per frame
     void Update()
     {
         
     }
-
     IEnumerator SpawnEnemy()
     {
         yield return new WaitForSeconds(2.0f);
@@ -42,7 +40,6 @@ public class SpawnManager : MonoBehaviour
             yield return new WaitForSeconds(4.0f);
         }        
     }
-
     IEnumerator SpawnPowerup()
     {
         while (_playerIsAlive == true)
@@ -54,21 +51,18 @@ public class SpawnManager : MonoBehaviour
             yield return new WaitForSeconds(Random.Range(3.0f, 7.0f));
         }        
     }
-
     public void StopSpawning()
     {
         _playerIsAlive = false;
         Destroy(_enemyContainer);
         Destroy(_powerupContainer);
     }
-
     public void StartSpawning()
     {
         _playerIsAlive = true;
         StartCoroutine(SpawnEnemy());
         StartCoroutine(SpawnPowerup());
     }
-
     private void PowerUpSelector()
     {
         int weight = Random.Range(1, 111);
@@ -100,7 +94,6 @@ public class SpawnManager : MonoBehaviour
         else
         {
             return;
-        }
-            
+        }            
     }
 }

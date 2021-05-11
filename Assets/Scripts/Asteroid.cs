@@ -19,13 +19,11 @@ public class Asteroid : MonoBehaviour
             Debug.LogError("SpawnManager is NULL!");
         }
     }
-
     // Update is called once per frame
     void Update()
     {
         transform.Rotate(0, 0, 0.1f);
     }
-
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.tag == "PlayerLaser")
