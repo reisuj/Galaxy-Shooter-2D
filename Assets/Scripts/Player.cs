@@ -75,7 +75,7 @@ public class Player : MonoBehaviour
     private Color _shieldDefaultColor;
     private bool _thrustAvailable;
     private bool _thrusterRegen = false;
-    private bool _thrusterActive = false;
+    //private bool _thrusterActive = false;
     private int _thrusterMax = 100;
     [SerializeField]
     private int _thrusterLevel = 100;
@@ -328,7 +328,7 @@ public class Player : MonoBehaviour
 
     private IEnumerator ThrusterActivated()
     {
-        _thrusterActive = true;
+        //_thrusterActive = true;
         _playerSpeed = _thrusterSpeed;
         while (Input.GetKey(KeyCode.LeftShift) && _thrusterLevel > 0)
         {
@@ -339,7 +339,7 @@ public class Player : MonoBehaviour
                 _thrustAvailable = false;
             }
         }
-        _thrusterActive = false;
+        //_thrusterActive = false;
         _playerSpeed = _baseSpeed;
         yield return new WaitForSeconds(2.0f);
         StartCoroutine(ThrusterRecharge());
