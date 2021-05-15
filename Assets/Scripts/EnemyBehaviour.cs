@@ -58,10 +58,10 @@ public class EnemyBehaviour : MonoBehaviour
     {
         transform.Translate(Vector3.down * _enemySpeed * Time.deltaTime);
 
-        if (transform.position.y < -3.5f)
+        if (transform.position.y < -7.5f)
         {
             float newX = Random.Range(-9.0f, 9.0f);
-            transform.position = new Vector3(newX, 10.5f, 0);
+            transform.position = new Vector3(newX, 7.5f, 0);
         }
     }
     void FireLaser()

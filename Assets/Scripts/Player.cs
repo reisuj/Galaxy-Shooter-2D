@@ -126,21 +126,22 @@ public class Player : MonoBehaviour
     {        
         float horizontalMovement = Input.GetAxis("Horizontal");
         float verticalMovement = Input.GetAxis("Vertical");
+        Debug.Log(horizontalMovement);        
 
         transform.Translate(Vector3.right * horizontalMovement * _playerSpeed * Time.deltaTime);
         transform.Translate(Vector3.up * verticalMovement * _playerSpeed * Time.deltaTime);
 
         // Restricts Player's Vetical movement between -1.5 and 3.0 on the Y axis.
-        transform.position = new Vector3(transform.position.x, (Mathf.Clamp(transform.position.y, -5.0f, 2.0f)), 0);
+        transform.position = new Vector3(transform.position.x, (Mathf.Clamp(transform.position.y, -5.0f, 1.0f)), 0);
 
         // Wraps Player on the X Axis when going past each edge.
-        if (transform.position.x < -11.3f)
+        if (transform.position.x < -11.0f)
         {
-            transform.position = new Vector3(11.3f, transform.position.y, 0);
+            transform.position = new Vector3(11.0f, transform.position.y, 0);
         }
-        else if (transform.position.x > 11.3f)
+        else if (transform.position.x > 11.0f)
         {
-            transform.position = new Vector3(-11.3f, transform.position.y, 0);
+            transform.position = new Vector3(-11.0f, transform.position.y, 0);
         }        
     }
     void LaserControl()
