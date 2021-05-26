@@ -8,6 +8,8 @@ public class GameManager : MonoBehaviour
 {
     [SerializeField]
     private bool _isGameOver;
+    [SerializeField]
+    private bool isPaused = false;
     
     [SerializeField]
     private Text _gameOverText;
@@ -34,6 +36,11 @@ public class GameManager : MonoBehaviour
         {
             Application.Quit();
         }
+
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            PauseGameToggle();
+        }
     }
 
     public void GameOver()
@@ -44,6 +51,20 @@ public class GameManager : MonoBehaviour
     public void RestartScene()
     {
         SceneManager.LoadScene(1);
+    }
+
+    public void PauseGameToggle()
+    {
+        if (isPaused == false)
+        {
+            Time.timeScale = 0;
+            isPaused = true;
+        }
+        else if(isPaused == true)
+        {
+            Time.timeScale = 1;
+            isPaused = false;
+        }
     }
 
     

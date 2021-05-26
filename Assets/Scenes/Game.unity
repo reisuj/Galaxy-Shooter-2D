@@ -1871,5 +1871,10 @@ PrefabInstance:
       propertyPath: _ammoDepleted
       value: 
       objectReference: {fileID: 8300000, guid: bf7bc467856df6340b4c07600d2ac1c6, type: 3}
+    - target: {fileID: 4528373477114313279, guid: b98b890ee0b636a40ad470f3b45dee7d,
+        type: 3}
+      propertyPath: _ammoDepletedAudioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: bf7bc467856df6340b4c07600d2ac1c6, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b98b890ee0b636a40ad470f3b45dee7d, type: 3}

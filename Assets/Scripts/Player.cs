@@ -25,11 +25,11 @@ public class Player : MonoBehaviour
     private int _shieldStrength = 0;
     private bool _playerAlive = true;
     [SerializeField]
-    private int _maxAmmo = 1;
+    private int _maxAmmo = 15;
     [SerializeField]
     private int _currentAmmo;
     private float _audioDelay = 5.0f;
-    private float _playAmmoDepleted;
+    private float _canPlayAmmoDepletedAudio;
 
     private UIManager _uiManager;
     private SpawnManager _spawnManager;
@@ -54,7 +54,7 @@ public class Player : MonoBehaviour
     [SerializeField]
     private AudioClip _laserAudio;
     [SerializeField]
-    private AudioClip _ammoDepleted;
+    private AudioClip _ammoDepletedAudioClip;
     [SerializeField]
     private AudioClip _explosionAudio;
     private Renderer _shieldColor;
@@ -148,11 +148,11 @@ public class Player : MonoBehaviour
             }
 
         }
-        else if (_currentAmmo < 1 && Time.time > _playAmmoDepleted)
+        else if (_currentAmmo < 1 && Time.time > _canPlayAmmoDepletedAudio)
         {
-            _playAmmoDepleted = Time.time + _audioDelay;
+            _canPlayAmmoDepletedAudio = Time.time + _audioDelay;
             _uiManager.AmmoDepleted();
-            AudioSource.PlayClipAtPoint(_ammoDepleted, new Vector3(0f, 3.5f, -10f), 1.0f);
+            AudioSource.PlayClipAtPoint(_ammoDepletedAudioClip, new Vector3(0f, 3.5f, -10f), 1.0f);
         }
     }
 
