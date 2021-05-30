@@ -8,9 +8,7 @@ public class Player : MonoBehaviour
     [SerializeField]
     private float _playerSpeed = 5.0f;
     [SerializeField]
-    private float _baseSpeed = 5.0f;
-    [SerializeField]
-    private float _thrusterSpeed = 10.0f;
+    private float _baseSpeed = 5.0f;    
     [SerializeField]
     private float _speedMultiplier = 2.0f;
     #endregion MOVEMENT
@@ -73,18 +71,20 @@ public class Player : MonoBehaviour
     private AudioClip _explosionAudio;
     private Renderer _shieldColor;
     private Color _shieldDefaultColor;
-    private bool _thrustAvailable;
-    private bool _thrusterRegen = false;
-    //private bool _thrusterActive = false;
-    private int _thrusterMax = 100;
+    
+    [SerializeField]
+    private Camera _camera;
+
+    [Header("Thruster Properties")]
+    [SerializeField]
+    private float _thrusterSpeed = 10.0f;
     [SerializeField]
     private int _thrusterLevel = 100;
     [SerializeField]
     private BoostBar _boostbar;
-    [SerializeField]
-    private Camera _camera;
-
-
+    private bool _thrustAvailable;
+    private bool _thrusterRegen = false;
+    private int _thrusterMax = 100;
 
     void Start()
     {
@@ -126,7 +126,6 @@ public class Player : MonoBehaviour
     {        
         float horizontalMovement = Input.GetAxis("Horizontal");
         float verticalMovement = Input.GetAxis("Vertical");
-        Debug.Log(horizontalMovement);        
 
         transform.Translate(Vector3.right * horizontalMovement * _playerSpeed * Time.deltaTime);
         transform.Translate(Vector3.up * verticalMovement * _playerSpeed * Time.deltaTime);
@@ -329,18 +328,17 @@ public class Player : MonoBehaviour
 
     private IEnumerator ThrusterActivated()
     {
-        //_thrusterActive = true;
         _playerSpeed = _thrusterSpeed;
         while (Input.GetKey(KeyCode.LeftShift) && _thrusterLevel > 0)
         {
             yield return new WaitForSeconds(0.05f);
-            _boostbar.SetBooster(--_thrusterLevel);
+            _thrusterLevel = _thrusterLevel - 2;
+            _boostbar.SetBooster(_thrusterLevel);
             if (_thrusterLevel < 1)
             {
                 _thrustAvailable = false;
             }
         }
-        //_thrusterActive = false;
         _playerSpeed = _baseSpeed;
         yield return new WaitForSeconds(2.0f);
         StartCoroutine(ThrusterRecharge());
@@ -348,7 +346,7 @@ public class Player : MonoBehaviour
     private IEnumerator ThrusterRecharge()
     {
         _thrusterRegen = true;
-        yield return new WaitForSeconds(2.0f);
+        yield return new WaitForSeconds(1.0f);
         while (_thrusterLevel < _thrusterMax && _thrusterRegen == true)
         {
             _thrusterLevel++;

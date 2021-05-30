@@ -18,7 +18,7 @@ public class SpawnManager : MonoBehaviour
     private GameObject[] _powerups;
     [SerializeField]
     private float _startDelay;
-    private int powerUpID;
+    private int _powerUpID;
     // Start is called before the first frame update
     void Start()
     {
@@ -46,7 +46,7 @@ public class SpawnManager : MonoBehaviour
         {
             float _powerupX = Random.Range(-9.0f, 9.0f);
             PowerUpSelector();
-            GameObject newPowerup = Instantiate(_powerups[powerUpID], (new Vector3(_powerupX, 10.5f, 0)), Quaternion.identity);
+            GameObject newPowerup = Instantiate(_powerups[_powerUpID], (new Vector3(_powerupX, 10.5f, 0)), Quaternion.identity);
             newPowerup.transform.parent = _powerupContainer.transform;
             yield return new WaitForSeconds(Random.Range(3.0f, 7.0f));
         }        
@@ -69,27 +69,27 @@ public class SpawnManager : MonoBehaviour
         
         if (weight < 10)
         {
-            powerUpID = 5;
+            _powerUpID = 5;
         }
         else if (weight < 30)
         {
-            powerUpID = 4;
+            _powerUpID = 4;
         }
         else if (weight< 50)
         {
-            powerUpID = 3;
+            _powerUpID = 3;
         }
         else if (weight < 70)
         {
-            powerUpID = 2;
+            _powerUpID = 2;
         }
         else if (weight < 90)
         {
-            powerUpID = 1;
+            _powerUpID = 1;
         }
         else if (weight < 110)
         {
-            powerUpID = 0;
+            _powerUpID = 0;
         }
         else
         {
