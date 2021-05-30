@@ -8,10 +8,12 @@ public class GameManager : MonoBehaviour
 {
     [SerializeField]
     private bool _isGameOver;
-    
+    [SerializeField]
+    private bool isGamePaused = false;    
     [SerializeField]
     private Text _gameOverText;
     private UIManager _uiManager;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -33,6 +35,11 @@ public class GameManager : MonoBehaviour
         {
             ExitGame();
         }
+
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            PauseToggle();
+        }
     }
     public void GameOver()
     {
@@ -43,8 +50,24 @@ public class GameManager : MonoBehaviour
         SceneManager.LoadScene(1);
     }
 
+
     public void ExitGame()
     {
         Application.Quit();
+    }
+
+
+    public void PauseToggle()
+    {
+        if (isGamePaused == false)
+        {
+            Time.timeScale = 0;
+            isGamePaused = true;
+        }
+        else if(isGamePaused == true)
+        {
+            Time.timeScale = 1;
+            isGamePaused = false;
+        }
     }
 }
