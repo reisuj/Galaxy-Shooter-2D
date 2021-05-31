@@ -29,7 +29,9 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     private bool _ammoDepleted = false;
     [SerializeField]
-    private int _ammoCount;    
+    private int _ammoCount;
+    [SerializeField]
+    private int maxAmmo = 15;
 
     // Start is called before the first frame update
     void Start()
@@ -53,7 +55,7 @@ public class UIManager : MonoBehaviour
     }
     public void UpdateAmmo(int currentAmmo)
     {
-        _ammoCountText.text = "AMMO: " + currentAmmo;
+        _ammoCountText.text = "AMMO: " + currentAmmo + " / " + maxAmmo;
         if (currentAmmo < 1)
         {
             AmmoDepleted();
