@@ -25,11 +25,11 @@ public class EnemyBehaviour : MonoBehaviour
 
     private float _fireDelay;
 
-    private int movementType;
+    private int movementTypeID;
 
     private void Start()
     {
-        movementType = Random.Range(1, 4);
+        movementTypeID = Random.Range(1, 4);
 
         _player = GameObject.Find("Player").GetComponent<Player>();
 
@@ -60,9 +60,7 @@ public class EnemyBehaviour : MonoBehaviour
     }
     void CalculateMovement()
     {
-        
-
-        switch (movementType)
+        switch (movementTypeID)
         {
             case 1:
                 transform.Translate((Vector3.down + Vector3.left) * (_enemySpeed / 2) * Time.deltaTime);
@@ -75,9 +73,7 @@ public class EnemyBehaviour : MonoBehaviour
                 break;
             default:
                 break;
-        }
-
-        //transform.Translate((Vector3.down + Vector3.left) * (_enemySpeed / 2) * Time.deltaTime);
+        }        
 
         if (transform.position.y < -7.0f)
         {
