@@ -25,8 +25,12 @@ public class EnemyBehaviour : MonoBehaviour
 
     private float _fireDelay;
 
+    private int movementType;
+
     private void Start()
     {
+        movementType = Random.Range(1, 4);
+
         _player = GameObject.Find("Player").GetComponent<Player>();
 
         if (_player == null)
@@ -56,7 +60,24 @@ public class EnemyBehaviour : MonoBehaviour
     }
     void CalculateMovement()
     {
-        transform.Translate(Vector3.down * _enemySpeed * Time.deltaTime);
+        
+
+        switch (movementType)
+        {
+            case 1:
+                transform.Translate((Vector3.down + Vector3.left) * (_enemySpeed / 2) * Time.deltaTime);
+                break;
+            case 2:
+                transform.Translate((Vector3.down + Vector3.right) * (_enemySpeed / 2) * Time.deltaTime);
+                break;
+            case 3:
+                transform.Translate(Vector3.down * _enemySpeed * Time.deltaTime);
+                break;
+            default:
+                break;
+        }
+
+        //transform.Translate((Vector3.down + Vector3.left) * (_enemySpeed / 2) * Time.deltaTime);
 
         if (transform.position.y < -7.0f)
         {
@@ -67,7 +88,8 @@ public class EnemyBehaviour : MonoBehaviour
     void FireLaser()
     {
         _fireDelay = Random.Range(3.0f, 7.0f);
-        if (Time.time > _canFire)
+        // y position prevents enemy from firing before showing on screen
+        if (Time.time > _canFire && transform.position.y < 6.0f) 
         {
             _canFire = Time.time + _fireDelay;
             AudioSource.PlayClipAtPoint(_laserAudio, transform.position, 1.0f);
@@ -102,9 +124,4 @@ public class EnemyBehaviour : MonoBehaviour
         }
     }
 
-    //IEnumerator FireLaser()
-    //{
-    //    yield return new WaitForSeconds(1.0f);
-    //    Instantiate(_enemyLaser, transform.position, Quaternion.identity);
-    //}
 }
