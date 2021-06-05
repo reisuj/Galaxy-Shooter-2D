@@ -26,6 +26,7 @@ public class EnemyBehaviour : MonoBehaviour
     private float _fireDelay;
 
     private int movementTypeID;
+    
 
     private void Start()
     {
@@ -58,8 +59,9 @@ public class EnemyBehaviour : MonoBehaviour
         CalculateMovement();
         FireLaser();
     }
-    void CalculateMovement()
-    {
+
+    private void CalculateMovement()
+    {        
         switch (movementTypeID)
         {
             case 1:
@@ -79,6 +81,16 @@ public class EnemyBehaviour : MonoBehaviour
         {
             float newX = Random.Range(-9.0f, 9.0f);
             transform.position = new Vector3(newX, 7.0f, 0);
+            Debug.Log("Rest to top of screen");
+        }
+
+        if (transform.position.x <= -11.0f)
+        {
+            transform.position = new Vector3(11.0f, transform.position.y, 0);
+        }
+        else if (transform.position.x >= 11.0f)
+        {
+            transform.position = new Vector3(-11.0f, transform.position.y, 0);
         }
     }
     void FireLaser()
