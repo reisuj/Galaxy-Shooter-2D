@@ -109,7 +109,6 @@ public class Player : MonoBehaviour
             Debug.LogError("The UIManager is NULL!!");
         }
     }
-    // Update is called once per frame
     void Update()
     {
         if (_playerAlive == true)
