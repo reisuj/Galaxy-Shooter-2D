@@ -6,8 +6,6 @@ public class SpawnManager : MonoBehaviour
 {
     [SerializeField]
     private GameObject _enemyPrefab;
-    //[SerializeField]
-    //private GameObject _powerupPrefab;
     [SerializeField]
     private GameObject _enemyContainer;
     [SerializeField]
@@ -67,29 +65,33 @@ public class SpawnManager : MonoBehaviour
     {
         int weight = Random.Range(1, 111);
         
+        if (weight < 5)
+        {
+            _powerUpID = 6; //Negative_powerUp
+        }
         if (weight < 10)
         {
-            _powerUpID = 5;
+            _powerUpID = 5; //Multi-Shot_PowerUp
         }
         else if (weight < 30)
         {
-            _powerUpID = 4;
+            _powerUpID = 4; //Health_PowerUp
         }
         else if (weight< 50)
         {
-            _powerUpID = 3;
+            _powerUpID = 3; //Ammo_PowerUp
         }
         else if (weight < 70)
         {
-            _powerUpID = 2;
+            _powerUpID = 2; //ShieldPowerup
         }
         else if (weight < 90)
         {
-            _powerUpID = 1;
+            _powerUpID = 1; //SpeedPowerup
         }
         else if (weight < 110)
         {
-            _powerUpID = 0;
+            _powerUpID = 0; //TripleShotPowerup
         }
         else
         {

@@ -44,6 +44,7 @@ public class Player : MonoBehaviour
     [SerializeField]
     private AudioClip _ammoDepleted;
     private float _playAmmoDepleted;
+    private int _heldAmmo; // Holds ammo amount during Negative Powerup duration
     #endregion LASERS
 
     [SerializeField]
@@ -63,6 +64,9 @@ public class Player : MonoBehaviour
     private GameObject _rightEngine;
     [SerializeField]
     private GameObject _leftEngine;
+
+    [SerializeField]
+    private GameObject _particleSystem;
     
     [SerializeField]
     private GameObject _explosion;
@@ -261,6 +265,23 @@ public class Player : MonoBehaviour
             _currentAmmo = _maxAmmo;
         }
         _uiManager.UpdateAmmo(_currentAmmo);
+    }
+
+    public void NegativePowerupCollected()
+    {
+        _particleSystem.SetActive(true);
+        _heldAmmo = _currentAmmo;
+        _currentAmmo = 0;
+        _playerSpeed = 2;
+        StartCoroutine(NegativePowerupRecovery());
+    }
+
+    IEnumerator NegativePowerupRecovery()
+    {
+        yield return new WaitForSeconds(5.0f);
+        _particleSystem.SetActive(false);
+        _currentAmmo = _heldAmmo;
+        _playerSpeed = _baseSpeed;
     }
     public void ShieldPickedUp()
     {

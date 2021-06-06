@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657826, g: 0.49641263, b: 0.57481676, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1077,6 +1077,7 @@ MonoBehaviour:
   - {fileID: 1995458324217659999, guid: d82960d25ee256d4db97ce076fe4de27, type: 3}
   - {fileID: 1296085280135346812, guid: abdfd006d942dad41967752a56aeff83, type: 3}
   - {fileID: 8160235212105405024, guid: 2c42e56555097e04d92f3e2d811f0e4d, type: 3}
+  - {fileID: 8854660628869275904, guid: ff74ad2af3b5fcf4d8683dea32c811ec, type: 3}
   _startDelay: 0
 --- !u!4 &1129285360
 Transform:
@@ -1868,6 +1869,7 @@ MonoBehaviour:
   _ammoCountText: {fileID: 1747585154}
   _ammoDepleted: 0
   _ammoCount: 0
+  maxAmmo: 15
 --- !u!1 &1747585152
 GameObject:
   m_ObjectHideFlags: 0
@@ -2167,21 +2169,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4528373477114313277, guid: b98b890ee0b636a40ad470f3b45dee7d,
         type: 3}
-      propertyPath: m_LocalScale.x
-      value: 0.35
-      objectReference: {fileID: 0}
-    - target: {fileID: 4528373477114313277, guid: b98b890ee0b636a40ad470f3b45dee7d,
-        type: 3}
-      propertyPath: m_LocalScale.y
-      value: 0.35
-      objectReference: {fileID: 0}
-    - target: {fileID: 4528373477114313277, guid: b98b890ee0b636a40ad470f3b45dee7d,
-        type: 3}
-      propertyPath: m_LocalScale.z
-      value: 0.35
-      objectReference: {fileID: 0}
-    - target: {fileID: 4528373477114313277, guid: b98b890ee0b636a40ad470f3b45dee7d,
-        type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.18
       objectReference: {fileID: 0}
@@ -2242,28 +2229,8 @@ PrefabInstance:
       objectReference: {fileID: 606045463}
     - target: {fileID: 4528373477114313279, guid: b98b890ee0b636a40ad470f3b45dee7d,
         type: 3}
-      propertyPath: _maxAmmo
-      value: 15
-      objectReference: {fileID: 0}
-    - target: {fileID: 4528373477114313279, guid: b98b890ee0b636a40ad470f3b45dee7d,
-        type: 3}
-      propertyPath: _boostBar
-      value: 
-      objectReference: {fileID: 547043857}
-    - target: {fileID: 4528373477114313279, guid: b98b890ee0b636a40ad470f3b45dee7d,
-        type: 3}
       propertyPath: _boostbar
       value: 
       objectReference: {fileID: 547043859}
-    - target: {fileID: 4528373477114313279, guid: b98b890ee0b636a40ad470f3b45dee7d,
-        type: 3}
-      propertyPath: _currentAmmo
-      value: 15
-      objectReference: {fileID: 0}
-    - target: {fileID: 4528373477114313279, guid: b98b890ee0b636a40ad470f3b45dee7d,
-        type: 3}
-      propertyPath: _ammoDepleted
-      value: 
-      objectReference: {fileID: 8300000, guid: bf7bc467856df6340b4c07600d2ac1c6, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b98b890ee0b636a40ad470f3b45dee7d, type: 3}
