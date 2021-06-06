@@ -69,7 +69,7 @@ public class SpawnManager : MonoBehaviour
         {
             _powerUpID = 6; //Negative_powerUp
         }
-        if (weight < 10)
+        else if (weight < 10)
         {
             _powerUpID = 5; //Multi-Shot_PowerUp
         }

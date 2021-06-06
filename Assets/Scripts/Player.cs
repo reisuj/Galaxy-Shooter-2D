@@ -206,6 +206,25 @@ public class Player : MonoBehaviour
             StartCoroutine(PlayerDead());
         }
     }
+    public void ShieldCheck()
+    {
+        switch (_shieldStrength)
+        {
+            case 0:
+                _shieldIsActive = false;
+                _shieldVisual.SetActive(false);
+                break;
+            case 1:
+                _shieldColor.material.SetColor("_Color", Color.red);
+                break;
+            case 2:
+                _shieldColor.material.SetColor("_Color", Color.yellow);
+                break;
+            case 3:
+                _shieldColor.material.SetColor("_Color", _shieldDefaultColor);
+                break;
+        }
+    }
     private void EngineDamageCheck(int lives)
     {
         if (lives == 3)
@@ -222,7 +241,6 @@ public class Player : MonoBehaviour
             _leftEngine.SetActive(true);
         }
     }
-
     public void TripleShotActive()
     {
         multiShotActive = false;
@@ -266,7 +284,6 @@ public class Player : MonoBehaviour
         }
         _uiManager.UpdateAmmo(_currentAmmo);
     }
-
     public void NegativePowerupCollected()
     {
         _particleSystem.SetActive(true);
@@ -275,7 +292,6 @@ public class Player : MonoBehaviour
         _playerSpeed = 2;
         StartCoroutine(NegativePowerupRecovery());
     }
-
     IEnumerator NegativePowerupRecovery()
     {
         yield return new WaitForSeconds(5.0f);
@@ -293,26 +309,7 @@ public class Player : MonoBehaviour
         _shieldVisual.SetActive(true);        
         ShieldCheck();
         Debug.Log("Player Collected Shield");
-    }
-    public void ShieldCheck()
-    {
-        switch (_shieldStrength)
-        {
-            case 0:
-                _shieldIsActive = false;
-                _shieldVisual.SetActive(false);
-                break;
-            case 1:
-                _shieldColor.material.SetColor("_Color", Color.red);
-                break;
-            case 2:
-                _shieldColor.material.SetColor("_Color", Color.yellow);
-                break;
-            case 3:
-                _shieldColor.material.SetColor("_Color", _shieldDefaultColor);
-                break;
-        }
-    }
+    }    
     public void HealthCollected()
     {
         _playerLives++;
@@ -345,7 +342,6 @@ public class Player : MonoBehaviour
         _uiManager.GameOver();
         Destroy(this.gameObject);
     }
-
     private IEnumerator ThrusterActivated()
     {
         _playerSpeed = _thrusterSpeed;

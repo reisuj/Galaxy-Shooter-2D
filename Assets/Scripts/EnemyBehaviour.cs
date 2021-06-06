@@ -26,11 +26,26 @@ public class EnemyBehaviour : MonoBehaviour
     private float _fireDelay;
 
     private int movementTypeID;
+
+    [SerializeField]
+    private int _shieldChance;
+    [SerializeField]
+    private bool _shieldIsActive = false;
+    [SerializeField]
+    private GameObject _shields;
     
 
     private void Start()
     {
         movementTypeID = Random.Range(1, 4);
+
+        _shieldChance = Random.Range(1, 101);
+
+        if (_shieldChance >= 75)
+        {
+            _shieldIsActive = true;
+            _shields.SetActive(true);
+        }
 
         _player = GameObject.Find("Player").GetComponent<Player>();
 
@@ -108,28 +123,48 @@ public class EnemyBehaviour : MonoBehaviour
     {
         if(other.tag == "PlayerLaser")
         {
-            Destroy(other.gameObject);
-            if (_player != null)
+            if (_shieldIsActive == false)
             {
-                _player.AddScore(Random.Range(5, 11));
+                Destroy(other.gameObject);
+                if (_player != null)
+                {
+                    _player.AddScore(Random.Range(5, 11));
+                }
+                EnemyDestroyed();
             }
-            AudioSource.PlayClipAtPoint(_explosionAudio, new Vector3(0, 0, -10), 1.0f);
-            _anim.SetTrigger("OnEnemyDeath");
-            _collider.enabled = false;
-            Destroy(this.gameObject, 2.8f);
+            else
+            {
+                Destroy(other.gameObject);
+                _shieldIsActive = false;
+                _shields.SetActive(false);
+            }            
         }
         else if(other.tag == "Player")
-        {            
-            Player player = other.transform.GetComponent<Player>();
-            if (player != null)
+        {
+            if (_shieldIsActive == false)
             {
-                player.Damage();
+                Player player = other.transform.GetComponent<Player>();
+                if (player != null)
+                {
+                    player.Damage();
+                }
+                EnemyDestroyed();
             }
-            AudioSource.PlayClipAtPoint(_explosionAudio, new Vector3(0, 0, -10), 1.0f);
-            _anim.SetTrigger("OnEnemyDeath");
-            _collider.enabled = false;
-            Destroy(this.gameObject, 2.8f);
+            else
+            {
+                _player.Damage();
+                _shieldIsActive = false;
+                _shields.SetActive(false);
+            }            
         }
+    }
+
+    private void EnemyDestroyed()
+    {
+        AudioSource.PlayClipAtPoint(_explosionAudio, new Vector3(0, 0, -10), 1.0f);
+        _anim.SetTrigger("OnEnemyDeath");
+        _collider.enabled = false;
+        Destroy(this.gameObject, 2.8f);
     }
 
 }
