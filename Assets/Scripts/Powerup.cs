@@ -12,15 +12,44 @@ public class Powerup : MonoBehaviour
     private AudioClip _powerupAudio;
     [SerializeField]
     private int ammoRefillAmount = 15;
+    [SerializeField]
+    private GameObject _player;
+    [SerializeField]
+    private bool _isBeingCollected = false;
+
+    private void Start()
+    {
+        _player = GameObject.FindGameObjectWithTag("Player");
+    }
 
     // Update is called once per frame
     void Update()
     {
-        transform.Translate(Vector2.down * _speed * Time.deltaTime);
+        if (Input.GetKeyDown(KeyCode.C))
+        {
+            _isBeingCollected = true;
+        }
+
+        if (_isBeingCollected == true)
+        {
+            BeingCollected();
+        }
+        else
+        {
+            transform.Translate(Vector2.down * _speed * Time.deltaTime);
+        }
+        
         if (transform.position.y < -7.5f)
         {
             Destroy(this.gameObject);
         }
+    }
+
+    private void BeingCollected()
+    {
+        Vector3 dir = this.transform.position - _player.transform.position;
+        dir = dir.normalized;
+        this.transform.position -= dir * Time.deltaTime * (_speed * 2);
     }
     private void OnTriggerEnter2D(Collider2D other)
     {
