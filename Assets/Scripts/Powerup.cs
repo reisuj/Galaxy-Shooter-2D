@@ -7,13 +7,13 @@ public class Powerup : MonoBehaviour
     [SerializeField]
     private float _speed = 3.0f;
     [SerializeField]
-    private int powerupID;
+    private int powerupID = 0;
     [SerializeField]
-    private AudioClip _powerupAudio;
+    private AudioClip _powerupAudio = null;
     [SerializeField]
     private int ammoRefillAmount = 15;
     [SerializeField]
-    private GameObject _player;
+    private GameObject _player = null;
     [SerializeField]
     private bool _isBeingCollected = false;
 

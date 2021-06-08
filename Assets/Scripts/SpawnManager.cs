@@ -5,65 +5,89 @@ using UnityEngine;
 public class SpawnManager : MonoBehaviour
 {
     [SerializeField]
-    private GameObject _enemyPrefab;
+    private GameObject _enemyPrefab = null;
     [SerializeField]
-    private GameObject _enemyContainer;
+    private GameObject _enemyContainer = null;
     [SerializeField]
-    private GameObject _powerupContainer;
+    private GameObject _powerupContainer = null;
     [SerializeField]
-    private bool _playerIsAlive;
+    private bool _playerIsAlive = false;
     [SerializeField]
-    private GameObject[] _powerups;
+    private GameObject[] _powerups = null;
+    //[SerializeField]
+    //private float _startDelay = 0.0f;
+    private int _powerUpID = 0;
     [SerializeField]
-    private float _startDelay;
-    private int _powerUpID;
+    private int _waveCount = 1;
     [SerializeField]
-    private int _waveCount;
+    private int _waveMax = 3;
     [SerializeField]
-    private int _waveMax;
+    private int _enemiesInWave = 0;
     [SerializeField]
-    private int _enemiesInWave;
+    private int _enemiesSpawned = 0;
     [SerializeField]
-    private int _enemiesSpawned;
-    [SerializeField]
-    private int _enemiesAlive;
+    private int _enemiesAlive = 0;
+    private UIManager _uiManager = null;
 
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        _uiManager = GameObject.Find("Canvas").GetComponent<UIManager>();
+        if (_uiManager == null)
+        {
+            Debug.LogError("The UIManager is NULL!!");
+        }
+        Coroutine spawnRoutine = StartCoroutine(SpawnEnemy());
     }
     // Update is called once per frame
     void Update()
     {
-        
+        if (_waveCount <= _waveMax)
+        {
+            if (_enemiesSpawned == _enemiesInWave && _enemiesAlive == 0)
+            {
+                Debug.Log("Pre Start Next Wave");
+                _enemiesSpawned = 0;
+                _enemiesInWave += 2;
+                _enemiesAlive = 0;
+                _waveCount++;
+                StartCoroutine(NextWave());
+            }            
+        }
+        else
+        {
+            Debug.Log("Waves Ended");
+            StopAllCoroutines();
+        }
     }
     IEnumerator SpawnEnemy()
     {
-        yield return new WaitForSeconds(2.0f);
-        while (_playerIsAlive == true && _enemiesSpawned < _enemiesInWave)
+        Debug.Log("Starting Wave " + _waveCount);
+        _uiManager.UpdateWave(_waveCount);
+        yield return new WaitForSeconds(5.0f);
+        while (_enemiesSpawned < _enemiesInWave && _playerIsAlive == true)
         {
             float _enemyX = Random.Range(-9.0f, 9.0f);
-            GameObject newEnemy = Instantiate(_enemyPrefab, (new Vector3(_enemyX, 10.5f, 0)), Quaternion.identity);
-            _enemiesSpawned++;
-            _enemiesAlive++;
+            GameObject newEnemy = Instantiate(_enemyPrefab, (new Vector3(_enemyX, 10.5f, 0)), Quaternion.identity);            
             newEnemy.transform.parent = _enemyContainer.transform;
+            _enemiesSpawned++;
+            _enemiesAlive++;            
             yield return new WaitForSeconds(4.0f);
         }        
-                    
-        
-        yield return new WaitForSeconds(5.0f);
-        NextWave();
-        
-        //yield return new WaitForSeconds(5.0f);
-        //NextWave();
     }
-
     public void EnemyKilled()
     {
         _enemiesAlive--;
     }
+
+    IEnumerator NextWave()
+    {
+        yield return new WaitForSeconds(5.0f);
+        StartCoroutine(SpawnEnemy());
+        Debug.Log("Next Wave Started");
+    }
+
     IEnumerator SpawnPowerup()
     {
         while (_playerIsAlive == true)
@@ -88,21 +112,6 @@ public class SpawnManager : MonoBehaviour
         StartCoroutine(SpawnPowerup());
     }
 
-    private void NextWave()
-    {
-        if (_waveCount <= _waveMax && _enemiesAlive == 0)
-        {
-            Debug.Log("Starting Next Wave");
-            _waveCount++;
-            _enemiesInWave++;
-            _enemiesSpawned = 0;
-            StartCoroutine(SpawnEnemy());
-        }
-        else
-        {
-            Debug.Log("Waves Ended");
-        }
-    }
     private void PowerUpSelector()
     {
         int weight = Random.Range(1, 111);

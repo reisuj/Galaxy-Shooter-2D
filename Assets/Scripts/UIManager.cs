@@ -9,6 +9,8 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     private Text _scoreText;
     [SerializeField]
+    private Text _waveText;
+    [SerializeField]
     private Image _livesImg;
     [SerializeField]
     private Sprite[] _livesSprites;
@@ -39,12 +41,7 @@ public class UIManager : MonoBehaviour
         _scoreText.text = "Score: " + 0;
         _gameOverText.text = "";
         _restartLevelText.gameObject.SetActive(false);
-    }
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
+    }   
     public void UpdateScore(int playerScore)
     {
         _scoreText.text = "Score: " + playerScore;
@@ -53,6 +50,8 @@ public class UIManager : MonoBehaviour
     {
         _livesImg.sprite = _livesSprites[currentLives];        
     }
+
+    
     public void UpdateAmmo(int currentAmmo)
     {
         _ammoCountText.text = "AMMO: " + currentAmmo + " / " + maxAmmo;
@@ -64,6 +63,17 @@ public class UIManager : MonoBehaviour
         {
             _ammoDepleted = false;
         }
+    }
+
+    public void UpdateWave(int currentWave)
+    {
+        StartCoroutine(WaveDisplay(currentWave));
+    }
+    IEnumerator WaveDisplay(int currentWave)
+    {
+        _waveText.text = "WAVE " + currentWave;
+        yield return new WaitForSeconds(5.0f);
+        _waveText.text = "";
     }
     public IEnumerator GameOverSequence()
     {

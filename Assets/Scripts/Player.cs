@@ -98,16 +98,19 @@ public class Player : MonoBehaviour
         _boostbar.SetBooster(_thrusterMax);
         _thrusterLevel = _thrusterMax;
         transform.position = new Vector3(0, -3, 0);
-        _spawnManager = GameObject.Find("SpawnManager").GetComponent<SpawnManager>();
-        _uiManager = GameObject.Find("Canvas").GetComponent<UIManager>();
+        
+        
         _camera = Camera.main;
         _shieldColor = _shieldVisual.GetComponent<Renderer>();
         _shieldDefaultColor = _shieldVisual.GetComponent<Renderer>().material.GetColor("_Color");
+
+        _spawnManager = GameObject.Find("SpawnManager").GetComponent<SpawnManager>();
         if (_spawnManager == null)
         {
             Debug.LogError("The Spawn Manageris NULL!!");
         }
 
+        _uiManager = GameObject.Find("Canvas").GetComponent<UIManager>();
         if (_uiManager == null)
         {
             Debug.LogError("The UIManager is NULL!!");

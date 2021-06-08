@@ -4,9 +4,7 @@ using UnityEngine;
 
 public class CameraControl : MonoBehaviour
 {
-    private Animator _anim;
-
-    
+    private Animator _anim;   
 
     // Start is called before the first frame update
     void Start()
@@ -18,13 +16,6 @@ public class CameraControl : MonoBehaviour
             Debug.LogError("The Animator is NULL!");
         }
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     public void CamShake()
     {
         _anim.SetTrigger("Shake");
