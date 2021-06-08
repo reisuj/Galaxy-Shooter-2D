@@ -16,6 +16,9 @@ public class EnemyBehaviour : MonoBehaviour
     private GameObject _enemyLaser;
 
     [SerializeField]
+    private SpawnManager _spawnManager;
+
+    [SerializeField]
     private AudioClip _laserAudio;
 
     [SerializeField]
@@ -38,6 +41,13 @@ public class EnemyBehaviour : MonoBehaviour
     private void Start()
     {
         movementTypeID = Random.Range(1, 4);
+
+        _spawnManager = FindObjectOfType<SpawnManager>().GetComponent<SpawnManager>();
+
+        if (_spawnManager == null)
+        {
+            Debug.LogError("SpawnManager is NULL!");
+        }
 
         _shieldChance = Random.Range(1, 101);
 
@@ -96,7 +106,6 @@ public class EnemyBehaviour : MonoBehaviour
         {
             float newX = Random.Range(-9.0f, 9.0f);
             transform.position = new Vector3(newX, 7.0f, 0);
-            Debug.Log("Rest to top of screen");
         }
 
         if (transform.position.x <= -11.0f)
@@ -164,6 +173,7 @@ public class EnemyBehaviour : MonoBehaviour
         AudioSource.PlayClipAtPoint(_explosionAudio, new Vector3(0, 0, -10), 1.0f);
         _anim.SetTrigger("OnEnemyDeath");
         _collider.enabled = false;
+        _spawnManager.EnemyKilled();
         Destroy(this.gameObject, 2.8f);
     }
 

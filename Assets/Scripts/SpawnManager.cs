@@ -17,6 +17,18 @@ public class SpawnManager : MonoBehaviour
     [SerializeField]
     private float _startDelay;
     private int _powerUpID;
+    [SerializeField]
+    private int _waveCount;
+    [SerializeField]
+    private int _waveMax;
+    [SerializeField]
+    private int _enemiesInWave;
+    [SerializeField]
+    private int _enemiesSpawned;
+    [SerializeField]
+    private int _enemiesAlive;
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -30,13 +42,27 @@ public class SpawnManager : MonoBehaviour
     IEnumerator SpawnEnemy()
     {
         yield return new WaitForSeconds(2.0f);
-        while (_playerIsAlive == true)
+        while (_playerIsAlive == true && _enemiesSpawned < _enemiesInWave)
         {
             float _enemyX = Random.Range(-9.0f, 9.0f);
             GameObject newEnemy = Instantiate(_enemyPrefab, (new Vector3(_enemyX, 10.5f, 0)), Quaternion.identity);
+            _enemiesSpawned++;
+            _enemiesAlive++;
             newEnemy.transform.parent = _enemyContainer.transform;
             yield return new WaitForSeconds(4.0f);
         }        
+                    
+        
+        yield return new WaitForSeconds(5.0f);
+        NextWave();
+        
+        //yield return new WaitForSeconds(5.0f);
+        //NextWave();
+    }
+
+    public void EnemyKilled()
+    {
+        _enemiesAlive--;
     }
     IEnumerator SpawnPowerup()
     {
@@ -60,6 +86,22 @@ public class SpawnManager : MonoBehaviour
         _playerIsAlive = true;
         StartCoroutine(SpawnEnemy());
         StartCoroutine(SpawnPowerup());
+    }
+
+    private void NextWave()
+    {
+        if (_waveCount <= _waveMax && _enemiesAlive == 0)
+        {
+            Debug.Log("Starting Next Wave");
+            _waveCount++;
+            _enemiesInWave++;
+            _enemiesSpawned = 0;
+            StartCoroutine(SpawnEnemy());
+        }
+        else
+        {
+            Debug.Log("Waves Ended");
+        }
     }
     private void PowerUpSelector()
     {
