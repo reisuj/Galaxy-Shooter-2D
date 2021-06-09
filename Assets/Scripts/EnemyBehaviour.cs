@@ -167,7 +167,6 @@ public class EnemyBehaviour : MonoBehaviour
             }            
         }
     }
-
     private void EnemyDestroyed()
     {
         AudioSource.PlayClipAtPoint(_explosionAudio, new Vector3(0, 0, -10), 1.0f);
@@ -176,5 +175,4 @@ public class EnemyBehaviour : MonoBehaviour
         _spawnManager.EnemyKilled();
         Destroy(this.gameObject, 2.8f);
     }
-
 }

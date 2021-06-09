@@ -14,9 +14,9 @@ public class SpawnManager : MonoBehaviour
     private bool _playerIsAlive = false;
     [SerializeField]
     private GameObject[] _powerups = null;
-    //[SerializeField]
-    //private float _startDelay = 0.0f;
     private int _powerUpID = 0;
+
+    // Wave System
     [SerializeField]
     private int _waveCount = 1;
     [SerializeField]
@@ -38,32 +38,14 @@ public class SpawnManager : MonoBehaviour
         {
             Debug.LogError("The UIManager is NULL!!");
         }
-        Coroutine spawnRoutine = StartCoroutine(SpawnEnemy());
     }
     // Update is called once per frame
     void Update()
     {
-        if (_waveCount <= _waveMax)
-        {
-            if (_enemiesSpawned == _enemiesInWave && _enemiesAlive == 0)
-            {
-                Debug.Log("Pre Start Next Wave");
-                _enemiesSpawned = 0;
-                _enemiesInWave += 2;
-                _enemiesAlive = 0;
-                _waveCount++;
-                StartCoroutine(NextWave());
-            }            
-        }
-        else
-        {
-            Debug.Log("Waves Ended");
-            StopAllCoroutines();
-        }
+        WaveControl();
     }
     IEnumerator SpawnEnemy()
     {
-        Debug.Log("Starting Wave " + _waveCount);
         _uiManager.UpdateWave(_waveCount);
         yield return new WaitForSeconds(5.0f);
         while (_enemiesSpawned < _enemiesInWave && _playerIsAlive == true)
@@ -85,7 +67,25 @@ public class SpawnManager : MonoBehaviour
     {
         yield return new WaitForSeconds(5.0f);
         StartCoroutine(SpawnEnemy());
-        Debug.Log("Next Wave Started");
+    }
+
+    private void WaveControl()
+    {
+        if (_waveCount <= _waveMax)
+        {
+            if (_enemiesSpawned == _enemiesInWave && _enemiesAlive == 0)
+            {
+                _enemiesSpawned = 0;
+                _enemiesInWave += 2;
+                _enemiesAlive = 0;
+                _waveCount++;
+                StartCoroutine(NextWave());
+            }
+        }
+        else
+        {
+            StopAllCoroutines();
+        }
     }
 
     IEnumerator SpawnPowerup()
