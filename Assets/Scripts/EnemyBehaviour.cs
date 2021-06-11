@@ -125,7 +125,7 @@ public class EnemyBehaviour : MonoBehaviour
         {
             _canFire = Time.time + _fireDelay;
             AudioSource.PlayClipAtPoint(_laserAudio, transform.position, 1.0f);
-            Instantiate(_enemyLaser, transform.position, Quaternion.identity);
+            Instantiate(_enemyLaser, transform.position, Quaternion.Euler(transform.rotation.x, transform.rotation.y, 180.0f));
         }
     }
     private void OnTriggerEnter2D(Collider2D other)
