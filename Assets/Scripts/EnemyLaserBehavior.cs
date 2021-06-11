@@ -11,12 +11,11 @@ public class EnemyLaserBehavior : MonoBehaviour
     void Update()
     {
         transform.Translate(Vector3.down * _laserSpeed * Time.deltaTime);
-        if (transform.position.y < -3.5f)
+        if (transform.position.y < -7.0f || transform.position.y > 10.0f)
         {            
             Destroy(this.gameObject);
         }
     }
-
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.tag == "Player")
