@@ -21,9 +21,4 @@ public class LaserBehaviour : MonoBehaviour
             Destroy(this.gameObject);
         }
     }
-
-    public void FireUp()
-    {
-        _direction = Vector3.up;
-    }
 }

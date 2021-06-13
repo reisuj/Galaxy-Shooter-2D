@@ -27,7 +27,7 @@ public class EnemyBehaviour : MonoBehaviour
     private float _canFire = 0.0f;
     private float _canFireBack = 0.0f;
 
-    //private float _fireDelay;
+    private float _fireDelay;
 
     private int movementTypeID;
 
@@ -83,7 +83,6 @@ public class EnemyBehaviour : MonoBehaviour
     void Update()
     {
         CalculateMovement();
-        FireBack();
         FireLaser();
     }
 
@@ -131,20 +130,17 @@ public class EnemyBehaviour : MonoBehaviour
         }
     }
 
-    void FireBack()
+    public void FireBack()
     {
-        float _fireBackDelay = Random.Range(3.0f, 7.0f);
-        // y position prevents enemy from firing before showing on screen
         if (Time.time > _canFireBack)
-        {            
-            if (Mathf.Round(_player.transform.position.x) == Mathf.Round(transform.position.x) && _player.transform.position.y > transform.position.y)
-            {
-                AudioSource.PlayClipAtPoint(_laserAudio, transform.position, 1.0f);
-                Instantiate(_enemyLaser, transform.position, Quaternion.Euler(transform.rotation.x, transform.rotation.y, 180.0f));
-            }
-            _canFireBack = Time.time + _fireBackDelay;
+        {
+            _canFireBack = Time.time + _fireDelay;
+            Debug.Log("Reverse Fire");
+            AudioSource.PlayClipAtPoint(_laserAudio, transform.position, 1.0f);
+            Instantiate(_enemyLaser, transform.position, Quaternion.Euler(transform.rotation.x, transform.rotation.y, 180.0f));
         }
-    }
+        
+    }        
     private void OnTriggerEnter2D(Collider2D other)
     {
         if(other.tag == "PlayerLaser")
