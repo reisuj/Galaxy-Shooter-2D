@@ -84,6 +84,8 @@ public class EnemyBehaviour : MonoBehaviour
     {
         CalculateMovement();
         FireLaser();
+        //FireBack();
+        ScanBack();
     }
 
     private void CalculateMovement()
@@ -132,14 +134,14 @@ public class EnemyBehaviour : MonoBehaviour
 
     public void FireBack()
     {
-        if (Time.time > _canFireBack)
+        float _fireDelay = Random.Range(1.0f, 3.0f);
+        if (Time.time > _canFireBack && transform.position.y < _player.transform.position.y)
         {
             _canFireBack = Time.time + _fireDelay;
             Debug.Log("Reverse Fire");
             AudioSource.PlayClipAtPoint(_laserAudio, transform.position, 1.0f);
             Instantiate(_enemyLaser, transform.position, Quaternion.Euler(transform.rotation.x, transform.rotation.y, 180.0f));
         }
-        
     }        
     private void OnTriggerEnter2D(Collider2D other)
     {
@@ -165,6 +167,7 @@ public class EnemyBehaviour : MonoBehaviour
         {
             if (_shieldIsActive == false)
             {
+                Debug.Log("Enemy Collider hit by " + other.name);
                 Player player = other.transform.GetComponent<Player>();
                 if (player != null)
                 {
@@ -187,5 +190,19 @@ public class EnemyBehaviour : MonoBehaviour
         _collider.enabled = false;
         _spawnManager.EnemyKilled();
         Destroy(this.gameObject, 2.8f);
+    }
+
+    private void ScanBack()
+    {
+        RaycastHit2D hit = Physics2D.CircleCast(transform.position, 1.0f, transform.TransformDirection(Vector2.up), 100.0f);
+        
+        if (hit.collider != null)
+        {
+            Debug.Log("Collided with " + hit.collider.name);
+            if (hit.collider.name == "Player")
+            {
+                FireBack();
+            }           
+        }        
     }
 }
