@@ -150,22 +150,12 @@ public class EnemyBehaviour : MonoBehaviour
             AudioSource.PlayClipAtPoint(_laserAudio, transform.position, 1.0f);
             Instantiate(_enemyLaser, transform.position, Quaternion.Euler(transform.rotation.x, transform.rotation.y, 180.0f));
         }
-<<<<<<< HEAD
         else if (Time.time > _canFire && transform.position.y < 6.0f && _isBackwards == false)
-=======
-    }
-
-    public void FireBack()
-    {
-        float _fireDelay = Random.Range(1.0f, 3.0f);
-        if (Time.time > _canFireBack && transform.position.y < _player.transform.position.y)
->>>>>>> 2374d97d47a40dff6b86d5ac6264ae15030907b0
         {
             _canFire = Time.time + _fireDelay;
             AudioSource.PlayClipAtPoint(_laserAudio, transform.position, 1.0f);
             Instantiate(_enemyLaser, transform.position, Quaternion.identity);
         }
-<<<<<<< HEAD
     }
 
     //public void FireBack()
@@ -179,9 +169,6 @@ public class EnemyBehaviour : MonoBehaviour
     //    }
         
     //}        
-=======
-    }        
->>>>>>> 2374d97d47a40dff6b86d5ac6264ae15030907b0
     private void OnTriggerEnter2D(Collider2D other)
     {
         if(other.tag == "PlayerLaser")
