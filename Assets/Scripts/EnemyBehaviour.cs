@@ -91,6 +91,8 @@ public class EnemyBehaviour : MonoBehaviour
     {
         CalculateMovement();
         FireLaser();
+        //FireBack();
+        ScanBack();
     }
 
     private void CalculateMovement()
@@ -148,12 +150,22 @@ public class EnemyBehaviour : MonoBehaviour
             AudioSource.PlayClipAtPoint(_laserAudio, transform.position, 1.0f);
             Instantiate(_enemyLaser, transform.position, Quaternion.Euler(transform.rotation.x, transform.rotation.y, 180.0f));
         }
+<<<<<<< HEAD
         else if (Time.time > _canFire && transform.position.y < 6.0f && _isBackwards == false)
+=======
+    }
+
+    public void FireBack()
+    {
+        float _fireDelay = Random.Range(1.0f, 3.0f);
+        if (Time.time > _canFireBack && transform.position.y < _player.transform.position.y)
+>>>>>>> 2374d97d47a40dff6b86d5ac6264ae15030907b0
         {
             _canFire = Time.time + _fireDelay;
             AudioSource.PlayClipAtPoint(_laserAudio, transform.position, 1.0f);
             Instantiate(_enemyLaser, transform.position, Quaternion.identity);
         }
+<<<<<<< HEAD
     }
 
     //public void FireBack()
@@ -167,6 +179,9 @@ public class EnemyBehaviour : MonoBehaviour
     //    }
         
     //}        
+=======
+    }        
+>>>>>>> 2374d97d47a40dff6b86d5ac6264ae15030907b0
     private void OnTriggerEnter2D(Collider2D other)
     {
         if(other.tag == "PlayerLaser")
@@ -191,6 +206,7 @@ public class EnemyBehaviour : MonoBehaviour
         {
             if (_shieldIsActive == false)
             {
+                Debug.Log("Enemy Collider hit by " + other.name);
                 Player player = other.transform.GetComponent<Player>();
                 if (player != null)
                 {
@@ -213,5 +229,19 @@ public class EnemyBehaviour : MonoBehaviour
         _collider.enabled = false;
         _spawnManager.EnemyKilled();
         Destroy(this.gameObject, 2.8f);
+    }
+
+    private void ScanBack()
+    {
+        RaycastHit2D hit = Physics2D.CircleCast(transform.position, 1.0f, transform.TransformDirection(Vector2.up), 100.0f);
+        
+        if (hit.collider != null)
+        {
+            Debug.Log("Collided with " + hit.collider.name);
+            if (hit.collider.name == "Player")
+            {
+                FireBack();
+            }           
+        }        
     }
 }

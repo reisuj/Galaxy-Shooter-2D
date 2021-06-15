@@ -8,6 +8,7 @@ public class ReverseScan : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
+            Debug.Log("ReverseScan collider hit by " + collision.name);
             EnemyBehaviour _enemyBehaviour = transform.parent.GetComponent<EnemyBehaviour>();
             //_enemyBehaviour.FireBack();
         }
