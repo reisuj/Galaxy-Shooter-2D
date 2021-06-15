@@ -9,7 +9,7 @@ public class ReverseScan : MonoBehaviour
         if (collision.CompareTag("Player"))
         {
             EnemyBehaviour _enemyBehaviour = transform.parent.GetComponent<EnemyBehaviour>();
-            _enemyBehaviour.FireBack();
+            //_enemyBehaviour.FireBack();
         }
     }
 }

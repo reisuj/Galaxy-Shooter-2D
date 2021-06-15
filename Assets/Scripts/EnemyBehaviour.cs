@@ -37,6 +37,13 @@ public class EnemyBehaviour : MonoBehaviour
     private bool _shieldIsActive = false;
     [SerializeField]
     private GameObject _shields;
+
+    [SerializeField]
+    private float _rotationSpeed = 0.5f;
+
+    private Vector3 _direction = Vector3.down;
+    private bool _canRotate = true;
+    private bool _isBackwards = false;
     
 
     private void Start()
@@ -91,13 +98,13 @@ public class EnemyBehaviour : MonoBehaviour
         switch (movementTypeID)
         {
             case 1:
-                transform.Translate((Vector3.down + Vector3.left) * (_enemySpeed / 2) * Time.deltaTime);
+                transform.Translate((_direction + Vector3.left) * (_enemySpeed / 2) * Time.deltaTime);
                 break;
             case 2:
-                transform.Translate((Vector3.down + Vector3.right) * (_enemySpeed / 2) * Time.deltaTime);
+                transform.Translate((_direction + Vector3.right) * (_enemySpeed / 2) * Time.deltaTime);
                 break;
             case 3:
-                transform.Translate(Vector3.down * _enemySpeed * Time.deltaTime);
+                transform.Translate(_direction * _enemySpeed * Time.deltaTime);
                 break;
             default:
                 break;
@@ -105,8 +112,12 @@ public class EnemyBehaviour : MonoBehaviour
 
         if (transform.position.y < -7.0f)
         {
+            transform.Rotate(0f, 0f, 180f, Space.World);
+            _canRotate = true;
+            _isBackwards = false;
             float newX = Random.Range(-9.0f, 9.0f);
             transform.position = new Vector3(newX, 7.0f, 0);
+            _direction = Vector3.down;
         }
 
         if (transform.position.x <= -11.0f)
@@ -117,30 +128,45 @@ public class EnemyBehaviour : MonoBehaviour
         {
             transform.position = new Vector3(-11.0f, transform.position.y, 0);
         }
+
+        if (transform.position.y < _player.transform.position.y && _canRotate == true)
+        {
+            transform.Rotate(0f, 0f, 180f, Space.World);
+            _canRotate = false;
+            _direction = Vector3.up;
+            _isBackwards = true;
+            //_direction = new Vector3(0, -1, 0);
+        }
     }
     void FireLaser()
     {
         float _fireDelay = Random.Range(3.0f, 7.0f);
         // y position prevents enemy from firing before showing on screen
-        if (Time.time > _canFire && transform.position.y < 6.0f) 
+        if (Time.time > _canFire && transform.position.y < 6.0f && _isBackwards == true) 
         {
-            _canFire = Time.time + _fireDelay;
-            AudioSource.PlayClipAtPoint(_laserAudio, transform.position, 1.0f);
-            Instantiate(_enemyLaser, transform.position, Quaternion.identity);            
-        }
-    }
-
-    public void FireBack()
-    {
-        if (Time.time > _canFireBack)
-        {
-            _canFireBack = Time.time + _fireDelay;
-            Debug.Log("Reverse Fire");
+            _canFire = Time.time + (_fireDelay / 3);
             AudioSource.PlayClipAtPoint(_laserAudio, transform.position, 1.0f);
             Instantiate(_enemyLaser, transform.position, Quaternion.Euler(transform.rotation.x, transform.rotation.y, 180.0f));
         }
+        else if (Time.time > _canFire && transform.position.y < 6.0f && _isBackwards == false)
+        {
+            _canFire = Time.time + _fireDelay;
+            AudioSource.PlayClipAtPoint(_laserAudio, transform.position, 1.0f);
+            Instantiate(_enemyLaser, transform.position, Quaternion.identity);
+        }
+    }
+
+    //public void FireBack()
+    //{
+    //    if (Time.time > _canFireBack)
+    //    {
+    //        _canFireBack = Time.time + _fireDelay;
+    //        Debug.Log("Reverse Fire");
+    //        AudioSource.PlayClipAtPoint(_laserAudio, transform.position, 1.0f);
+    //        Instantiate(_enemyLaser, transform.position, Quaternion.Euler(transform.rotation.x, transform.rotation.y, 180.0f));
+    //    }
         
-    }        
+    //}        
     private void OnTriggerEnter2D(Collider2D other)
     {
         if(other.tag == "PlayerLaser")
