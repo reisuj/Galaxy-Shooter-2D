@@ -7,9 +7,9 @@ public class EnemyBehaviour : BaseEnemy
     //[SerializeField]
     //private float _enemySpeed = 1.0f;
 
-    private Player _player;
+    //private Player _player;
 
-    private Animator _anim;
+    //private Animator _anim;
 
     private BoxCollider2D _collider;
     [SerializeField]
@@ -24,10 +24,10 @@ public class EnemyBehaviour : BaseEnemy
     [SerializeField]
     private AudioClip _explosionAudio;
 
-    private float _canFire = 0.0f;
-    private float _canFireBack = 0.0f;
+    private float _fireTime = 0.0f;
+    private bool _canFire = true;
 
-    private float _fireDelay;
+    
 
     private int movementTypeID;
 
@@ -41,12 +41,12 @@ public class EnemyBehaviour : BaseEnemy
     [SerializeField]
     private float _rotationSpeed = 0.5f;
 
-    private Vector3 _direction = Vector3.down;
+    
     private bool _canRotate = true;
     private bool _isBackwards = false;
     
 
-    private void Start()
+    private new void Start()
     {
         
         movementTypeID = Random.Range(1, 4);
@@ -87,11 +87,17 @@ public class EnemyBehaviour : BaseEnemy
             Debug.LogError("Collider is NULL!");
         }
     }
-    // Update is called once per frame
-    void Update()
+
+    
+        // Update is called once per frame
+    new void Update()
     {
         CalculateMovement();
-        FireLaser();
+        if(_canFire == true)
+        {
+            FireLaser();
+        }
+        
         //FireBack();
         //ScanBack();
     }
@@ -120,7 +126,6 @@ public class EnemyBehaviour : BaseEnemy
             _isBackwards = false;
             float newX = Random.Range(-9.0f, 9.0f);
             transform.position = new Vector3(newX, 7.0f, 0);
-            _direction = Vector3.down;
         }
 
         if (transform.position.x <= -11.0f)
@@ -136,23 +141,22 @@ public class EnemyBehaviour : BaseEnemy
         {
             transform.Rotate(0f, 0f, 180f, Space.World);
             _canRotate = false;            
-            _isBackwards = true;
-            
+            _isBackwards = true;            
         }
     }
     void FireLaser()
     {
         float _fireDelay = Random.Range(3.0f, 7.0f);
         // y position prevents enemy from firing before showing on screen
-        if (Time.time > _canFire && transform.position.y < 6.0f && _isBackwards == true) 
+        if (Time.time > _fireTime && transform.position.y < 6.0f && _isBackwards == true) 
         {
-            _canFire = Time.time + (_fireDelay / 5);
+            _fireTime = Time.time + (_fireDelay / 5);
             AudioSource.PlayClipAtPoint(_laserAudio, transform.position, 1.0f);
             Instantiate(_enemyLaser, transform.position, Quaternion.Euler(transform.rotation.x, transform.rotation.y, 180.0f));
         }
-        else if (Time.time > _canFire && transform.position.y < 6.0f && _isBackwards == false)
+        else if (Time.time > _fireTime && transform.position.y < 6.0f && _isBackwards == false)
         {
-            _canFire = Time.time + _fireDelay;
+            _fireTime = Time.time + _fireDelay;
             AudioSource.PlayClipAtPoint(_laserAudio, transform.position, 1.0f);
             Instantiate(_enemyLaser, transform.position, Quaternion.identity);
         }
@@ -175,6 +179,7 @@ public class EnemyBehaviour : BaseEnemy
         {
             if (_shieldIsActive == false)
             {
+                _canFire = false;
                 Destroy(other.gameObject);
                 if (_player != null)
                 {
@@ -191,8 +196,10 @@ public class EnemyBehaviour : BaseEnemy
         }
         else if(other.tag == "Player")
         {
+            
             if (_shieldIsActive == false)
             {
+                _canFire = false;
                 Debug.Log("Enemy Collider hit by " + other.name);
                 Player player = other.transform.GetComponent<Player>();
                 if (player != null)

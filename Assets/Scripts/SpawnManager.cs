@@ -31,6 +31,8 @@ public class SpawnManager : MonoBehaviour
 
     [SerializeField]
     private GameObject[] _enemiesToSpawn;
+    [SerializeField]
+    private int _enemyID;
 
 
     // Start is called before the first frame update
@@ -53,8 +55,9 @@ public class SpawnManager : MonoBehaviour
         yield return new WaitForSeconds(5.0f);
         while (_enemiesSpawned < _enemiesInWave && _playerIsAlive == true)
         {
+            _enemyID = Random.Range(0, 2);
             float _enemyX = Random.Range(-9.0f, 9.0f);
-            GameObject newEnemy = Instantiate(_enemiesToSpawn[0], (new Vector3(_enemyX, 10.5f, 0)), Quaternion.identity);            
+            GameObject newEnemy = Instantiate(_enemiesToSpawn[_enemyID], (new Vector3(_enemyX, 10.5f, 0)), Quaternion.identity);            
             newEnemy.transform.parent = _enemyContainer.transform;
             _enemiesSpawned++;
             _enemiesAlive++;            
