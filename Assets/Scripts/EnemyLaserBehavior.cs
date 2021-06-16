@@ -10,7 +10,7 @@ public class EnemyLaserBehavior : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.Translate(Vector3.down * _laserSpeed * Time.deltaTime);
+        transform.Translate(Vector3.down * _laserSpeed * Time.deltaTime, Space.World);
         if (transform.position.y < -7.0f || transform.position.y > 10.0f)
         {            
             Destroy(this.gameObject);

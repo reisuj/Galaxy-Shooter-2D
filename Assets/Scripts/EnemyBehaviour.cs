@@ -92,7 +92,7 @@ public class EnemyBehaviour : MonoBehaviour
         CalculateMovement();
         FireLaser();
         //FireBack();
-        ScanBack();
+        //ScanBack();
     }
 
     private void CalculateMovement()
@@ -100,13 +100,13 @@ public class EnemyBehaviour : MonoBehaviour
         switch (movementTypeID)
         {
             case 1:
-                transform.Translate((_direction + Vector3.left) * (_enemySpeed / 2) * Time.deltaTime);
+                transform.Translate((Vector3.down + Vector3.left) * (_enemySpeed / 2) * Time.deltaTime, Space.World);
                 break;
             case 2:
-                transform.Translate((_direction + Vector3.right) * (_enemySpeed / 2) * Time.deltaTime);
+                transform.Translate((Vector3.down + Vector3.right) * (_enemySpeed / 2) * Time.deltaTime, Space.World);
                 break;
             case 3:
-                transform.Translate(_direction * _enemySpeed * Time.deltaTime);
+                transform.Translate(Vector3.down * _enemySpeed * Time.deltaTime, Space.World);
                 break;
             default:
                 break;
@@ -134,10 +134,9 @@ public class EnemyBehaviour : MonoBehaviour
         if (transform.position.y < _player.transform.position.y && _canRotate == true)
         {
             transform.Rotate(0f, 0f, 180f, Space.World);
-            _canRotate = false;
-            _direction = Vector3.up;
+            _canRotate = false;            
             _isBackwards = true;
-            //_direction = new Vector3(0, -1, 0);
+            
         }
     }
     void FireLaser()
@@ -218,17 +217,17 @@ public class EnemyBehaviour : MonoBehaviour
         Destroy(this.gameObject, 2.8f);
     }
 
-    private void ScanBack()
-    {
-        RaycastHit2D hit = Physics2D.CircleCast(transform.position, 1.0f, transform.TransformDirection(Vector2.up), 100.0f);
+    //private void ScanBack()
+    //{
+    //    RaycastHit2D hit = Physics2D.CircleCast(transform.position, 1.0f, transform.TransformDirection(Vector2.up), 100.0f);
         
-        if (hit.collider != null)
-        {
-            Debug.Log("Collided with " + hit.collider.name);
-            if (hit.collider.name == "Player")
-            {
-                FireBack();
-            }           
-        }        
-    }
+    //    if (hit.collider != null)
+    //    {
+    //        Debug.Log("Collided with " + hit.collider.name);
+    //        if (hit.collider.name == "Player")
+    //        {
+    //            //FireBack();
+    //        }           
+    //    }        
+    //}
 }
