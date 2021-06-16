@@ -2,10 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyBehaviour : MonoBehaviour
+public class EnemyBehaviour : BaseEnemy
 {
-    [SerializeField]
-    private float _enemySpeed = 1.0f;
+    //[SerializeField]
+    //private float _enemySpeed = 1.0f;
 
     private Player _player;
 
@@ -48,6 +48,7 @@ public class EnemyBehaviour : MonoBehaviour
 
     private void Start()
     {
+        
         movementTypeID = Random.Range(1, 4);
 
         _spawnManager = FindObjectOfType<SpawnManager>().GetComponent<SpawnManager>();
@@ -145,7 +146,7 @@ public class EnemyBehaviour : MonoBehaviour
         // y position prevents enemy from firing before showing on screen
         if (Time.time > _canFire && transform.position.y < 6.0f && _isBackwards == true) 
         {
-            _canFire = Time.time + (_fireDelay / 3);
+            _canFire = Time.time + (_fireDelay / 5);
             AudioSource.PlayClipAtPoint(_laserAudio, transform.position, 1.0f);
             Instantiate(_enemyLaser, transform.position, Quaternion.Euler(transform.rotation.x, transform.rotation.y, 180.0f));
         }

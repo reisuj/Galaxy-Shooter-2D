@@ -150,7 +150,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45d171c14fd91dc459d247ec2d2438f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _enemySpeed: 4
+  _enemySpeed: 3
   _enemyLaser: {fileID: 7152518119008837574, guid: 39e6e22fd21b74c4b89ff7496dfdfcb4,
     type: 3}
   _spawnManager: {fileID: 0}
@@ -159,6 +159,7 @@ MonoBehaviour:
   _shieldChance: 0
   _shieldIsActive: 0
   _shields: {fileID: 715170406}
+  _rotationSpeed: 0.5
 --- !u!212 &-537944000425925285
 SpriteRenderer:
   m_ObjectHideFlags: 0

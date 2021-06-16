@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class SpawnManager : MonoBehaviour
 {
-    [SerializeField]
-    private GameObject _enemyPrefab = null;
+    //[SerializeField]
+    //private GameObject _enemyPrefab = null;
     [SerializeField]
     private GameObject _enemyContainer = null;
     [SerializeField]
@@ -29,6 +29,9 @@ public class SpawnManager : MonoBehaviour
     private int _enemiesAlive = 0;
     private UIManager _uiManager = null;
 
+    [SerializeField]
+    private GameObject[] _enemiesToSpawn;
+
 
     // Start is called before the first frame update
     void Start()
@@ -51,7 +54,7 @@ public class SpawnManager : MonoBehaviour
         while (_enemiesSpawned < _enemiesInWave && _playerIsAlive == true)
         {
             float _enemyX = Random.Range(-9.0f, 9.0f);
-            GameObject newEnemy = Instantiate(_enemyPrefab, (new Vector3(_enemyX, 10.5f, 0)), Quaternion.identity);            
+            GameObject newEnemy = Instantiate(_enemiesToSpawn[0], (new Vector3(_enemyX, 10.5f, 0)), Quaternion.identity);            
             newEnemy.transform.parent = _enemyContainer.transform;
             _enemiesSpawned++;
             _enemiesAlive++;            
