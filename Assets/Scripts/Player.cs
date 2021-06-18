@@ -177,6 +177,8 @@ public class Player : MonoBehaviour
             AudioSource.PlayClipAtPoint(_ammoDepleted, new Vector3(0f, 3.5f, -10f), 1.0f);
         }
     }
+
+    #region Firing
     public void MultiShot()
     {
         for (int fireangle = -67; fireangle < 83; fireangle += 15)
@@ -209,6 +211,8 @@ public class Player : MonoBehaviour
             StartCoroutine(PlayerDead());
         }
     }
+
+    #endregion
     public void ShieldCheck()
     {
         switch (_shieldStrength)

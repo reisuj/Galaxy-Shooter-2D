@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: -2510350303522145537}
   - component: {fileID: -3176029993113362773}
   m_Layer: 0
-  m_Name: RotatingEnemy
+  m_Name: SmartEnemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -162,10 +162,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 7081814606214135961}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 45d171c14fd91dc459d247ec2d2438f6, type: 3}
+  m_Script: {fileID: 11500000, guid: 48aa186fe44c7fb4097a46a2524733c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _enemySpeed: 3
+  _enemySpeed: 0
   _enemyLaser: {fileID: 7152518119008837574, guid: 39e6e22fd21b74c4b89ff7496dfdfcb4,
     type: 3}
   _spawnManager: {fileID: 0}
@@ -174,7 +174,6 @@ MonoBehaviour:
   _shieldChance: 0
   _shieldIsActive: 0
   _shields: {fileID: 411828041679017916}
-  _rotationSpeed: 0.5
 --- !u!1001 &7964206402516341764
 PrefabInstance:
   m_ObjectHideFlags: 0

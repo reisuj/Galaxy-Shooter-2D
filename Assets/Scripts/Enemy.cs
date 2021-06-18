@@ -2,53 +2,44 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyBehaviour : BaseEnemy
+public abstract class Enemy : MonoBehaviour
 {
-    //[SerializeField]
-    //private float _enemySpeed = 1.0f;
-
-    //private Player _player;
-
-    //private Animator _anim;
-
-    private BoxCollider2D _collider;
     [SerializeField]
-    private GameObject _enemyLaser;
+    protected float _enemySpeed;
 
+    protected Player _player;
+
+    protected Animator _anim;
+
+    protected BoxCollider2D _collider;
     [SerializeField]
-    private SpawnManager _spawnManager;
+    protected GameObject _enemyLaser;
 
     [SerializeField]
-    private AudioClip _laserAudio;
+    protected SpawnManager _spawnManager;
 
     [SerializeField]
-    private AudioClip _explosionAudio;
-
-    private float _fireTime = 0.0f;
-    private bool _canFire = true;
-
-    
-
-    private int movementTypeID;
+    protected AudioClip _laserAudio;
 
     [SerializeField]
-    private int _shieldChance;
-    [SerializeField]
-    private bool _shieldIsActive = false;
-    [SerializeField]
-    private GameObject _shields;
+    protected AudioClip _explosionAudio;
+
+    protected bool _canFire = true;
+    protected float _fireTime = 0.0f;
+
+    protected int movementTypeID;
 
     [SerializeField]
-    private float _rotationSpeed = 0.5f;
+    protected int _shieldChance;
+    [SerializeField]
+    protected bool _shieldIsActive = false;
+    [SerializeField]
+    protected GameObject _shields;
 
-    
-    private bool _canRotate = true;
-    private bool _isBackwards = false;
-    
 
-    private new void Start()
+    protected virtual void Start()
     {
-        
+
         movementTypeID = Random.Range(1, 4);
 
         _spawnManager = FindObjectOfType<SpawnManager>().GetComponent<SpawnManager>();
@@ -56,14 +47,6 @@ public class EnemyBehaviour : BaseEnemy
         if (_spawnManager == null)
         {
             Debug.LogError("SpawnManager is NULL!");
-        }
-
-        _shieldChance = Random.Range(1, 101);
-
-        if (_shieldChance >= 75)
-        {
-            _shieldIsActive = true;
-            _shields.SetActive(true);
         }
 
         _player = GameObject.Find("Player").GetComponent<Player>();
@@ -86,24 +69,38 @@ public class EnemyBehaviour : BaseEnemy
         {
             Debug.LogError("Collider is NULL!");
         }
+
+        InitialShieldCheck();
     }
 
-    
-        // Update is called once per frame
-    new void Update()
+
+    // Update is called once per frame
+    protected void Update()
     {
         CalculateMovement();
-        if(_canFire == true)
-        {
-            FireLaser();
-        }
-        
-        //FireBack();
-        //ScanBack();
+        FireLaser();
     }
 
-    private void CalculateMovement()
-    {        
+    //private void FixedUpdate()
+    //{
+    //    RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.up, 5.0f);
+    //    Debug.DrawRay(transform.position, Vector3.up * 5.0f, Color.red);
+
+    //    if (hit.collider != null)
+    //    {
+    //        Debug.Log(hit.collider.tag);
+    //        float _fireDelay = Random.Range(3.0f, 5.0f);
+    //        if (hit.collider.CompareTag("Player") && Time.time > _revFireTime)
+    //        {
+    //            _revFireTime = Time.time + _fireDelay;
+    //            AudioSource.PlayClipAtPoint(_laserAudio, transform.position, 1.0f);
+    //            Instantiate(_enemyLaser, transform.position, Quaternion.Euler(transform.rotation.x, transform.rotation.y, 180.0f));
+    //        }
+    //    }
+    //}
+
+    protected virtual void CalculateMovement()
+    {
         switch (movementTypeID)
         {
             case 1:
@@ -117,15 +114,11 @@ public class EnemyBehaviour : BaseEnemy
                 break;
             default:
                 break;
-        }        
+        }
 
         if (transform.position.y < -7.0f)
         {
-            transform.Rotate(0f, 0f, 180f, Space.World);
-            _canRotate = true;
-            _isBackwards = false;
-            float newX = Random.Range(-9.0f, 9.0f);
-            transform.position = new Vector3(newX, 7.0f, 0);
+            transform.position = new Vector3(transform.position.x, 7.0f, 0);
         }
 
         if (transform.position.x <= -11.0f)
@@ -136,25 +129,11 @@ public class EnemyBehaviour : BaseEnemy
         {
             transform.position = new Vector3(-11.0f, transform.position.y, 0);
         }
-
-        if (transform.position.y < _player.transform.position.y && _canRotate == true)
-        {
-            transform.Rotate(0f, 0f, 180f, Space.World);
-            _canRotate = false;            
-            _isBackwards = true;            
-        }
     }
-    void FireLaser()
+    protected virtual void FireLaser()
     {
         float _fireDelay = Random.Range(3.0f, 7.0f);
-        // y position prevents enemy from firing before showing on screen
-        if (Time.time > _fireTime && transform.position.y < 6.0f && _isBackwards == true) 
-        {
-            _fireTime = Time.time + (_fireDelay / 5);
-            AudioSource.PlayClipAtPoint(_laserAudio, transform.position, 1.0f);
-            Instantiate(_enemyLaser, transform.position, Quaternion.Euler(transform.rotation.x, transform.rotation.y, 180.0f));
-        }
-        else if (Time.time > _fireTime && transform.position.y < 6.0f && _isBackwards == false)
+        if (Time.time > _fireTime && transform.position.y < 6.0f && _canFire == true)
         {
             _fireTime = Time.time + _fireDelay;
             AudioSource.PlayClipAtPoint(_laserAudio, transform.position, 1.0f);
@@ -162,20 +141,9 @@ public class EnemyBehaviour : BaseEnemy
         }
     }
 
-    //public void FireBack()
-    //{
-    //    if (Time.time > _canFireBack)
-    //    {
-    //        _canFireBack = Time.time + _fireDelay;
-    //        Debug.Log("Reverse Fire");
-    //        AudioSource.PlayClipAtPoint(_laserAudio, transform.position, 1.0f);
-    //        Instantiate(_enemyLaser, transform.position, Quaternion.Euler(transform.rotation.x, transform.rotation.y, 180.0f));
-    //    }
-        
-    //}        
-    private void OnTriggerEnter2D(Collider2D other)
+    protected virtual void OnTriggerEnter2D(Collider2D other)
     {
-        if(other.tag == "PlayerLaser")
+        if (other.tag == "PlayerLaser")
         {
             if (_shieldIsActive == false)
             {
@@ -192,11 +160,10 @@ public class EnemyBehaviour : BaseEnemy
                 Destroy(other.gameObject);
                 _shieldIsActive = false;
                 _shields.SetActive(false);
-            }            
+            }
         }
-        else if(other.tag == "Player")
+        else if (other.tag == "Player")
         {
-            
             if (_shieldIsActive == false)
             {
                 _canFire = false;
@@ -213,10 +180,10 @@ public class EnemyBehaviour : BaseEnemy
                 _player.Damage();
                 _shieldIsActive = false;
                 _shields.SetActive(false);
-            }            
+            }
         }
     }
-    private void EnemyDestroyed()
+    protected virtual void EnemyDestroyed()
     {
         AudioSource.PlayClipAtPoint(_explosionAudio, new Vector3(0, 0, -10), 1.0f);
         _anim.SetTrigger("OnEnemyDeath");
@@ -225,17 +192,14 @@ public class EnemyBehaviour : BaseEnemy
         Destroy(this.gameObject, 2.8f);
     }
 
-    //private void ScanBack()
-    //{
-    //    RaycastHit2D hit = Physics2D.CircleCast(transform.position, 1.0f, transform.TransformDirection(Vector2.up), 100.0f);
-        
-    //    if (hit.collider != null)
-    //    {
-    //        Debug.Log("Collided with " + hit.collider.name);
-    //        if (hit.collider.name == "Player")
-    //        {
-    //            //FireBack();
-    //        }           
-    //    }        
-    //}
+    protected virtual void InitialShieldCheck()
+    {
+        _shieldChance = Random.Range(1, 101);
+
+        if (_shieldChance >= 75)
+        {
+            _shieldIsActive = true;
+            _shields.SetActive(true);
+        }
+    }
 }
