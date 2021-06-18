@@ -23,6 +23,8 @@ public abstract class BaseEnemy : MonoBehaviour
 
     [SerializeField]
     protected AudioClip _explosionAudio;
+    [SerializeField]
+    protected GameObject _explosionFX;
 
     protected bool _canFire = true;
     protected float _fireTime = 0.0f;
@@ -163,10 +165,10 @@ public abstract class BaseEnemy : MonoBehaviour
     protected virtual void EnemyDestroyed()
     {
         AudioSource.PlayClipAtPoint(_explosionAudio, new Vector3(0, 0, -10), 1.0f);
-        _anim.SetTrigger("OnEnemyDeath");
+        Instantiate(_explosionFX, transform.position, Quaternion.identity);
         _collider.enabled = false;
         _spawnManager.EnemyKilled();
-        Destroy(this.gameObject, 2.8f);
+        Destroy(this.gameObject, 1.3f);
     }
     protected virtual void InitialShieldCheck()
     {

@@ -54,6 +54,8 @@ MonoBehaviour:
   _spawnManager: {fileID: 0}
   _laserAudio: {fileID: 8300000, guid: 75676f361bdfeaf41a46623e95df3dbc, type: 3}
   _explosionAudio: {fileID: 8300000, guid: a885c043fab7e46438bba03ba9dab6bc, type: 3}
+  _explosionFX: {fileID: 2212395541323266536, guid: b5b48639b9f026642ab004a74d175cf8,
+    type: 3}
   _shieldChance: 0
   _shieldIsActive: 0
   _shields: {fileID: 715170406}
