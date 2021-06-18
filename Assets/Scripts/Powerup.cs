@@ -16,10 +16,14 @@ public class Powerup : MonoBehaviour
     private GameObject _player = null;
     [SerializeField]
     private bool _isBeingCollected = false;
+    [SerializeField]
+    private GameObject _explosion;
+    [SerializeField]
+    private AudioClip _explosionAudio;
 
     private void Start()
     {
-        _player = GameObject.FindGameObjectWithTag("Player");
+        _player = GameObject.FindGameObjectWithTag("Player");        
     }
 
     // Update is called once per frame
@@ -87,6 +91,15 @@ public class Powerup : MonoBehaviour
                 }                
             }
             AudioSource.PlayClipAtPoint(_powerupAudio, new Vector3(0, 0, -10), 1.0f);
+            Destroy(this.gameObject);
+        }
+
+        if (other.tag == "EnemyLaser")
+        {
+            Debug.Log("Hit by: " + other.tag);
+            Destroy(other.gameObject);
+            AudioSource.PlayClipAtPoint(_explosionAudio, new Vector3(0, 0, -10), 1.0f);
+            Instantiate(_explosion, transform.position, Quaternion.identity);                     
             Destroy(this.gameObject);
         }
     }

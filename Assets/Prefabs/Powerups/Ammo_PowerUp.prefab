@@ -121,6 +121,11 @@ MonoBehaviour:
   powerupID: 3
   _powerupAudio: {fileID: 8300000, guid: 5ee343246919d2b4bba63ae629e95494, type: 3}
   ammoRefillAmount: 15
+  _player: {fileID: 0}
+  _isBeingCollected: 0
+  _explosion: {fileID: 2212395541323266536, guid: e284dfa4131c1a541a2cbe035561f632,
+    type: 3}
+  _explosionAudio: {fileID: 8300000, guid: a885c043fab7e46438bba03ba9dab6bc, type: 3}
 --- !u!61 &3977691520508797448
 BoxCollider2D:
   m_ObjectHideFlags: 0

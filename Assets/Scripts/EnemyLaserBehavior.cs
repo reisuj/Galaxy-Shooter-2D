@@ -12,7 +12,7 @@ public class EnemyLaserBehavior : MonoBehaviour
     {
         transform.Translate(Vector3.down * _laserSpeed * Time.deltaTime);
         if (transform.position.y < -7.0f || transform.position.y > 10.0f)
-        {            
+        {
             Destroy(this.gameObject);
         }
     }
