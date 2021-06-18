@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SmartEnemy : Enemy
+public class SmartEnemy : BaseEnemy
 {    
     private float _revFireTime = 0.0f;
     // Start is called before the first frame update
