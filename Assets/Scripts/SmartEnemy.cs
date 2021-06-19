@@ -9,7 +9,6 @@ public class SmartEnemy : BaseEnemy
     protected override void Start()
     {
         base.Start();
-        _enemySpeed = 3.0f;
     }
     private void FixedUpdate()
     {

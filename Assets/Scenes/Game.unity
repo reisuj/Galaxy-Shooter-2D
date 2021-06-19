@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657826, g: 0.49641263, b: 0.57481676, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -374,12 +374,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &172063120 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 897407398, guid: b98b890ee0b636a40ad470f3b45dee7d,
-    type: 3}
-  m_PrefabInstance: {fileID: 4528373475945847450}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &210491377
 GameObject:
   m_ObjectHideFlags: 0
@@ -1170,6 +1164,7 @@ MonoBehaviour:
   - {fileID: 6859482750010898201, guid: 205bc89fc70e60e4a95df721f56c039d, type: 3}
   - {fileID: 7081814606214135961, guid: 9ccd4bfae5420be49969ca7eb3f2485c, type: 3}
   - {fileID: 7081814606214135961, guid: 07d5156940abf2d4f86aa74b13763ced, type: 3}
+  - {fileID: 2615873515108755182, guid: f238d957c7201454284ae00ad1248c7b, type: 3}
   _enemyID: 0
 --- !u!4 &1129285360
 Transform:
@@ -2278,80 +2273,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c8f7d7713a384cd429189296b74d0481, type: 3}
---- !u!1001 &2615873514803292498
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 1759800567849259665, guid: f238d957c7201454284ae00ad1248c7b,
-        type: 3}
-      propertyPath: _shields
-      value: 
-      objectReference: {fileID: 172063120}
-    - target: {fileID: 2615873515108755090, guid: f238d957c7201454284ae00ad1248c7b,
-        type: 3}
-      propertyPath: m_RootOrder
-      value: 12
-      objectReference: {fileID: 0}
-    - target: {fileID: 2615873515108755090, guid: f238d957c7201454284ae00ad1248c7b,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 3.98
-      objectReference: {fileID: 0}
-    - target: {fileID: 2615873515108755090, guid: f238d957c7201454284ae00ad1248c7b,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 3.9
-      objectReference: {fileID: 0}
-    - target: {fileID: 2615873515108755090, guid: f238d957c7201454284ae00ad1248c7b,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2615873515108755090, guid: f238d957c7201454284ae00ad1248c7b,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2615873515108755090, guid: f238d957c7201454284ae00ad1248c7b,
-        type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2615873515108755090, guid: f238d957c7201454284ae00ad1248c7b,
-        type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2615873515108755090, guid: f238d957c7201454284ae00ad1248c7b,
-        type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2615873515108755090, guid: f238d957c7201454284ae00ad1248c7b,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2615873515108755090, guid: f238d957c7201454284ae00ad1248c7b,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2615873515108755090, guid: f238d957c7201454284ae00ad1248c7b,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2615873515108755182, guid: f238d957c7201454284ae00ad1248c7b,
-        type: 3}
-      propertyPath: m_Name
-      value: EnemyDodgeShip
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: f238d957c7201454284ae00ad1248c7b, type: 3}
 --- !u!1001 &4528373475945847450
 PrefabInstance:
   m_ObjectHideFlags: 0

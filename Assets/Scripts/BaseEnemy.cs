@@ -5,7 +5,7 @@ using UnityEngine;
 public abstract class BaseEnemy : MonoBehaviour
 {
     [SerializeField]
-    protected float _enemySpeed;
+    protected float _enemySpeed = 3.0f;
 
     protected Player _player;
 
@@ -127,11 +127,11 @@ public abstract class BaseEnemy : MonoBehaviour
             if (_shieldIsActive == false)
             {
                 _canFire = false;
-                Destroy(other.gameObject);
                 if (_player != null)
                 {
                     _player.AddScore(Random.Range(5, 11));
                 }
+                Destroy(other.gameObject);
                 EnemyDestroyed();
             }
             else
@@ -164,11 +164,12 @@ public abstract class BaseEnemy : MonoBehaviour
     }
     protected virtual void EnemyDestroyed()
     {
+        _enemySpeed = 0;
         AudioSource.PlayClipAtPoint(_explosionAudio, new Vector3(0, 0, -10), 1.0f);
         Instantiate(_explosionFX, transform.position, Quaternion.identity);
         _collider.enabled = false;
         _spawnManager.EnemyKilled();
-        Destroy(this.gameObject, 1.3f);
+        Destroy(this.gameObject, 1.0f);
     }
     protected virtual void InitialShieldCheck()
     {

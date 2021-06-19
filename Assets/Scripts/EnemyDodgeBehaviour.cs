@@ -10,7 +10,6 @@ public class EnemyDodgeBehaviour : BaseEnemy
     protected override void Start()
     {
         base.Start();
-        _enemySpeed = 0.0f;
     }
 
     private void FixedUpdate()

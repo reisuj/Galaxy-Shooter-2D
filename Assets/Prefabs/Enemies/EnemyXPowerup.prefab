@@ -73,8 +73,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 2066640349
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 10d8e323092e0cd46a4b6621d2b074b0, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -243,6 +243,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Shields
+      objectReference: {fileID: 0}
+    - target: {fileID: 7724114174492689336, guid: 4901b7ec696f82b418afc090750e7cb1,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4901b7ec696f82b418afc090750e7cb1, type: 3}

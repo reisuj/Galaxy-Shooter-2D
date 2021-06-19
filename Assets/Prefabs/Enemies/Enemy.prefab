@@ -48,7 +48,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bf97f7a92f95c414091b7a62f0e78bf9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _enemySpeed: 0
+  _enemySpeed: 3
   _enemyLaser: {fileID: 7152518119008837574, guid: 39e6e22fd21b74c4b89ff7496dfdfcb4,
     type: 3}
   _spawnManager: {fileID: 0}
@@ -242,6 +242,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Shields
+      objectReference: {fileID: 0}
+    - target: {fileID: 7724114174492689336, guid: 4901b7ec696f82b418afc090750e7cb1,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4901b7ec696f82b418afc090750e7cb1, type: 3}

@@ -8,6 +8,5 @@ public class DefaultEnemy : BaseEnemy
     protected override void Start()
     {
         base.Start();
-        _enemySpeed = 3.0f;
     }
 }
