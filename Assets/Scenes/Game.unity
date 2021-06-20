@@ -1165,6 +1165,7 @@ MonoBehaviour:
   - {fileID: 7081814606214135961, guid: 9ccd4bfae5420be49969ca7eb3f2485c, type: 3}
   - {fileID: 7081814606214135961, guid: 07d5156940abf2d4f86aa74b13763ced, type: 3}
   - {fileID: 2615873515108755182, guid: f238d957c7201454284ae00ad1248c7b, type: 3}
+  - {fileID: 2615873515108755182, guid: a98faaeafbf3c9843b10fea5e601c806, type: 3}
   _enemyID: 0
 --- !u!4 &1129285360
 Transform:
@@ -2303,12 +2304,12 @@ PrefabInstance:
     - target: {fileID: 4528373477114313277, guid: b98b890ee0b636a40ad470f3b45dee7d,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 4.09
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4528373477114313277, guid: b98b890ee0b636a40ad470f3b45dee7d,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -4.17
+      value: -3
       objectReference: {fileID: 0}
     - target: {fileID: 4528373477114313277, guid: b98b890ee0b636a40ad470f3b45dee7d,
         type: 3}
