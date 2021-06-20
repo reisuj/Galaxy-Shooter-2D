@@ -37,9 +37,12 @@ public abstract class BaseEnemy : MonoBehaviour
     protected bool _shieldIsActive = false;
     [SerializeField]
     protected GameObject _shields;
+    [SerializeField]
+    protected float _randomX;
 
     protected virtual void Start()
     {
+        
 
         movementTypeID = Random.Range(1, 4);
 
@@ -81,16 +84,17 @@ public abstract class BaseEnemy : MonoBehaviour
     }
     protected virtual void CalculateMovement()
     {
+        
         switch (movementTypeID)
         {
             case 1:
-                transform.Translate((Vector3.down + Vector3.left) * (_enemySpeed / 2) * Time.deltaTime, Space.World);
+                transform.Translate((Vector3.down + Vector3.left) * (_enemySpeed / 2) * Time.deltaTime);
                 break;
             case 2:
-                transform.Translate((Vector3.down + Vector3.right) * (_enemySpeed / 2) * Time.deltaTime, Space.World);
+                transform.Translate((Vector3.down + Vector3.right) * (_enemySpeed / 2) * Time.deltaTime);
                 break;
             case 3:
-                transform.Translate(Vector3.down * _enemySpeed * Time.deltaTime, Space.World);
+                transform.Translate(Vector3.down * _enemySpeed * Time.deltaTime);
                 break;
             default:
                 break;
@@ -98,7 +102,8 @@ public abstract class BaseEnemy : MonoBehaviour
 
         if (transform.position.y < -7.0f)
         {
-            transform.position = new Vector3(transform.position.x, 7.0f, 0);
+            _randomX = Random.Range(-9.8f, 9.8f);
+            transform.position = new Vector3(_randomX, 7.0f, 0);
         }
 
         if (transform.position.x <= -11.0f)
