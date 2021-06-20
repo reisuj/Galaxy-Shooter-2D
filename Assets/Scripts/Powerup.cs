@@ -40,7 +40,7 @@ public class Powerup : MonoBehaviour
         }
         else
         {
-            transform.Translate(Vector2.down * _speed * Time.deltaTime);
+            transform.Translate(Vector2.down * _speed * Time.deltaTime, Space.World);
         }
         
         if (transform.position.y < -7.5f)
@@ -84,6 +84,9 @@ public class Powerup : MonoBehaviour
                         break;
                     case 6:
                         player.NegativePowerupCollected();
+                        break;
+                    case 7:
+                        player.MissileCollected();
                         break;
                     default:
                         Debug.Log("Default Value");

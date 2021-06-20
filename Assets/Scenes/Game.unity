@@ -531,6 +531,85 @@ Transform:
   m_Father: {fileID: 1129285360}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &342558642
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 342558643}
+  - component: {fileID: 342558645}
+  - component: {fileID: 342558644}
+  m_Layer: 5
+  m_Name: MissileCount
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &342558643
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 342558642}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1715633663}
+  m_RootOrder: 9
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -284.83, y: 92.2}
+  m_SizeDelta: {x: 160, y: 30}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &342558644
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 342558642}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0.5127803, g: 0.9811321, b: 0.5210586, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_FontData:
+    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_FontSize: 14
+    m_FontStyle: 0
+    m_BestFit: 0
+    m_MinSize: 10
+    m_MaxSize: 40
+    m_Alignment: 0
+    m_AlignByGeometry: 0
+    m_RichText: 1
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 0
+    m_LineSpacing: 1
+  m_Text: 'Missiles:'
+--- !u!222 &342558645
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 342558642}
+  m_CullTransparentMesh: 1
 --- !u!1 &482821088
 GameObject:
   m_ObjectHideFlags: 0
@@ -1155,6 +1234,7 @@ MonoBehaviour:
   - {fileID: 1296085280135346812, guid: abdfd006d942dad41967752a56aeff83, type: 3}
   - {fileID: 8160235212105405024, guid: 2c42e56555097e04d92f3e2d811f0e4d, type: 3}
   - {fileID: 8854660628869275904, guid: ff74ad2af3b5fcf4d8683dea32c811ec, type: 3}
+  - {fileID: 1555971357243565597, guid: 08f0ea818acefa141925a46fa96ec516, type: 3}
   _waveCount: 1
   _waveMax: 3
   _enemiesInWave: 5
@@ -1922,6 +2002,7 @@ RectTransform:
   - {fileID: 1747585153}
   - {fileID: 547043858}
   - {fileID: 549443575}
+  - {fileID: 342558643}
   m_Father: {fileID: 0}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1959,7 +2040,10 @@ MonoBehaviour:
   _ammoCountText: {fileID: 1747585154}
   _ammoDepleted: 0
   _ammoCount: 0
-  maxAmmo: 15
+  _maxAmmo: 15
+  _missileCount: 0
+  _missileDepleted: 0
+  _missileCountText: {fileID: 342558644}
 --- !u!1 &1747585152
 GameObject:
   m_ObjectHideFlags: 0
@@ -2010,7 +2094,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.6176575, g: 0.9433962, b: 0.6309298, a: 1}
+  m_Color: {r: 0.5509434, g: 1, b: 0.56042844, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1

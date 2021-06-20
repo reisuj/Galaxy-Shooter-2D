@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: -3176029993113362773}
   m_Layer: 0
   m_Name: SmartEnemy
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -176,6 +176,7 @@ MonoBehaviour:
   _shieldChance: 0
   _shieldIsActive: 0
   _shields: {fileID: 411828041679017916}
+  _randomX: 0
 --- !u!1001 &7964206402516341764
 PrefabInstance:
   m_ObjectHideFlags: 0

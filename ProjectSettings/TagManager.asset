@@ -10,6 +10,7 @@ TagManager:
   - Powerup
   - SpawnManager
   - NegativePowerup
+  - HomingMissile
   layers:
   - Default
   - TransparentFX

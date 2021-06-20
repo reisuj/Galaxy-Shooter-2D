@@ -28,7 +28,7 @@ public class Player : MonoBehaviour
     private bool _shieldIsActive = false;
     #endregion POWERUPS
 
-    #region LASERS
+    #region WEAPONS
     [SerializeField]
     private float _laserOffset = 1.1f;
     [SerializeField]
@@ -45,7 +45,18 @@ public class Player : MonoBehaviour
     private AudioClip _ammoDepleted;
     private float _playAmmoDepleted;
     private int _heldAmmo; // Holds ammo amount during Negative Powerup duration
-    #endregion LASERS
+    [SerializeField]
+    private int _missileCount;
+    [SerializeField]
+    private int _maxMissiles;
+    [SerializeField]
+    private float _missileOffset = 1.0f;
+    [SerializeField]
+    private GameObject _missilePrefab;
+
+    #endregion WEAPONS
+
+
 
     [SerializeField]
     private int _playerLives = 3;
@@ -92,6 +103,7 @@ public class Player : MonoBehaviour
 
     void Start()
     {
+        _missileCount = 0;
         _currentAmmo = _maxAmmo;
         _thrustAvailable = true;
         _boostbar.SetStartBooster(_thrusterMax);
@@ -126,6 +138,7 @@ public class Player : MonoBehaviour
             }
             PlayerMovement();
             LaserControl();
+            MissileControl();            
         }               
     }
     void PlayerMovement()
@@ -178,7 +191,17 @@ public class Player : MonoBehaviour
         }
     }
 
-    #region Firing
+    void MissileControl()
+    {
+        if (Input.GetKeyDown(KeyCode.X) && _missileCount > 0)
+        {
+            Instantiate(_missilePrefab, (new Vector3(transform.position.x, transform.position.y + _missileOffset, 0)), Quaternion.identity);
+            _missileCount -= 1;
+            if (_missileCount < 0) { _missileCount = 0; }
+            _uiManager.UpdateMissileCount(-1);
+        }
+    }
+
     public void MultiShot()
     {
         for (int fireangle = -67; fireangle < 83; fireangle += 15)
@@ -210,9 +233,7 @@ public class Player : MonoBehaviour
         {
             StartCoroutine(PlayerDead());
         }
-    }
-
-    #endregion
+    }   
     public void ShieldCheck()
     {
         switch (_shieldStrength)
@@ -326,6 +347,12 @@ public class Player : MonoBehaviour
         }
         EngineDamageCheck(_playerLives);
         _uiManager.UpdateLives(_playerLives);
+    }
+
+    public void MissileCollected()
+    {
+        _missileCount += 1;
+        _uiManager.UpdateMissileCount(1);
     }
     public void AddScore(int points)
     {

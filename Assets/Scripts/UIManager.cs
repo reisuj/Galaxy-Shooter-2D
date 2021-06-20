@@ -33,7 +33,14 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     private int _ammoCount;
     [SerializeField]
-    private int maxAmmo = 15;
+    private int _maxAmmo = 15;
+    [SerializeField]
+    private int _missileCount;
+    private int _maxMissiles = 3;
+    [SerializeField]
+    private bool _missileDepleted;    
+    [SerializeField]
+    private Text _missileCountText;
 
     // Start is called before the first frame update
     void Start()
@@ -41,6 +48,7 @@ public class UIManager : MonoBehaviour
         _scoreText.text = "Score: " + 0;
         _gameOverText.text = "";
         _restartLevelText.gameObject.SetActive(false);
+
     }   
     public void UpdateScore(int playerScore)
     {
@@ -50,11 +58,10 @@ public class UIManager : MonoBehaviour
     {
         _livesImg.sprite = _livesSprites[currentLives];        
     }
-
     
     public void UpdateAmmo(int currentAmmo)
     {
-        _ammoCountText.text = "AMMO: " + currentAmmo + " / " + maxAmmo;
+        _ammoCountText.text = "AMMO: " + currentAmmo + " / " + _maxAmmo;
         if (currentAmmo < 1)
         {
             AmmoDepleted();
@@ -63,6 +70,20 @@ public class UIManager : MonoBehaviour
         {
             _ammoDepleted = false;
         }
+    }
+
+    public void UpdateMissileCount(int missileCount)
+    {
+        _missileCount += missileCount;
+        if (_missileCount < 0)
+        {
+            _missileCount = 0;
+        }
+        else if (_missileCount > _maxMissiles)
+        {
+            _missileCount = 3;
+        }
+        _missileCountText.text = "Missiles: " + _missileCount;
     }
 
     public void UpdateWave(int currentWave)

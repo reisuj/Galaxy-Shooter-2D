@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: -7292906912448131865}
   m_Layer: 0
   m_Name: EnemyXPowerup
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -177,6 +177,7 @@ MonoBehaviour:
   _shieldIsActive: 0
   _shields: {fileID: 7724114174492689336, guid: 4901b7ec696f82b418afc090750e7cb1,
     type: 3}
+  _randomX: 0
 --- !u!1001 &7964206402516341764
 PrefabInstance:
   m_ObjectHideFlags: 0
