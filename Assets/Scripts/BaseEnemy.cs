@@ -11,6 +11,7 @@ public abstract class BaseEnemy : MonoBehaviour
 
     protected Animator _anim;
 
+    
     protected BoxCollider2D _collider;
     [SerializeField]
     protected GameObject _enemyLaser;
@@ -42,8 +43,6 @@ public abstract class BaseEnemy : MonoBehaviour
 
     protected virtual void Start()
     {
-        
-
         movementTypeID = Random.Range(1, 4);
 
         _spawnManager = FindObjectOfType<SpawnManager>().GetComponent<SpawnManager>();
@@ -84,37 +83,23 @@ public abstract class BaseEnemy : MonoBehaviour
     }
     protected virtual void CalculateMovement()
     {
-        
+
         switch (movementTypeID)
         {
             case 1:
-                transform.Translate((Vector3.down + Vector3.left) * (_enemySpeed / 2) * Time.deltaTime);
+                transform.Translate((Vector3.down + Vector3.left) * (_enemySpeed / 2) * Time.deltaTime, Space.World);
                 break;
             case 2:
-                transform.Translate((Vector3.down + Vector3.right) * (_enemySpeed / 2) * Time.deltaTime);
+                transform.Translate((Vector3.down + Vector3.right) * (_enemySpeed / 2) * Time.deltaTime, Space.World);
                 break;
             case 3:
-                transform.Translate(Vector3.down * _enemySpeed * Time.deltaTime);
+                transform.Translate(Vector3.down * _enemySpeed * Time.deltaTime, Space.World);
                 break;
             default:
                 break;
         }
-
-        if (transform.position.y < -7.0f)
-        {
-            _randomX = Random.Range(-9.8f, 9.8f);
-            transform.position = new Vector3(_randomX, 7.0f, 0);
-        }
-
-        if (transform.position.x <= -11.0f)
-        {
-            transform.position = new Vector3(11.0f, transform.position.y, 0);
-        }
-        else if (transform.position.x >= 11.0f)
-        {
-            transform.position = new Vector3(-11.0f, transform.position.y, 0);
-        }
-    }
+        ResetScreenPosition();
+    }    
     protected virtual void FireLaser()
     {
         float _fireDelay = Random.Range(3.0f, 7.0f);
@@ -185,5 +170,23 @@ public abstract class BaseEnemy : MonoBehaviour
             _shieldIsActive = true;
             _shields.SetActive(true);
         }
+    }
+
+    protected virtual void ResetScreenPosition()
+    {
+        if (transform.position.y < -7.0f)
+        {
+            _randomX = Random.Range(-9.8f, 9.8f);
+            transform.position = new Vector3(_randomX, 7.0f, 0);
+        }
+
+        if (transform.position.x <= -11.0f)
+        {
+            transform.position = new Vector3(11.0f, transform.position.y, 0);
+        }
+        else if (transform.position.x >= 11.0f)
+        {
+            transform.position = new Vector3(-11.0f, transform.position.y, 0);
+        }    
     }
 }

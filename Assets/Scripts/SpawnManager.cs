@@ -50,13 +50,12 @@ public class SpawnManager : MonoBehaviour
         WaveControl();
     }
     IEnumerator SpawnEnemy()
-    {
-        _uiManager.UpdateWave(_waveCount);
+    {        
         yield return new WaitForSeconds(5.0f);
         while (_enemiesSpawned < _enemiesInWave && _playerIsAlive == true)
         {
             float _enemyX = Random.Range(-9.0f, 9.0f);
-            _enemyID = Random.Range(0, 4);
+            _enemyID = Random.Range(0, 5);
             GameObject newEnemy = Instantiate(_enemiesToSpawn[_enemyID], (new Vector3(_enemyX, 10.5f, 0)), Quaternion.identity);            
             newEnemy.transform.parent = _enemyContainer.transform;
             _enemiesSpawned++;
@@ -71,6 +70,7 @@ public class SpawnManager : MonoBehaviour
 
     IEnumerator NextWave()
     {
+        _uiManager.UpdateWave(_waveCount);
         yield return new WaitForSeconds(5.0f);
         StartCoroutine(SpawnEnemy());
     }
