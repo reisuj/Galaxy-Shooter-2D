@@ -27,7 +27,7 @@ public abstract class BaseEnemy : MonoBehaviour
     [SerializeField]
     protected GameObject _explosionFX;
 
-    protected bool _canFire = true;
+    protected bool _canFire = false;
     protected float _fireTime = 0.0f;
 
     protected int movementTypeID;
@@ -102,8 +102,8 @@ public abstract class BaseEnemy : MonoBehaviour
     }    
     protected virtual void FireLaser()
     {
-        float _fireDelay = Random.Range(3.0f, 7.0f);
-        if (Time.time > _fireTime && transform.position.y < 6.0f && _canFire == true)
+        float _fireDelay = Random.Range(3.0f, 5.0f);
+        if (Time.time > _fireTime && _canFire == true)
         {
             _fireTime = Time.time + _fireDelay;
             AudioSource.PlayClipAtPoint(_laserAudio, transform.position, 1.0f);
@@ -112,7 +112,7 @@ public abstract class BaseEnemy : MonoBehaviour
     }
     protected virtual void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.tag == "PlayerLaser")
+        if (other.tag == "PlayerLaser" || other.tag == "HomingMissile")
         {
             if (_shieldIsActive == false)
             {
@@ -174,7 +174,7 @@ public abstract class BaseEnemy : MonoBehaviour
 
     protected virtual void ResetScreenPosition()
     {
-        if (transform.position.y < -7.0f)
+        if (transform.position.y < -8.0f)
         {
             _randomX = Random.Range(-9.8f, 9.8f);
             transform.position = new Vector3(_randomX, 7.0f, 0);
@@ -189,4 +189,16 @@ public abstract class BaseEnemy : MonoBehaviour
             transform.position = new Vector3(-11.0f, transform.position.y, 0);
         }    
     }
+
+    private void OnBecameVisible()
+    {
+        _canFire = true;
+    }
+
+    private void OnBecameInvisible()
+    {
+        _canFire = false;
+    }
+
+
 }

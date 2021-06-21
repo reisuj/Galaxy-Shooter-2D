@@ -12,9 +12,10 @@ GameObject:
   - component: {fileID: 7990371369547605445}
   - component: {fileID: -1410500462912570507}
   - component: {fileID: 6709642088931480973}
+  - component: {fileID: -660381585182586625}
   m_Layer: 0
   m_Name: HomingMissile
-  m_TagString: Untagged
+  m_TagString: HomingMissile
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -28,7 +29,7 @@ Transform:
   m_GameObject: {fileID: 5526829441550533126}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 4.230727, y: -1.4977365, z: 0}
-  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
+  m_LocalScale: {x: 0.75, y: 0.75, z: 0.75}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -117,3 +118,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 117737a5025e93340a77b8e46d37b861, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _missileSpeed: 4.5
+  _availableEnemies: []
+--- !u!70 &-660381585182586625
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5526829441550533126}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0.009672483, y: -0.009672801}
+  m_Size: {x: 0.19687335, y: 1.2516365}
+  m_Direction: 0

@@ -24,7 +24,7 @@ public class EnemyRamBehaviour : BaseEnemy
 
     protected override void Update()
     {
-        base.Update();        
+        base.Update();
         transform.Rotate(0, 0, _rotation);
         RammingCheck();
     }
@@ -38,11 +38,11 @@ public class EnemyRamBehaviour : BaseEnemy
             dir = dir.normalized;
             this.transform.position -= dir * Time.deltaTime * (_enemySpeed * 2);
         }
-    }
-
-    protected override void EnemyDestroyed()
-    {
-        base.EnemyDestroyed();
-        _circleCollider.enabled = false;
+        else if (_distance < .3f)
+        {
+            _circleCollider.enabled = false;
+            EnemyDestroyed();
+        }
     }
 }
+
