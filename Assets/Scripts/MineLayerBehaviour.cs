@@ -5,14 +5,33 @@ using UnityEngine;
 public class MineLayerBehaviour : BaseEnemy
 {
     [SerializeField]
-    private float _rotation = 3.0f;
+    private float _rotation = 1.0f;
     [SerializeField]
     private float _rotateSpeed = 3.0f;
     private CircleCollider2D _circleCollider;
-
+    [SerializeField]
+    private float _startPositionY;
+    [SerializeField]
+    private float _startPositionX;
     protected override void Start()
     {
-        base.Start();
+        _startPositionY = Random.Range(1.0f, 4.5f);
+        _startPositionX = 13.0f;
+        this.transform.position = new Vector3(_startPositionX, _startPositionY, 0);
+
+        _spawnManager = FindObjectOfType<SpawnManager>().GetComponent<SpawnManager>();
+
+        if (_spawnManager == null)
+        {
+            Debug.LogError("SpawnManager is NULL!");
+        }
+
+        _player = GameObject.Find("Player").GetComponent<Player>();
+
+        if (_player == null)
+        {
+            Debug.LogError("Player is NULL!");
+        }
 
         _circleCollider = GetComponent<CircleCollider2D>();
         if (_circleCollider == null)
@@ -26,7 +45,16 @@ public class MineLayerBehaviour : BaseEnemy
     {
         base.Update();
         transform.Rotate(0, 0, _rotation);
-        transform.Translate(Vector3.down * _rotateSpeed * Time.deltaTime);
+        if (transform.position.x < -13.0f)
+        {
+            _startPositionY = Random.Range(1.0f, 4.5f);
+            transform.position = new Vector3(_startPositionX, _startPositionY, 0);
+        }
+    }
+
+    protected override void CalculateMovement()
+    {
+        transform.Translate(Vector3.left * (_enemySpeed / 2) * Time.deltaTime, Space.World);
     }
 
     protected override void EnemyDestroyed()
