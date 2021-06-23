@@ -59,7 +59,7 @@ public class HomingMissile : MonoBehaviour
                 transform.rotation = Quaternion.Euler(Vector3.forward * (angle + offset));
             }
         }
-        else if (_enemyTarget == null)
+        else
         {
             _enemyTarget = GetNearestEnemy();
         }
@@ -68,6 +68,4 @@ public class HomingMissile : MonoBehaviour
     {
         Destroy(this.gameObject);
     }
-
-
 }

@@ -7,7 +7,6 @@ public class MineLayerBehaviour : BaseEnemy
     [SerializeField]
     private float _rotation = 1.0f;
     [SerializeField]
-    private float _rotateSpeed = 3.0f;
     private CircleCollider2D _circleCollider;
     [SerializeField]
     private float _startPositionY;
@@ -61,7 +60,6 @@ public class MineLayerBehaviour : BaseEnemy
     {
         _enemySpeed = 0;
         _rotation = 0;
-        _rotateSpeed = 0;
         AudioSource.PlayClipAtPoint(_explosionAudio, new Vector3(0, 0, -10), 1.0f);
         Instantiate(_explosionFX, transform.position, Quaternion.identity);
         _circleCollider.enabled = false;
