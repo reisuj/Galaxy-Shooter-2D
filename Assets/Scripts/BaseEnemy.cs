@@ -9,8 +9,6 @@ public abstract class BaseEnemy : MonoBehaviour
 
     protected Player _player;
 
-    protected Animator _anim;
-
     
     protected BoxCollider2D _collider;
     [SerializeField]
@@ -57,13 +55,6 @@ public abstract class BaseEnemy : MonoBehaviour
         if (_player == null)
         {
             Debug.LogError("Player is NULL!");
-        }
-
-        _anim = GetComponent<Animator>();
-
-        if (_anim == null)
-        {
-            Debug.LogError("The Animator is NULL!");
         }
 
         _collider = GetComponent<BoxCollider2D>();
@@ -199,6 +190,4 @@ public abstract class BaseEnemy : MonoBehaviour
     {
         _canFire = false;
     }
-
-
 }

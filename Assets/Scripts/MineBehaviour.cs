@@ -4,14 +4,14 @@ using UnityEngine;
 
 public class MineBehaviour : MonoBehaviour
 {
-    private Vector3 _destination;
     private float _speed;
-    private float _destinationX;
     private float _destinationY;
     [SerializeField]
     private GameObject _explosion;
     [SerializeField]
     private AudioClip _explosionAudio;
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -22,6 +22,11 @@ public class MineBehaviour : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        MineMoveMent();
+    }
+
+    private void MineMoveMent()
+    {
         if (transform.position.y > _destinationY)
         {
             transform.Translate(Vector3.down * _speed * Time.deltaTime, Space.World);
@@ -29,6 +34,7 @@ public class MineBehaviour : MonoBehaviour
         else
         {
             transform.position = new Vector3(transform.position.x, _destinationY, 0);
+            StartCoroutine(StartSelfDestruct());
         }
     }
 
@@ -41,9 +47,21 @@ public class MineBehaviour : MonoBehaviour
             {
                 player.Damage();
             }
-            AudioSource.PlayClipAtPoint(_explosionAudio, new Vector3(0, 0, -10), 1.0f);
-            Instantiate(_explosion, transform.position, Quaternion.identity);
-            Destroy(this.gameObject);
+            DestroyMine();
         }
+    }
+
+    private void DestroyMine()
+    {
+        AudioSource.PlayClipAtPoint(_explosionAudio, new Vector3(0, 0, -10), 1.0f);
+        Instantiate(_explosion, transform.position, Quaternion.identity);
+        Destroy(this.gameObject);
+    }
+
+    IEnumerator StartSelfDestruct()
+    {
+        float _selfDestructTimer = Random.Range(10.0f, 20.0f);
+        yield return new WaitForSeconds(_selfDestructTimer);
+        DestroyMine();
     }
 }
