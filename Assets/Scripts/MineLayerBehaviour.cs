@@ -42,7 +42,6 @@ public class MineLayerBehaviour : BaseEnemy
         if (transform.position.x < -13.2f || transform.position.x > 13.2f)
         {
             SetStartPosition();
-            //Destroy(this.gameObject);
         }
     }
 
@@ -69,7 +68,6 @@ public class MineLayerBehaviour : BaseEnemy
         {
             _startPositionX = 13.0f;
         }
-
         this.transform.position = new Vector3(_startPositionX, _startPositionY, 0);
     }
 
