@@ -11,6 +11,8 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     private Text _waveText;
     [SerializeField]
+    private Text _waveCountText;
+    [SerializeField]
     private Image _livesImg;
     [SerializeField]
     private Sprite[] _livesSprites;
@@ -48,8 +50,14 @@ public class UIManager : MonoBehaviour
         _scoreText.text = "Score: " + 0;
         _gameOverText.text = "";
         _restartLevelText.gameObject.SetActive(false);
+        
 
-    }   
+    }
+
+    public void GameStarted()
+    {
+        StartCoroutine(WaveDisplay(1));
+    }
     public void UpdateScore(int playerScore)
     {
         _scoreText.text = "Score: " + playerScore;
@@ -93,6 +101,7 @@ public class UIManager : MonoBehaviour
     IEnumerator WaveDisplay(int currentWave)
     {
         _waveText.text = "WAVE " + currentWave;
+        _waveCountText.text = "WAVE " + currentWave;
         yield return new WaitForSeconds(5.0f);
         _waveText.text = "";
     }

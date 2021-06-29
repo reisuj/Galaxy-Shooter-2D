@@ -531,6 +531,85 @@ Transform:
   m_Father: {fileID: 1129285360}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &305273824
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 305273825}
+  - component: {fileID: 305273827}
+  - component: {fileID: 305273826}
+  m_Layer: 5
+  m_Name: Wave_Track
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &305273825
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 305273824}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1715633663}
+  m_RootOrder: 10
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 300, y: 206.99}
+  m_SizeDelta: {x: 160, y: 25.97}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &305273826
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 305273824}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0.4188679, g: 1, b: 0.47740528, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_FontData:
+    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_FontSize: 20
+    m_FontStyle: 0
+    m_BestFit: 0
+    m_MinSize: 2
+    m_MaxSize: 40
+    m_Alignment: 0
+    m_AlignByGeometry: 0
+    m_RichText: 1
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 1
+    m_LineSpacing: 1
+  m_Text: 'Wave:'
+--- !u!222 &305273827
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 305273824}
+  m_CullTransparentMesh: 1
 --- !u!1 &342558642
 GameObject:
   m_ObjectHideFlags: 0
@@ -1235,8 +1314,9 @@ MonoBehaviour:
   - {fileID: 8160235212105405024, guid: 2c42e56555097e04d92f3e2d811f0e4d, type: 3}
   - {fileID: 8854660628869275904, guid: ff74ad2af3b5fcf4d8683dea32c811ec, type: 3}
   - {fileID: 1555971357243565597, guid: 08f0ea818acefa141925a46fa96ec516, type: 3}
+  _powerUpID: 0
   _waveCount: 1
-  _waveMax: 3
+  _waveMax: 6
   _enemiesInWave: 5
   _enemiesSpawned: 0
   _enemiesAlive: 0
@@ -1246,7 +1326,10 @@ MonoBehaviour:
   - {fileID: 7081814606214135961, guid: 07d5156940abf2d4f86aa74b13763ced, type: 3}
   - {fileID: 2615873515108755182, guid: f238d957c7201454284ae00ad1248c7b, type: 3}
   - {fileID: 2615873515108755182, guid: a98faaeafbf3c9843b10fea5e601c806, type: 3}
+  - {fileID: 3052370537164587605, guid: 687d8233fb0656d4ab0bca83254884dd, type: 3}
   _enemyID: 0
+  weight: 0
+  _total: 0
 --- !u!4 &1129285360
 Transform:
   m_ObjectHideFlags: 0
@@ -1856,7 +1939,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -100, y: -50}
+  m_AnchoredPosition: {x: -100, y: -50.00003}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1714060473
@@ -1872,7 +1955,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.50784975, g: 0.9716981, b: 0.5197654, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -2003,6 +2086,7 @@ RectTransform:
   - {fileID: 547043858}
   - {fileID: 549443575}
   - {fileID: 342558643}
+  - {fileID: 305273825}
   m_Father: {fileID: 0}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2025,6 +2109,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _scoreText: {fileID: 1714060473}
   _waveText: {fileID: 549443576}
+  _waveCountText: {fileID: 305273826}
   _livesImg: {fileID: 1150316808}
   _livesSprites:
   - {fileID: 21300000, guid: ba53e111f0125654cabfd4eefaf3a657, type: 3}

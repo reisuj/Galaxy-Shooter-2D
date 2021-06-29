@@ -40,7 +40,6 @@ public class EnemyRamBehaviour : BaseEnemy
         }
         else if (_distance < .3f)
         {
-            _circleCollider.enabled = false;
             EnemyDestroyed();
         }
     }

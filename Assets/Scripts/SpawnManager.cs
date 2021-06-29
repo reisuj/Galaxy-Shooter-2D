@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class SpawnManager : MonoBehaviour
 {
-    //[SerializeField]
-    //private GameObject _enemyPrefab = null;
     [SerializeField]
     private GameObject _enemyContainer = null;
     [SerializeField]
@@ -14,6 +12,7 @@ public class SpawnManager : MonoBehaviour
     private bool _playerIsAlive = false;
     [SerializeField]
     private GameObject[] _powerups = null;
+    [SerializeField]
     private int _powerUpID = 0;
 
     // Wave System
@@ -34,7 +33,25 @@ public class SpawnManager : MonoBehaviour
     [SerializeField]
     private int _enemyID;
 
+    
 
+
+    private int[] _table =
+    {
+        100, // Ammo Powerup
+        75, // TripleShot Powerup
+        50, // Shield Powerup
+        50, // Speed Powerup
+        50, // Health Powerup
+        30, // Negative Powerup
+        30, // MultiShot Powerup
+        25  // Missile Powerup
+    };
+
+    [SerializeField]
+    private int weight;
+    [SerializeField]
+    private int _total;
     // Start is called before the first frame update
     void Start()
     {
@@ -42,6 +59,11 @@ public class SpawnManager : MonoBehaviour
         if (_uiManager == null)
         {
             Debug.LogError("The UIManager is NULL!!");
+        }
+
+        foreach (var item in _table)
+        {
+            _total += item;
         }
     }
     // Update is called once per frame
@@ -51,17 +73,28 @@ public class SpawnManager : MonoBehaviour
     }
     IEnumerator SpawnEnemy()
     {        
-        yield return new WaitForSeconds(5.0f);
+        yield return new WaitForSeconds(3.0f);
         while (_enemiesSpawned < _enemiesInWave && _playerIsAlive == true)
         {
             float _enemyX = Random.Range(-9.0f, 9.0f);
-            _enemyID = Random.Range(0, 5);
+            _enemyID = Random.Range(0, _waveCount);
             GameObject newEnemy = Instantiate(_enemiesToSpawn[_enemyID], (new Vector3(_enemyX, 10.5f, 0)), Quaternion.identity);            
             newEnemy.transform.parent = _enemyContainer.transform;
             _enemiesSpawned++;
             _enemiesAlive++;            
             yield return new WaitForSeconds(4.0f);
         }        
+    }
+    IEnumerator SpawnPowerup()
+    {
+        while (_playerIsAlive == true)
+        {
+            float _powerupX = Random.Range(-9.0f, 9.0f);
+            PowerUpSelector();
+            GameObject newPowerup = Instantiate(_powerups[_powerUpID], (new Vector3(_powerupX, 10.5f, 0)), Quaternion.identity);
+            newPowerup.transform.parent = _powerupContainer.transform;
+            yield return new WaitForSeconds(Random.Range(3.0f, 7.0f));
+        }
     }
     public void EnemyKilled()
     {
@@ -82,7 +115,7 @@ public class SpawnManager : MonoBehaviour
             if (_enemiesSpawned == _enemiesInWave && _enemiesAlive == 0)
             {
                 _enemiesSpawned = 0;
-                _enemiesInWave *= (_waveCount + 1);
+                _enemiesInWave += 5;
                 _enemiesAlive = 0;
                 _waveCount++;
                 StartCoroutine(NextWave());
@@ -94,17 +127,7 @@ public class SpawnManager : MonoBehaviour
         }
     }
 
-    IEnumerator SpawnPowerup()
-    {
-        while (_playerIsAlive == true)
-        {
-            float _powerupX = Random.Range(-9.0f, 9.0f);
-            PowerUpSelector();
-            GameObject newPowerup = Instantiate(_powerups[_powerUpID], (new Vector3(_powerupX, 10.5f, 0)), Quaternion.identity);
-            newPowerup.transform.parent = _powerupContainer.transform;
-            yield return new WaitForSeconds(Random.Range(3.0f, 7.0f));
-        }        
-    }
+
     public void StopSpawning()
     {
         _playerIsAlive = false;
@@ -116,43 +139,24 @@ public class SpawnManager : MonoBehaviour
         _playerIsAlive = true;
         StartCoroutine(SpawnEnemy());
         StartCoroutine(SpawnPowerup());
+        _uiManager.GameStarted();
     }
 
     private void PowerUpSelector()
     {
-        int weight = Random.Range(1, 111);
+        weight = Random.Range(0, _total);
         
-        if (weight < 5)
+        for (int i = 0; i < _table.Length; i++)
         {
-            _powerUpID = 6; //Negative_powerUp
-        }
-        else if (weight < 10)
-        {
-            _powerUpID = 5; //Multi-Shot_PowerUp
-        }
-        else if (weight < 30)
-        {
-            _powerUpID = 4; //Health_PowerUp
-        }
-        else if (weight< 50)
-        {
-            _powerUpID = 3; //Ammo_PowerUp
-        }
-        else if (weight < 70)
-        {
-            _powerUpID = 2; //ShieldPowerup
-        }
-        else if (weight < 90)
-        {
-            _powerUpID = 1; //SpeedPowerup
-        }
-        else if (weight < 110)
-        {
-            _powerUpID = 0; //TripleShotPowerup
-        }
-        else
-        {
-            return;
-        }            
+            if (weight <= _table[i])
+            {
+                _powerUpID = i;
+                return;
+            }
+            else
+            {
+                weight -= _table[i];
+            }
+        }           
     }
 }
