@@ -33,6 +33,7 @@ public class SpawnManager : MonoBehaviour
     [SerializeField]
     private int _enemyID;
 
+    private IEnumerator _enemyRoutine;
     
 
 
@@ -65,6 +66,8 @@ public class SpawnManager : MonoBehaviour
         {
             _total += item;
         }
+
+        _enemyRoutine = SpawnEnemy();
     }
     // Update is called once per frame
     void Update()
@@ -96,16 +99,16 @@ public class SpawnManager : MonoBehaviour
             yield return new WaitForSeconds(Random.Range(3.0f, 7.0f));
         }
     }
-    public void EnemyKilled()
-    {
-        _enemiesAlive--;
-    }
-
     IEnumerator NextWave()
     {
         _uiManager.UpdateWave(_waveCount);
         yield return new WaitForSeconds(5.0f);
         StartCoroutine(SpawnEnemy());
+    }
+
+    public void EnemyKilled()
+    {
+        _enemiesAlive--;
     }
 
     private void WaveControl()
@@ -123,7 +126,8 @@ public class SpawnManager : MonoBehaviour
         }
         else
         {
-            StopAllCoroutines();
+            StopCoroutine(_enemyRoutine);
+            StartBossLevel();
         }
     }
 
@@ -158,5 +162,20 @@ public class SpawnManager : MonoBehaviour
                 weight -= _table[i];
             }
         }           
+    }
+
+    private void StartBossLevel()
+    {
+        // Set Wave message to Boss Wave
+        // Instantiate boss above screen
+        // Play dramatic music
+        // Have boss move slowly down to center screen
+
+        // Start BossRoutine coroutine for battle
+        StartCoroutine(BossRoutine());
+    }
+    private IEnumerator BossRoutine()
+    {
+        yield return new WaitForSeconds(1.0f);
     }
 }
