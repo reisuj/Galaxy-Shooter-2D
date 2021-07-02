@@ -8,6 +8,9 @@ public class BossBehaviour : MonoBehaviour
     private float _speed = 1.5f;
     [SerializeField]
     private int _bossHealth;
+    //private UIManager _uiManager;
+    [SerializeField]
+    private BossHealthBar _bossHealthBar;
 
     [SerializeField]
     private GameObject _explosion1;
@@ -16,7 +19,13 @@ public class BossBehaviour : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        _bossHealth = 100;
+        _bossHealth = 200;
+
+        //_uiManager = GameObject.Find("Canvas").GetComponent<UIManager>();
+        //if (_uiManager == null)
+        //{
+        //    Debug.LogError("The UIManager is NULL!!");
+        //}
     }
 
     // Update is called once per frame
@@ -39,6 +48,7 @@ public class BossBehaviour : MonoBehaviour
     private void HitByPlayer(int damage)
     {
         _bossHealth -= damage;
+        _bossHealthBar.DamageBoss(_bossHealth);
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -58,6 +68,4 @@ public class BossBehaviour : MonoBehaviour
             HitByPlayer(10);
         }
     }
-
-
 }
