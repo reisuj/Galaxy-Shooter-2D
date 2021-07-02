@@ -372,7 +372,7 @@ public class Player : MonoBehaviour
         AudioSource.PlayClipAtPoint(_explosionAudio, new Vector3(0, 0, -10), 1.0f);
         Instantiate(_explosion, transform.position, Quaternion.identity);
         yield return new WaitForSeconds(1.0f);
-        _spawnManager.StopSpawning();
+        _spawnManager.PlayerDied();
         _uiManager.GameOver();
         Destroy(this.gameObject);
     }

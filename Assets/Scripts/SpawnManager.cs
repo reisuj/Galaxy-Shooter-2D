@@ -132,7 +132,7 @@ public class SpawnManager : MonoBehaviour
     }
 
 
-    public void StopSpawning()
+    public void PlayerDied()
     {
         _playerIsAlive = false;
         Destroy(_enemyContainer);
