@@ -4,13 +4,31 @@ using UnityEngine;
 
 public class BossBehaviour : MonoBehaviour
 {
-    private float _destinationY = 3.5f;
+    private float _destinationY = 5.0f;
     private float _speed = 1.5f;
     [SerializeField]
+    private int _laserToFire;
+    [SerializeField]
     private int _bossHealth;
-    //private UIManager _uiManager;
+    [SerializeField]
+    private int _bossMaxHealth = 200;
+    private UIManager _uiManager;
     [SerializeField]
     private BossHealthBar _bossHealthBar;
+    [SerializeField]
+    private GameObject _enemyLaser;
+    [SerializeField]
+    private AudioClip _laserAudio;
+    [SerializeField]
+    private int _missileActivation;
+    [SerializeField]
+    private bool _canFireMissile;
+    [SerializeField]
+    private int _lightningActivation;
+    [SerializeField]
+    private bool _canUseLightning;
+    [SerializeField]
+    private GameObject _bossMissile;
 
     [SerializeField]
     private GameObject _explosion1;
@@ -19,13 +37,17 @@ public class BossBehaviour : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        _bossHealth = 200;
+        _bossHealth = _bossMaxHealth;
 
-        //_uiManager = GameObject.Find("Canvas").GetComponent<UIManager>();
-        //if (_uiManager == null)
-        //{
-        //    Debug.LogError("The UIManager is NULL!!");
-        //}
+        _uiManager = GameObject.Find("Canvas").GetComponent<UIManager>();
+        if (_uiManager == null)
+        {
+            Debug.LogError("The UIManager is NULL!!");
+        }
+
+        _uiManager.BossWave();
+
+        StartCoroutine(WeaponControl());        
     }
 
     // Update is called once per frame
@@ -42,13 +64,15 @@ public class BossBehaviour : MonoBehaviour
         }
         else
         {
-            transform.position = new Vector3(transform.position.x, _destinationY, 0);
+            transform.position = new Vector3(transform.position.x, _destinationY, 0);         
         }
     }
     private void HitByPlayer(int damage)
     {
         _bossHealth -= damage;
         _bossHealthBar.DamageBoss(_bossHealth);
+        _canFireMissile = true;
+        _canUseLightning = true;
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -66,6 +90,71 @@ public class BossBehaviour : MonoBehaviour
             newExplosion.transform.localScale = new Vector3(0.5f, 0.5f, 1);
             Destroy(other.gameObject);
             HitByPlayer(10);
+        }
+    }
+
+    IEnumerator WeaponControl()
+    {
+        yield return new WaitForSeconds(5.0f);
+        while (transform.position.y ==_destinationY)
+        {
+            LaserControl();
+            MissileControl();
+            LightningControl();
+            yield return new WaitForSeconds(Random.Range(1.0f, 2.5f));
+        }        
+    }
+
+    private void MissileControl()
+    {
+        if (_bossHealth%_missileActivation == 0 && _canFireMissile == true)
+        {
+            Debug.Log("Fire Missile");
+            int missileToFire = Random.Range(0, 2);
+            if (missileToFire == 0)
+            {
+                Instantiate(_bossMissile, (new Vector3(-1.0f, 3.6f, 0)), Quaternion.identity);
+            }
+            else
+            {
+                Instantiate(_bossMissile, (new Vector3(1.0f, 3.6f, 0)), Quaternion.identity);
+            }            
+            _canFireMissile = false;
+        }
+    }
+
+    private void LightningControl()
+    {
+        if (_bossHealth%_lightningActivation == 0 && _canUseLightning== true)
+        {
+            Debug.Log("Activate Lightning");
+            _canUseLightning = false;
+        }
+    }
+
+    private void LaserControl()
+    {
+        _laserToFire = Random.Range(0, 3);
+        switch (_laserToFire)
+        {
+            case 0:
+                AudioSource.PlayClipAtPoint(_laserAudio, transform.position, 1.0f);
+                Instantiate(_enemyLaser, new Vector3(0.0f, 1.4f, 0), Quaternion.identity);
+                break;
+            case 1:
+                AudioSource.PlayClipAtPoint(_laserAudio, transform.position, 1.0f);
+                Instantiate(_enemyLaser, new Vector3(-7.0f, 4.0f, 0), Quaternion.identity);
+                AudioSource.PlayClipAtPoint(_laserAudio, transform.position, 1.0f);
+                Instantiate(_enemyLaser, new Vector3(7.0f, 4.0f, 0), Quaternion.identity);
+                break;
+            case 2:
+                AudioSource.PlayClipAtPoint(_laserAudio, transform.position, 1.0f);
+                Instantiate(_enemyLaser, new Vector3(-2.1f, 1.15f, 0), Quaternion.identity);
+                AudioSource.PlayClipAtPoint(_laserAudio, transform.position, 1.0f);
+                Instantiate(_enemyLaser, new Vector3(2.1f, 1.15f, 0), Quaternion.identity);
+                break;
+            default:
+                break;
         }
     }
 }

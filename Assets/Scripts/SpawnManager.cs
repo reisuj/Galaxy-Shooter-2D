@@ -127,7 +127,7 @@ public class SpawnManager : MonoBehaviour
         else
         {
             StopCoroutine(_enemyRoutine);
-            StartBossLevel();
+            //StartBossLevel();
         }
     }
 
@@ -164,18 +164,18 @@ public class SpawnManager : MonoBehaviour
         }           
     }
 
-    private void StartBossLevel()
-    {
-        // Set Wave message to Boss Wave
-        // Instantiate boss above screen
-        // Play dramatic music
-        // Have boss move slowly down to center screen
+    //private void StartBossLevel()
+    //{
+    //    // Set Wave message to Boss Wave
+    //    // Instantiate boss above screen
+    //    // Play dramatic music
+    //    // Have boss move slowly down to center screen
 
-        // Start BossRoutine coroutine for battle
-        StartCoroutine(BossRoutine());
-    }
-    private IEnumerator BossRoutine()
-    {
-        yield return new WaitForSeconds(1.0f);
-    }
+    //    // Start BossRoutine coroutine for battle
+    //    StartCoroutine(BossRoutine());
+    //}
+    //private IEnumerator BossRoutine()
+    //{
+    //    yield return new WaitForSeconds(1.0f);
+    //}
 }

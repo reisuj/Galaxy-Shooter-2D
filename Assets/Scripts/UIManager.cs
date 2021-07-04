@@ -105,6 +105,18 @@ public class UIManager : MonoBehaviour
         yield return new WaitForSeconds(5.0f);
         _waveText.text = "";
     }
+
+    public void BossWave()
+    {
+        StartCoroutine(BossDisplay());
+    }
+    IEnumerator BossDisplay()
+    {
+        _waveText.text = "BOSS WAVE!!";
+        _waveCountText.text = "BOSS WAVE!!";
+        yield return new WaitForSeconds(5.0f);
+        _waveText.text = "";
+    }
     public IEnumerator GameOverSequence()
     {
         yield return new WaitForSeconds(2.0f);
