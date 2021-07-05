@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class EnemyRamBehaviour : BaseEnemy
 {
+    private CircleCollider2D _circleCollider;
     [SerializeField]
     private float _rotation = 2.5f;
     [SerializeField]
-    private float _distance;
-    private CircleCollider2D _circleCollider;
+    private float _distance;    
 
     // Start is called before the first frame update
     protected override void Start()
@@ -42,8 +42,6 @@ public class EnemyRamBehaviour : BaseEnemy
         {
             EnemyDestroyed();
         }
-    }
-
-    
+    }    
 }
 

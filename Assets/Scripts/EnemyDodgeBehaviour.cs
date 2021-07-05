@@ -6,6 +6,7 @@ public class EnemyDodgeBehaviour : BaseEnemy
 {
     private int _moveDirection;
     private bool _canDodge = true;
+
     // Start is called before the first frame update
     protected override void Start()
     {

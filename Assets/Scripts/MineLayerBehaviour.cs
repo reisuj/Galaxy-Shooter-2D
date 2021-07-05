@@ -4,15 +4,18 @@ using UnityEngine;
 
 public class MineLayerBehaviour : BaseEnemy
 {
-    [SerializeField]
-    private float _rotation = 1.0f;
+    
     [SerializeField]
     private CircleCollider2D _circleCollider;
+
+    private int _randomInt;
     [SerializeField]
     private float _startPositionY;
     [SerializeField]
     private float _startPositionX;
-    private int _randomInt;
+    [SerializeField]
+    private float _rotation = 1.0f;
+    
     protected override void Start()
     {
         SetStartPosition();
@@ -71,7 +74,7 @@ public class MineLayerBehaviour : BaseEnemy
         this.transform.position = new Vector3(_startPositionX, _startPositionY, 0);
     }
 
-    private void GetReferences()
+    protected override void GetReferences()
     {
         _spawnManager = FindObjectOfType<SpawnManager>().GetComponent<SpawnManager>();
 

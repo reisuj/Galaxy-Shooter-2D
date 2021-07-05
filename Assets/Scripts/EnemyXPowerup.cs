@@ -17,7 +17,7 @@ public class EnemyXPowerup : BaseEnemy
 
         if (hit.collider != null)
         {
-            if (hit.collider.tag == "Powerup" && _canShoot == true && hit.collider.name != "Negative_Powerup")
+            if (hit.collider.CompareTag("Powerup") && _canShoot == true && hit.collider.name != "Negative_Powerup")
             {
                 AudioSource.PlayClipAtPoint(_laserAudio, transform.position, 1.0f);
                 Instantiate(_enemyLaser, transform.position, Quaternion.identity);

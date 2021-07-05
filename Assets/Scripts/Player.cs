@@ -4,31 +4,64 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    #region MOVEMENT
-    [SerializeField]
-    private float _playerSpeed = 5.0f;
-    [SerializeField]
-    private float _baseSpeed = 5.0f;    
-    [SerializeField]
-    private float _speedMultiplier = 2.0f;
-    #endregion MOVEMENT
 
-    #region POWERUPS
+    #region GAMEOBJECTS
     [SerializeField]
     private GameObject _laserPrefab;
     [SerializeField]
     private GameObject _tripleShotPrefab;
     [SerializeField]
+    private GameObject _missilePrefab;
+    [SerializeField]
     private GameObject _shieldVisual;
     [SerializeField]
-    private bool multiShotActive = false;
+    private GameObject _rightEngine;
     [SerializeField]
-    private bool tripleShotActive = false;
+    private GameObject _leftEngine;
     [SerializeField]
-    private bool _shieldIsActive = false;
-    #endregion POWERUPS
+    private GameObject _particleSystem;
+    [SerializeField]
+    private GameObject _explosion;
+    #endregion GAMEOBJECTS
 
-    #region WEAPONS
+    #region AUDIO
+    [SerializeField]
+    private AudioClip _laserAudio;
+    [SerializeField]
+    private AudioClip _ammoDepleted;
+    [SerializeField]
+    private AudioClip _explosionAudio;
+    #endregion AUDIO
+
+    #region OTHER REFERENCES
+    [SerializeField]
+    private BoostBar _boostbar;
+    private UIManager _uiManager;
+    private SpawnManager _spawnManager;
+    private Renderer _shieldColor;
+    private Color _shieldDefaultColor;
+    #endregion OTHER REFERENCES
+
+    #region VARIABLES INT, FLOAT, STRING, FLOAT
+    //INTEGERS
+    [SerializeField]
+    private int _currentAmmo;
+    [SerializeField]
+    private int _maxAmmo = 1;    
+    [SerializeField]
+    private int _missileCount;
+    [SerializeField]
+    private int _maxMissiles;
+    [SerializeField]
+    private int _playerLives = 3;
+    [SerializeField]
+    private int _score;
+    [SerializeField]
+    private int _thrusterLevel = 100;
+    private int _thrusterMax = 100;
+    private int _shieldStrength = 0;
+    private int _heldAmmo; // Holds ammo amount during Negative Powerup duration
+    // FLOATS
     [SerializeField]
     private float _laserOffset = 1.1f;
     [SerializeField]
@@ -36,70 +69,28 @@ public class Player : MonoBehaviour
     [SerializeField]
     private float _canFire = 0.0f;
     [SerializeField]
-    private int _maxAmmo = 1;
-    [SerializeField]
-    private int _currentAmmo;
-    [SerializeField]
-    private AudioClip _laserAudio;
-    [SerializeField]
-    private AudioClip _ammoDepleted;
-    private float _playAmmoDepleted;
-    private int _heldAmmo; // Holds ammo amount during Negative Powerup duration
-    [SerializeField]
-    private int _missileCount;
-    [SerializeField]
-    private int _maxMissiles;
-    [SerializeField]
     private float _missileOffset = 1.0f;
     [SerializeField]
-    private GameObject _missilePrefab;
-
-    #endregion WEAPONS
-
-
-
+    private float _playerSpeed = 5.0f;
     [SerializeField]
-    private int _playerLives = 3;
+    private float _baseSpeed = 5.0f;
     [SerializeField]
-    private int _score;
-    private int _shieldStrength = 0;
-    private bool _playerAlive = true;
-    
-    private float _audioDelay = 5.0f;
-    
-
-    private UIManager _uiManager;
-    private SpawnManager _spawnManager;
-    
-    [SerializeField]
-    private GameObject _rightEngine;
-    [SerializeField]
-    private GameObject _leftEngine;
-
-    [SerializeField]
-    private GameObject _particleSystem;
-    
-    [SerializeField]
-    private GameObject _explosion;
-    
-    [SerializeField]
-    private AudioClip _explosionAudio;
-    private Renderer _shieldColor;
-    private Color _shieldDefaultColor;
-    
-    [SerializeField]
-    private Camera _camera;
-
-    [Header("Thruster Properties")]
+    private float _speedMultiplier = 2.0f;
     [SerializeField]
     private float _thrusterSpeed = 10.0f;
+    private float _audioDelay = 5.0f;
+    private float _playAmmoDepleted;
+    // BOOLEANS
     [SerializeField]
-    private int _thrusterLevel = 100;
+    private bool multiShotActive = false;
     [SerializeField]
-    private BoostBar _boostbar;
+    private bool tripleShotActive = false;
+    [SerializeField]
+    private bool _shieldIsActive = false;
     private bool _thrustAvailable;
     private bool _thrusterRegen = false;
-    private int _thrusterMax = 100;
+    private bool _playerAlive = true;
+    #endregion VARIABLES INT, FLOAT, STRING, FLOAT    
 
     void Start()
     {
@@ -109,10 +100,8 @@ public class Player : MonoBehaviour
         _boostbar.SetStartBooster(_thrusterMax);
         _boostbar.SetBooster(_thrusterMax);
         _thrusterLevel = _thrusterMax;
-        transform.position = new Vector3(0, -3, 0);
+        transform.position = new Vector3(0, -3, 0); 
         
-        
-        _camera = Camera.main;
         _shieldColor = _shieldVisual.GetComponent<Renderer>();
         _shieldDefaultColor = _shieldVisual.GetComponent<Renderer>().material.GetColor("_Color");
 
@@ -128,6 +117,7 @@ public class Player : MonoBehaviour
             Debug.LogError("The UIManager is NULL!!");
         }
     }
+
     void Update()
     {
         if (_playerAlive == true)
@@ -162,6 +152,7 @@ public class Player : MonoBehaviour
             transform.position = new Vector3(-11.0f, transform.position.y, 0);
         }        
     }
+
     void LaserControl()
     {
         if (Input.GetKeyDown(KeyCode.Space) && Time.time > _canFire && _currentAmmo > 0)
@@ -210,6 +201,7 @@ public class Player : MonoBehaviour
             newBullet.transform.eulerAngles = Vector3.forward * fireangle;
         }
     }
+
     public void Damage()
     {
         if (_shieldIsActive == true)
@@ -223,7 +215,7 @@ public class Player : MonoBehaviour
         {
             cameraControl.CamShake();
         }
-        _playerLives -= 0;
+        _playerLives -= 1;
 
         EngineDamageCheck(_playerLives);
 
@@ -234,6 +226,7 @@ public class Player : MonoBehaviour
             StartCoroutine(PlayerDead());
         }
     }   
+
     public void ShieldCheck()
     {
         switch (_shieldStrength)
@@ -253,6 +246,7 @@ public class Player : MonoBehaviour
                 break;
         }
     }
+
     private void EngineDamageCheck(int lives)
     {
         if (lives == 3)
@@ -269,6 +263,7 @@ public class Player : MonoBehaviour
             _leftEngine.SetActive(true);
         }
     }
+
     public void TripleShotActive()
     {
         multiShotActive = false;
@@ -276,11 +271,13 @@ public class Player : MonoBehaviour
         AmmoCollected(5);
         StartCoroutine(TripleShotPowerDown());
     }
+
     IEnumerator TripleShotPowerDown()
     {
         yield return new WaitForSeconds(6.0f);
         tripleShotActive = false;
     }
+
     public void MultiShotActive()
     {
         tripleShotActive = false;
@@ -288,21 +285,25 @@ public class Player : MonoBehaviour
         AmmoCollected(5);
         StartCoroutine(MultiShotPowerDown());
     }
+
     IEnumerator MultiShotPowerDown()
     {
         yield return new WaitForSeconds(5.0f);
         multiShotActive = false;
     }
+
     public void SpeedBoostActive()
     {
         _playerSpeed *= _speedMultiplier;
         StartCoroutine(SpeedBoostPowerDown());
     }
+
     IEnumerator SpeedBoostPowerDown()
     {
         yield return new WaitForSeconds(6.0f);
         _playerSpeed /= _speedMultiplier;
     }
+
     public void AmmoCollected(int ammoAmount)
     {
         _currentAmmo += ammoAmount;        
@@ -312,6 +313,7 @@ public class Player : MonoBehaviour
         }
         _uiManager.UpdateAmmo(_currentAmmo);
     }
+
     public void NegativePowerupCollected()
     {
         _particleSystem.SetActive(true);
@@ -320,6 +322,7 @@ public class Player : MonoBehaviour
         _playerSpeed = 2;
         StartCoroutine(NegativePowerupRecovery());
     }
+
     IEnumerator NegativePowerupRecovery()
     {
         yield return new WaitForSeconds(5.0f);
@@ -327,6 +330,7 @@ public class Player : MonoBehaviour
         _currentAmmo = _heldAmmo;
         _playerSpeed = _baseSpeed;
     }
+
     public void ShieldPickedUp()
     {
         if (_shieldStrength < 3)
@@ -338,6 +342,7 @@ public class Player : MonoBehaviour
         ShieldCheck();
         Debug.Log("Player Collected Shield");
     }    
+
     public void HealthCollected()
     {
         _playerLives++;
@@ -354,28 +359,13 @@ public class Player : MonoBehaviour
         _missileCount += 1;
         _uiManager.UpdateMissileCount(1);
     }
+
     public void AddScore(int points)
     {
         _score += points;
         _uiManager.UpdateScore(_score);
-    }
-    private IEnumerator PlayerDead()
-    {
-        BoxCollider2D _collider = GetComponent<BoxCollider2D>();
+    }    
 
-        if (_collider == null)
-        {
-            Debug.LogError("Collider is NULL!");
-        }
-        _collider.enabled = false;
-        _playerAlive = false;
-        AudioSource.PlayClipAtPoint(_explosionAudio, new Vector3(0, 0, -10), 1.0f);
-        Instantiate(_explosion, transform.position, Quaternion.identity);
-        yield return new WaitForSeconds(1.0f);
-        _spawnManager.PlayerDied();
-        _uiManager.GameOver();
-        Destroy(this.gameObject);
-    }
     private IEnumerator ThrusterActivated()
     {
         _playerSpeed = _thrusterSpeed;
@@ -393,6 +383,7 @@ public class Player : MonoBehaviour
         yield return new WaitForSeconds(2.0f);
         StartCoroutine(ThrusterRecharge());
     }
+
     private IEnumerator ThrusterRecharge()
     {
         _thrusterRegen = true;
@@ -405,5 +396,23 @@ public class Player : MonoBehaviour
         }
         _thrustAvailable = true;
         _thrusterRegen = false;
+    }
+
+    private IEnumerator PlayerDead()
+    {
+        BoxCollider2D _collider = GetComponent<BoxCollider2D>();
+
+        if (_collider == null)
+        {
+            Debug.LogError("Collider is NULL!");
+        }
+        _collider.enabled = false;
+        _playerAlive = false;
+        AudioSource.PlayClipAtPoint(_explosionAudio, new Vector3(0, 0, -10), 1.0f);
+        Instantiate(_explosion, transform.position, Quaternion.identity);
+        yield return new WaitForSeconds(1.0f);
+        _spawnManager.PlayerDied();
+        _uiManager.GameOver();
+        Destroy(this.gameObject);
     }
 }

@@ -1529,7 +1529,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _enemyContainer: {fileID: 1432167167}
   _powerupContainer: {fileID: 267074279}
-  _playerIsAlive: 0
   _powerups:
   - {fileID: 431949437664511739, guid: 3d5d6a26f10bfea4aa1ceca68c50183f, type: 3}
   - {fileID: 2620974304997894533, guid: c73b174d141580942b282aa7da258556, type: 3}
@@ -1539,12 +1538,6 @@ MonoBehaviour:
   - {fileID: 8160235212105405024, guid: 2c42e56555097e04d92f3e2d811f0e4d, type: 3}
   - {fileID: 8854660628869275904, guid: ff74ad2af3b5fcf4d8683dea32c811ec, type: 3}
   - {fileID: 1555971357243565597, guid: 08f0ea818acefa141925a46fa96ec516, type: 3}
-  _powerUpID: 0
-  _waveCount: 5
-  _waveMax: 6
-  _enemiesInWave: 5
-  _enemiesSpawned: 0
-  _enemiesAlive: 0
   _enemiesToSpawn:
   - {fileID: 6859482750010898201, guid: 205bc89fc70e60e4a95df721f56c039d, type: 3}
   - {fileID: 7081814606214135961, guid: 9ccd4bfae5420be49969ca7eb3f2485c, type: 3}
@@ -1552,10 +1545,17 @@ MonoBehaviour:
   - {fileID: 2615873515108755182, guid: f238d957c7201454284ae00ad1248c7b, type: 3}
   - {fileID: 2615873515108755182, guid: a98faaeafbf3c9843b10fea5e601c806, type: 3}
   - {fileID: 3052370537164587605, guid: 687d8233fb0656d4ab0bca83254884dd, type: 3}
-  _enemyID: 0
   _bossEnemy: {fileID: 7410613307883481832}
+  _waveCount: 1
+  _waveMax: 6
+  _enemiesInWave: 5
+  _enemiesSpawned: 0
+  _enemiesAlive: 0
+  _powerUpID: 0
   weight: 0
   _total: 0
+  _enemyID: 0
+  _playerIsAlive: 0
 --- !u!4 &1129285360
 Transform:
   m_ObjectHideFlags: 0
@@ -2447,25 +2447,25 @@ MonoBehaviour:
   _scoreText: {fileID: 1714060473}
   _waveText: {fileID: 549443576}
   _waveCountText: {fileID: 305273826}
+  _gameOverText: {fileID: 1226869055}
+  _restartLevelText: {fileID: 1593101448}
+  _countDownText: {fileID: 953015922}
+  _ammoDepletedText: {fileID: 698679304}
+  _ammoCountText: {fileID: 1747585154}
+  _missileCountText: {fileID: 342558644}
   _livesImg: {fileID: 1150316808}
+  _gameManager: {fileID: 94028968}
   _livesSprites:
   - {fileID: 21300000, guid: ba53e111f0125654cabfd4eefaf3a657, type: 3}
   - {fileID: 21300000, guid: 80fba5ece7697c44eacc036539c1b552, type: 3}
   - {fileID: 21300000, guid: 482c8e4c0346b704aa5f1760c3c989d5, type: 3}
   - {fileID: 21300000, guid: 9fe6f40efddf0b64fb68a3382b14a4db, type: 3}
-  _gameOverText: {fileID: 1226869055}
-  _restartLevelText: {fileID: 1593101448}
-  _gameManager: {fileID: 94028968}
-  _flashDelay: 0.75
-  _countDownText: {fileID: 953015922}
-  _ammoDepletedText: {fileID: 698679304}
-  _ammoCountText: {fileID: 1747585154}
-  _ammoDepleted: 0
   _ammoCount: 0
   _maxAmmo: 15
   _missileCount: 0
+  _flashDelay: 0.75
+  _ammoDepleted: 0
   _missileDepleted: 0
-  _missileCountText: {fileID: 342558644}
 --- !u!1 &1747585152
 GameObject:
   m_ObjectHideFlags: 0

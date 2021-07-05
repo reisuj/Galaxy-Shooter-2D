@@ -5,11 +5,13 @@ using UnityEngine;
 public class BossMissileBehaviour : MonoBehaviour
 {
     [SerializeField]
+    private GameObject _player;
+    [SerializeField]
     private float _missileSpeed = 6;
     [SerializeField]
     private float _posToFindTarget = 1.0f;
-    [SerializeField]
-    private GameObject _player;
+    
+
     // Start is called before the first frame update
     void Start()
     {
@@ -29,7 +31,6 @@ public class BossMissileBehaviour : MonoBehaviour
             return;
         }        
     }
-
 
     private void MoveToTargetPosition()
     {

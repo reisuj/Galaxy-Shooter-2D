@@ -4,13 +4,15 @@ using UnityEngine;
 
 public class MineBehaviour : MonoBehaviour
 {
-    private float _speed;
-    private float _destinationY;
+    
     [SerializeField]
     private GameObject _explosion;
+
     [SerializeField]
     private AudioClip _explosionAudio;
 
+    private float _speed;
+    private float _destinationY;
 
     // Start is called before the first frame update
     void Start()
@@ -51,14 +53,14 @@ public class MineBehaviour : MonoBehaviour
         }
     }
 
-    private void DestroyMine()
+    private void DestroyMine() // Called to destroy mine hwen hit by player or after Self Destruct time
     {
         AudioSource.PlayClipAtPoint(_explosionAudio, new Vector3(0, 0, -10), 1.0f);
         Instantiate(_explosion, transform.position, Quaternion.identity);
         Destroy(this.gameObject);
     }
 
-    IEnumerator StartSelfDestruct()
+    IEnumerator StartSelfDestruct() // Destroys Mine after set time.
     {
         float _selfDestructTimer = Random.Range(10.0f, 20.0f);
         yield return new WaitForSeconds(_selfDestructTimer);

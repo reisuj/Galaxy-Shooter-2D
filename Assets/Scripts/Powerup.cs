@@ -4,22 +4,30 @@ using UnityEngine;
 
 public class Powerup : MonoBehaviour
 {
-    [SerializeField]
-    private float _speed = 3.0f;
-    [SerializeField]
-    private int powerupID = 0;
-    [SerializeField]
-    private AudioClip _powerupAudio = null;
-    [SerializeField]
-    private int ammoRefillAmount = 15;
-    [SerializeField]
-    private GameObject _player = null;
-    [SerializeField]
-    private bool _isBeingCollected = false;
+    #region GAMEOBJECTS
     [SerializeField]
     private GameObject _explosion;
     [SerializeField]
+    private GameObject _player = null;
+    #endregion GAMEOBJECTS
+
+    #region AUDIO
+    [SerializeField]
+    private AudioClip _powerupAudio = null;
+    [SerializeField]
     private AudioClip _explosionAudio;
+    #endregion AUDIO
+
+    #region VARIABLES INT, FLOAT, STRING, BOOL
+    [SerializeField]
+    private int powerupID = 0;
+    [SerializeField]
+    private int ammoRefillAmount = 15;
+    [SerializeField]
+    private float _speed = 3.0f;
+    [SerializeField]
+    private bool _isBeingCollected = false;
+    #endregion VARIABLES INT, FLOAT, STRING, BOOL
 
     private void Start()
     {
@@ -57,7 +65,7 @@ public class Powerup : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.tag == "Player")
+        if (other.CompareTag("Player"))
         {
             Player player = other.transform.GetComponent<Player>();
             if (player != null)
@@ -97,7 +105,7 @@ public class Powerup : MonoBehaviour
             Destroy(this.gameObject);
         }
 
-        if (other.tag == "EnemyLaser")
+        if (other.CompareTag("EnemyLaser"))
         {
             Debug.Log("Hit by: " + other.tag);
             Destroy(other.gameObject);

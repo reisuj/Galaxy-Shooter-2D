@@ -4,74 +4,89 @@ using UnityEngine;
 
 public abstract class BaseEnemy : MonoBehaviour
 {
-    [SerializeField]
-    protected float _enemySpeed = 3.0f;
-
-    protected Player _player;
-
-    
-    protected BoxCollider2D _collider;
+    #region GAMEOBJECTS
     [SerializeField]
     protected GameObject _enemyLaser;
-
-    [SerializeField]
-    protected SpawnManager _spawnManager;
-
-    [SerializeField]
-    protected AudioClip _laserAudio;
-
-    [SerializeField]
-    protected AudioClip _explosionAudio;
     [SerializeField]
     protected GameObject _explosionFX;
-
-    protected bool _canFire = false;
-    protected float _fireTime = 0.0f;
-
-    protected int movementTypeID;
-
-    [SerializeField]
-    protected int _shieldChance;
-    [SerializeField]
-    protected bool _shieldIsActive = false;
     [SerializeField]
     protected GameObject _shields;
+    #endregion
+
+    #region AUDIO
     [SerializeField]
+    protected AudioClip _laserAudio;
+    [SerializeField]
+    protected AudioClip _explosionAudio;
+    #endregion
+
+    #region OTHER REFERENCES
+    [SerializeField]
+    protected SpawnManager _spawnManager;
+    protected Player _player;
+    protected BoxCollider2D _collider;
+    #endregion
+
+    #region VARIABLES INT, FLOAT, STRING, BOOL
+    protected int _shieldChance;
+    protected int movementTypeID;
+    [SerializeField]
+    protected float _enemySpeed = 3.0f;
     protected float _randomX;
+    protected float _fireTime = 0.0f;
+    [SerializeField]
+    protected bool _shieldIsActive = false;
+    protected bool _canFire = false;
+    #endregion
 
     protected virtual void Start()
     {
         movementTypeID = Random.Range(1, 4);
 
-        _spawnManager = FindObjectOfType<SpawnManager>().GetComponent<SpawnManager>();
+        GetReferences();        
 
+        InitialShieldCheck();
+    }
+
+    // Update is called once per frame
+    protected virtual void Update()
+    {
+        CalculateMovement();
+
+        FireLaser();
+    }
+
+    protected virtual void GetReferences()
+    {
+        _spawnManager = FindObjectOfType<SpawnManager>().GetComponent<SpawnManager>();
         if (_spawnManager == null)
         {
             Debug.LogError("SpawnManager is NULL!");
         }
 
         _player = GameObject.Find("Player").GetComponent<Player>();
-
         if (_player == null)
         {
             Debug.LogError("Player is NULL!");
         }
 
         _collider = GetComponent<BoxCollider2D>();
-
         if (_collider == null)
         {
             Debug.LogError("Collider is NULL!");
         }
+    }
 
-        InitialShieldCheck();
-    }
-    // Update is called once per frame
-    protected virtual void Update()
+    protected virtual void InitialShieldCheck()
     {
-        CalculateMovement();
-        FireLaser();
+        _shieldChance = Random.Range(1, 101);
+        if (_shieldChance >= 75)
+        {
+            _shieldIsActive = true;
+            _shields.SetActive(true);
+        }
     }
+
     protected virtual void CalculateMovement()
     {
 
@@ -90,7 +105,26 @@ public abstract class BaseEnemy : MonoBehaviour
                 break;
         }
         ResetScreenPosition();
-    }    
+    }
+
+    protected virtual void ResetScreenPosition()
+    {
+        if (transform.position.y < -8.0f)
+        {
+            _randomX = Random.Range(-9.8f, 9.8f);
+            transform.position = new Vector3(_randomX, 7.0f, 0);
+        }
+
+        if (transform.position.x <= -11.0f)
+        {
+            transform.position = new Vector3(11.0f, transform.position.y, 0);
+        }
+        else if (transform.position.x >= 11.0f)
+        {
+            transform.position = new Vector3(-11.0f, transform.position.y, 0);
+        }
+    }
+
     protected virtual void FireLaser()
     {
         float _fireDelay = Random.Range(3.0f, 5.0f);
@@ -101,6 +135,7 @@ public abstract class BaseEnemy : MonoBehaviour
             Instantiate(_enemyLaser, transform.position, Quaternion.identity);
         }
     }
+
     protected virtual void OnTriggerEnter2D(Collider2D other)
     {
         if (other.tag == "PlayerLaser" || other.tag == "HomingMissile")
@@ -143,6 +178,7 @@ public abstract class BaseEnemy : MonoBehaviour
             }
         }
     }
+
     protected virtual void EnemyDestroyed()
     {
         _enemySpeed = 0;
@@ -152,42 +188,16 @@ public abstract class BaseEnemy : MonoBehaviour
         _spawnManager.EnemyKilled();
         Destroy(this.gameObject, 1.0f);
     }
-    protected virtual void InitialShieldCheck()
-    {
-        _shieldChance = Random.Range(1, 101);
-
-        if (_shieldChance >= 75)
-        {
-            _shieldIsActive = true;
-            _shields.SetActive(true);
-        }
-    }
-
-    protected virtual void ResetScreenPosition()
-    {
-        if (transform.position.y < -8.0f)
-        {
-            _randomX = Random.Range(-9.8f, 9.8f);
-            transform.position = new Vector3(_randomX, 7.0f, 0);
-        }
-
-        if (transform.position.x <= -11.0f)
-        {
-            transform.position = new Vector3(11.0f, transform.position.y, 0);
-        }
-        else if (transform.position.x >= 11.0f)
-        {
-            transform.position = new Vector3(-11.0f, transform.position.y, 0);
-        }    
-    }
 
     private void OnBecameVisible()
     {
+        Debug.Log(this.transform.name + " became visible");
         _canFire = true;
     }
 
     private void OnBecameInvisible()
     {
+        Debug.Log(this.transform.name + " became invisible");
         _canFire = false;
-    }
+    }    
 }

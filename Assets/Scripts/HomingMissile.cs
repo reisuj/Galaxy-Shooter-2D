@@ -4,14 +4,22 @@ using UnityEngine;
 
 public class HomingMissile : MonoBehaviour
 {
+    #region GAMEOBJECTS
+    [SerializeField]
+    GameObject[] _availableEnemies;
+    private GameObject _enemyTarget;
+    #endregion
+
+    #region OTHER REFERENCES
+    private Vector3 _currentPosition;
+    #endregion
+
+    #region VARIABLES
     [SerializeField]
     private float _missileSpeed;
     private float _minDistance;
-    private Vector3 _currentPosition;
-    private GameObject _enemyTarget;
-    [SerializeField]
-    GameObject[] _availableEnemies;
-    
+    #endregion
+
     // Start is called before the first frame update
     void Start()
     {
@@ -66,6 +74,7 @@ public class HomingMissile : MonoBehaviour
     }
     private void OnBecameInvisible()
     {
+        Debug.Log(this.transform.name + " was destroyed out of bounds");
         Destroy(this.gameObject);
     }
 }

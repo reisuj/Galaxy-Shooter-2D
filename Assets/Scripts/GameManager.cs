@@ -50,12 +50,10 @@ public class GameManager : MonoBehaviour
         SceneManager.LoadScene(1);
     }
 
-
     public void ExitGame()
     {
         Application.Quit();
     }
-
 
     public void PauseToggle()
     {

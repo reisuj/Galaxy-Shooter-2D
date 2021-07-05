@@ -4,18 +4,29 @@ using UnityEngine;
 
 public class SpawnManager : MonoBehaviour
 {
+    #region GAMEOBJECTS
     [SerializeField]
     private GameObject _enemyContainer = null;
     [SerializeField]
     private GameObject _powerupContainer = null;
     [SerializeField]
-    private bool _playerIsAlive = false;
-    [SerializeField]
     private GameObject[] _powerups = null;
     [SerializeField]
-    private int _powerUpID = 0;
+    private GameObject[] _enemiesToSpawn;
+    [SerializeField]
+    private GameObject _bossEnemy;
+    #endregion GAMEOBJECTS
 
-    // Wave System
+    #region AUDIO
+    #endregion AUDIO
+
+    #region OTHER REFERENCES
+    private UIManager _uiManager = null;
+    private IEnumerator _enemyRoutine;
+    #endregion OTHER REFERENCES
+
+    #region VARIABLES INT, FLOAT, STRING, BOOL
+    // INTEGERS
     [SerializeField]
     private int _waveCount = 1;
     [SerializeField]
@@ -26,17 +37,18 @@ public class SpawnManager : MonoBehaviour
     private int _enemiesSpawned = 0;
     [SerializeField]
     private int _enemiesAlive = 0;
-    private UIManager _uiManager = null;
-
     [SerializeField]
-    private GameObject[] _enemiesToSpawn;
+    private int _powerUpID = 0;
+    [SerializeField]
+    private int weight;
+    [SerializeField]
+    private int _total;
     [SerializeField]
     private int _enemyID;
+    // BOOLEAN
     [SerializeField]
-    private GameObject _bossEnemy;
-
-    private IEnumerator _enemyRoutine;
-
+    private bool _playerIsAlive = false;
+    #endregion VARIABLES INT, FLOAT, STRING, BOOL
 
 
     private int[] _table =
@@ -50,11 +62,7 @@ public class SpawnManager : MonoBehaviour
         30, // MultiShot Powerup
         25  // Missile Powerup
     };
-
-    [SerializeField]
-    private int weight;
-    [SerializeField]
-    private int _total;
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -71,11 +79,13 @@ public class SpawnManager : MonoBehaviour
 
         _enemyRoutine = SpawnEnemy();
     }
+
     // Update is called once per frame
     void Update()
     {
         WaveControl();
     }
+
     IEnumerator SpawnEnemy()
     {
         yield return new WaitForSeconds(3.0f);
@@ -90,6 +100,7 @@ public class SpawnManager : MonoBehaviour
             yield return new WaitForSeconds(4.0f);
         }
     }
+
     IEnumerator SpawnPowerup()
     {
         while (_playerIsAlive == true)
@@ -100,17 +111,6 @@ public class SpawnManager : MonoBehaviour
             newPowerup.transform.parent = _powerupContainer.transform;
             yield return new WaitForSeconds(Random.Range(3.0f, 7.0f));
         }
-    }
-    IEnumerator NextWave()
-    {
-        _uiManager.UpdateWave(_waveCount);
-        yield return new WaitForSeconds(5.0f);
-        StartCoroutine(SpawnEnemy());
-    }
-
-    public void EnemyKilled()
-    {
-        _enemiesAlive--;
     }
 
     private void WaveControl()
@@ -133,19 +133,11 @@ public class SpawnManager : MonoBehaviour
         }
     }
 
-
-    public void PlayerDied()
+    IEnumerator NextWave()
     {
-        _playerIsAlive = false;
-        Destroy(_enemyContainer);
-        Destroy(_powerupContainer);
-    }
-    public void StartSpawning()
-    {
-        _playerIsAlive = true;
+        _uiManager.UpdateWave(_waveCount);
+        yield return new WaitForSeconds(5.0f);
         StartCoroutine(SpawnEnemy());
-        StartCoroutine(SpawnPowerup());
-        _uiManager.GameStarted();
     }
 
     private void PowerUpSelector()
@@ -170,5 +162,25 @@ public class SpawnManager : MonoBehaviour
     {
         _uiManager.BossWave();
         _bossEnemy.SetActive(true);
+    }
+
+    public void PlayerDied()
+    {
+        _playerIsAlive = false;
+        Destroy(_enemyContainer);
+        Destroy(_powerupContainer);
+    }
+
+    public void StartSpawning()
+    {
+        _playerIsAlive = true;
+        StartCoroutine(SpawnEnemy());
+        StartCoroutine(SpawnPowerup());
+        _uiManager.GameStarted();
+    }
+
+    public void EnemyKilled()
+    {
+        _enemiesAlive--;
     }
 }

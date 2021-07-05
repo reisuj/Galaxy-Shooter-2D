@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
-
+    #region TEXT REFEENCES
     [SerializeField]
     private Text _scoreText;
     [SerializeField]
@@ -13,17 +13,9 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     private Text _waveCountText;
     [SerializeField]
-    private Image _livesImg;
-    [SerializeField]
-    private Sprite[] _livesSprites;
-    [SerializeField]
     private Text _gameOverText;
     [SerializeField]
     private Text _restartLevelText;
-    [SerializeField]
-    private GameManager _gameManager;
-    [SerializeField]
-    private float _flashDelay = 0.75f;
     [SerializeField]
     private Text _countDownText;
     [SerializeField]
@@ -31,7 +23,20 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     private Text _ammoCountText;
     [SerializeField]
-    private bool _ammoDepleted = false;
+    private Text _missileCountText;
+    #endregion TEXT REFERENCES
+
+    #region OTHER REFERENCES
+    [SerializeField]
+    private Image _livesImg;
+    [SerializeField]
+    private GameManager _gameManager;
+    [SerializeField]
+    private Sprite[] _livesSprites;
+    #endregion OTHER REFERENCES
+
+    #region VARIABLES INT, FLOAT, STRING, BOOL
+    // INTEGERS
     [SerializeField]
     private int _ammoCount;
     [SerializeField]
@@ -39,10 +44,15 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     private int _missileCount;
     private int _maxMissiles = 3;
+    //FLOATS
     [SerializeField]
-    private bool _missileDepleted;    
+    private float _flashDelay = 0.75f;
+    //BOOLEANS
     [SerializeField]
-    private Text _missileCountText;
+    private bool _ammoDepleted = false;
+    [SerializeField]
+    private bool _missileDepleted;
+    #endregion VARIABLES INT, FLOAT, STRING, BOOL
 
     // Start is called before the first frame update
     void Start()
@@ -50,18 +60,18 @@ public class UIManager : MonoBehaviour
         _scoreText.text = "Score: " + 0;
         _gameOverText.text = "";
         _restartLevelText.gameObject.SetActive(false);
-        
-
     }
 
     public void GameStarted()
     {
         StartCoroutine(WaveDisplay(1));
     }
+
     public void UpdateScore(int playerScore)
     {
         _scoreText.text = "Score: " + playerScore;
     }
+
     public void UpdateLives(int currentLives)
     {
         if (currentLives < 0)
@@ -102,6 +112,7 @@ public class UIManager : MonoBehaviour
     {
         StartCoroutine(WaveDisplay(currentWave));
     }
+
     IEnumerator WaveDisplay(int currentWave)
     {
         _waveText.text = "WAVE " + currentWave;
@@ -114,6 +125,7 @@ public class UIManager : MonoBehaviour
     {
         StartCoroutine(BossDisplay());
     }
+
     IEnumerator BossDisplay()
     {
         _waveText.text = "BOSS WAVE!!";
@@ -121,6 +133,7 @@ public class UIManager : MonoBehaviour
         yield return new WaitForSeconds(5.0f);
         _waveText.text = "";
     }
+
     public IEnumerator GameOverSequence()
     {
         yield return new WaitForSeconds(2.0f);
@@ -128,6 +141,7 @@ public class UIManager : MonoBehaviour
         _gameManager.GameOver();
         _restartLevelText.gameObject.SetActive(true);        
     }
+
     IEnumerator GameOverFlickerRoutine()
     {
         while (true)
@@ -138,10 +152,12 @@ public class UIManager : MonoBehaviour
             yield return new WaitForSeconds(0.5f);
         }        
     }
+
     public void RestartCountdown()
     {
         StartCoroutine(RestartCountdownRoutine());
     }
+
     IEnumerator RestartCountdownRoutine()
     {
         _restartLevelText.gameObject.SetActive(false);
@@ -159,15 +175,18 @@ public class UIManager : MonoBehaviour
         yield return new WaitForSeconds(_flashDelay);
         _gameManager.RestartScene();
     }
+
     public void GameOver()
     {
         StartCoroutine(GameOverSequence());
     }
+
     public void AmmoDepleted()
     {
         _ammoDepleted = true;
         StartCoroutine(AmmoDepletedRoutine());
     }    
+
     IEnumerator AmmoDepletedRoutine()
     {
         while (_ammoDepleted == true)

@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class SmartEnemy : BaseEnemy
 {    
-    private float _revFireTime = 0.0f;
+    private float _reverseFireTime = 0.0f;
+
     // Start is called before the first frame update
     protected override void Start()
     {
@@ -19,9 +20,9 @@ public class SmartEnemy : BaseEnemy
         {
             Debug.Log(hit.collider.tag);
             float _fireDelay = Random.Range(3.0f, 5.0f);
-            if (hit.collider.CompareTag("Player") && Time.time > _revFireTime)
+            if (hit.collider.CompareTag("Player") && Time.time > _reverseFireTime)
             {
-                _revFireTime = Time.time + _fireDelay;
+                _reverseFireTime = Time.time + _fireDelay;
                 AudioSource.PlayClipAtPoint(_laserAudio, transform.position, 1.0f);
                 Instantiate(_enemyLaser, transform.position, Quaternion.Euler(transform.rotation.x, transform.rotation.y, 180.0f));
             }

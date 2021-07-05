@@ -10,15 +10,14 @@ public class CameraControl : MonoBehaviour
     void Start()
     {
         _anim = GetComponent<Animator>();
-
         if (_anim == null)
         {
             Debug.LogError("The Animator is NULL!");
         }
     }
+
     public void CamShake()
     {
         _anim.SetTrigger("Shake");
     }
-
 }

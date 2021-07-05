@@ -16,9 +16,10 @@ public class EnemyLaserBehavior : MonoBehaviour
             Destroy(this.gameObject);
         }
     }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.tag == "Player")
+        if (collision.CompareTag("Player"))
         {
             Player player = collision.transform.GetComponent<Player>();
             if (player != null)
