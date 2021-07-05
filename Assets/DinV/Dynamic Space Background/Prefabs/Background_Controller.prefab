@@ -92,6 +92,7 @@ GameObject:
   - component: {fileID: 4598455582901916}
   - component: {fileID: 114216866430666256}
   - component: {fileID: 45202572353313102}
+  - component: {fileID: 1875226467}
   m_Layer: 0
   m_Name: Background_Controller
   m_TagString: Untagged
@@ -108,7 +109,7 @@ Transform:
   m_GameObject: {fileID: 1616584906383700}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.1, y: 0.6, z: 1}
   m_Children:
   - {fileID: 4280941034635330}
   - {fileID: 4026536957771134}
@@ -150,6 +151,25 @@ Skybox:
   m_GameObject: {fileID: 1616584906383700}
   m_Enabled: 1
   m_CustomSkybox: {fileID: 0}
+--- !u!95 &1875226467
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1616584906383700}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 84d5d89fcc40f4a4d917cd3a9adf2c29, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &1755397086763700
 GameObject:
   m_ObjectHideFlags: 0

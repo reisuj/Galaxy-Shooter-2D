@@ -32,9 +32,11 @@ public class SpawnManager : MonoBehaviour
     private GameObject[] _enemiesToSpawn;
     [SerializeField]
     private int _enemyID;
+    [SerializeField]
+    private GameObject _bossEnemy;
 
     private IEnumerator _enemyRoutine;
-    
+
 
 
     private int[] _table =
@@ -75,18 +77,18 @@ public class SpawnManager : MonoBehaviour
         WaveControl();
     }
     IEnumerator SpawnEnemy()
-    {        
+    {
         yield return new WaitForSeconds(3.0f);
         while (_enemiesSpawned < _enemiesInWave && _playerIsAlive == true)
         {
             float _enemyX = Random.Range(-9.0f, 9.0f);
             _enemyID = Random.Range(0, _waveCount);
-            GameObject newEnemy = Instantiate(_enemiesToSpawn[_enemyID], (new Vector3(_enemyX, 10.5f, 0)), Quaternion.identity);            
+            GameObject newEnemy = Instantiate(_enemiesToSpawn[_enemyID], (new Vector3(_enemyX, 10.5f, 0)), Quaternion.identity);
             newEnemy.transform.parent = _enemyContainer.transform;
             _enemiesSpawned++;
-            _enemiesAlive++;            
+            _enemiesAlive++;
             yield return new WaitForSeconds(4.0f);
-        }        
+        }
     }
     IEnumerator SpawnPowerup()
     {
@@ -115,7 +117,7 @@ public class SpawnManager : MonoBehaviour
     {
         if (_waveCount <= _waveMax)
         {
-            if (_enemiesSpawned == _enemiesInWave && _enemiesAlive == 0)
+            if (_enemiesSpawned == _enemiesInWave && _enemiesAlive <= 0)
             {
                 _enemiesSpawned = 0;
                 _enemiesInWave += 5;
@@ -127,7 +129,7 @@ public class SpawnManager : MonoBehaviour
         else
         {
             StopCoroutine(_enemyRoutine);
-            //StartBossLevel();
+            StartBossLevel();
         }
     }
 
@@ -149,7 +151,7 @@ public class SpawnManager : MonoBehaviour
     private void PowerUpSelector()
     {
         weight = Random.Range(0, _total);
-        
+
         for (int i = 0; i < _table.Length; i++)
         {
             if (weight <= _table[i])
@@ -161,21 +163,12 @@ public class SpawnManager : MonoBehaviour
             {
                 weight -= _table[i];
             }
-        }           
+        }
     }
 
-    //private void StartBossLevel()
-    //{
-    //    // Set Wave message to Boss Wave
-    //    // Instantiate boss above screen
-    //    // Play dramatic music
-    //    // Have boss move slowly down to center screen
-
-    //    // Start BossRoutine coroutine for battle
-    //    StartCoroutine(BossRoutine());
-    //}
-    //private IEnumerator BossRoutine()
-    //{
-    //    yield return new WaitForSeconds(1.0f);
-    //}
+    private void StartBossLevel()
+    {
+        _uiManager.BossWave();
+        _bossEnemy.SetActive(true);
+    }
 }

@@ -12,7 +12,6 @@ public class BossBehaviour : MonoBehaviour
     private int _bossHealth;
     [SerializeField]
     private int _bossMaxHealth = 200;
-    private UIManager _uiManager;
     [SerializeField]
     private BossHealthBar _bossHealthBar;
     [SerializeField]
@@ -29,6 +28,12 @@ public class BossBehaviour : MonoBehaviour
     private bool _canUseLightning;
     [SerializeField]
     private GameObject _bossMissile;
+    [SerializeField]
+    private GameObject _leftLightning;
+    [SerializeField]
+    private GameObject _rightLightning;
+
+    private Player _player;
 
     [SerializeField]
     private GameObject _explosion1;
@@ -37,15 +42,14 @@ public class BossBehaviour : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        _bossHealth = _bossMaxHealth;
+        _bossHealth = _bossMaxHealth;        
 
-        _uiManager = GameObject.Find("Canvas").GetComponent<UIManager>();
-        if (_uiManager == null)
+        _player = GameObject.Find("Player").GetComponent<Player>();
+
+        if (_player == null)
         {
-            Debug.LogError("The UIManager is NULL!!");
+            Debug.LogError("Player is NULL!");
         }
-
-        _uiManager.BossWave();
 
         StartCoroutine(WeaponControl());        
     }
@@ -100,7 +104,7 @@ public class BossBehaviour : MonoBehaviour
         {
             LaserControl();
             MissileControl();
-            LightningControl();
+            StartCoroutine(LightningControl());
             yield return new WaitForSeconds(Random.Range(1.0f, 2.5f));
         }        
     }
@@ -123,12 +127,25 @@ public class BossBehaviour : MonoBehaviour
         }
     }
 
-    private void LightningControl()
+    IEnumerator LightningControl()
     {
         if (_bossHealth%_lightningActivation == 0 && _canUseLightning== true)
         {
             Debug.Log("Activate Lightning");
+            _leftLightning.SetActive(true);
+            _rightLightning.SetActive(true);
             _canUseLightning = false;
+            yield return new WaitForSeconds(2.0f);
+            _leftLightning.SetActive(false);
+            _player.Damage();
+            _rightLightning.SetActive(false);
+            _player.Damage();
+            yield break;
+
+        }
+        else
+        {
+            yield break;
         }
     }
 

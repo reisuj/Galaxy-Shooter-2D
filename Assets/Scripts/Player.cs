@@ -223,7 +223,7 @@ public class Player : MonoBehaviour
         {
             cameraControl.CamShake();
         }
-        _playerLives -= 1;
+        _playerLives -= 0;
 
         EngineDamageCheck(_playerLives);
 

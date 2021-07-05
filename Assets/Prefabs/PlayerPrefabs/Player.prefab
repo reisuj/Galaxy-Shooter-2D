@@ -130,7 +130,7 @@ Transform:
   m_GameObject: {fileID: 4528373477114313278}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.35, y: 0.35, z: 0.35}
+  m_LocalScale: {x: 0.3, y: 0.3, z: 0.3}
   m_Children:
   - {fileID: 897407400}
   - {fileID: 5410509866205120436}
@@ -221,6 +221,11 @@ MonoBehaviour:
   _currentAmmo: 15
   _laserAudio: {fileID: 8300000, guid: 75676f361bdfeaf41a46623e95df3dbc, type: 3}
   _ammoDepleted: {fileID: 8300000, guid: bf7bc467856df6340b4c07600d2ac1c6, type: 3}
+  _missileCount: 3
+  _maxMissiles: 3
+  _missileOffset: 1
+  _missilePrefab: {fileID: 5526829441550533126, guid: 1c63e551f6a83fd43996758673d4934a,
+    type: 3}
   _playerLives: 3
   _score: 0
   _rightEngine: {fileID: 5120659018182728696}
