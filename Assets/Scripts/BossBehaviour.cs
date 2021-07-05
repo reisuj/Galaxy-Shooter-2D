@@ -46,6 +46,10 @@ public class BossBehaviour : MonoBehaviour
     private bool _canFireMissile;
     [SerializeField]
     private bool _canUseLightning;
+    [SerializeField]
+    private bool _inPosition;
+    [SerializeField]
+    private bool _weaponsActive;
     #endregion
 
     // Start is called before the first frame update
@@ -59,14 +63,17 @@ public class BossBehaviour : MonoBehaviour
         {
             Debug.LogError("Player is NULL!");
         }
-
-        StartCoroutine(WeaponControl());        
     }
 
     // Update is called once per frame
     void Update()
     {
         MoveToStart();
+        if (_inPosition == true && _weaponsActive == false)
+        {
+            StartCoroutine(WeaponControl());
+            _weaponsActive = true;
+        }        
     }
 
     private void MoveToStart()
@@ -78,13 +85,15 @@ public class BossBehaviour : MonoBehaviour
         else
         {
             transform.position = new Vector3(transform.position.x, _destinationY, 0);
+            _inPosition = true;
         }
     }
 
     IEnumerator WeaponControl()
     {
-        yield return new WaitForSeconds(5.0f);
-        while (transform.position.y == _destinationY)
+        yield return new WaitForSeconds(2.0f);
+        _inPosition = true;
+        while (_inPosition == true)
         {
             LaserControl();
             MissileControl();
@@ -151,7 +160,6 @@ public class BossBehaviour : MonoBehaviour
             _rightLightning.SetActive(false);
             _player.Damage();
             yield break;
-
         }
         else
         {
