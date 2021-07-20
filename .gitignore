@@ -68,3 +68,12 @@ crashlytics-build.properties
 
 # DinV Dynamic Space Background
 Dynamic Space Background/
+[Dd]in[Vv]/
+
+# PickUpItens
+[Aa]ssets/[Pp]ick[Uu]p[Ii]tems/
+
+#LightningBolt
+[Aa]ssets/[Ll]ightning[Bb]olt/
+
+
