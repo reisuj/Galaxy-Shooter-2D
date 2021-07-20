@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class BossBehaviour : MonoBehaviour
 {
@@ -50,7 +51,11 @@ public class BossBehaviour : MonoBehaviour
     private bool _inPosition;
     [SerializeField]
     private bool _weaponsActive;
+    private Vector3 _direction = Vector3.right;
     #endregion
+
+    [SerializeField]
+    private UnityEvent _showBossHealth;
 
     // Start is called before the first frame update
     void Start()
@@ -73,7 +78,8 @@ public class BossBehaviour : MonoBehaviour
         {
             StartCoroutine(WeaponControl());
             _weaponsActive = true;
-        }        
+        }
+        SideMovement();
     }
 
     private void MoveToStart()
@@ -86,8 +92,32 @@ public class BossBehaviour : MonoBehaviour
         {
             transform.position = new Vector3(transform.position.x, _destinationY, 0);
             _inPosition = true;
+            _showBossHealth.Invoke();
         }
     }
+
+    private void SideMovement()
+    {
+        if (_inPosition == true)
+        {
+            transform.Translate(_direction * _speed * Time.deltaTime, Space.World);
+        }
+
+        if (transform.position.x >= 3.0f || transform.position.x <= -3.0f)
+        {
+            _direction = -_direction;
+        }
+    }
+
+    //private void MoveRight()
+    //{
+    //    transform.Translate(Vector3.right * _speed * Time.deltaTime, Space.World);
+    //}
+
+    //private void MoveLeft()
+    //{
+    //    transform.Translate(Vector3.left * _speed * Time.deltaTime, Space.World);
+    //}
 
     IEnumerator WeaponControl()
     {
