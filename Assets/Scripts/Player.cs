@@ -236,10 +236,10 @@ public class Player : MonoBehaviour
                 _shieldVisual.SetActive(false);
                 break;
             case 1:
-                _shieldColor.material.SetColor("_Color", Color.red);
+                _shieldColor.material.color = new Color(1f, 1f, 1f, 0.4f);
                 break;
             case 2:
-                _shieldColor.material.SetColor("_Color", Color.yellow);
+                _shieldColor.material.color = new Color(1f, 1f, 1f, 0.7f);
                 break;
             case 3:
                 _shieldColor.material.SetColor("_Color", _shieldDefaultColor);
